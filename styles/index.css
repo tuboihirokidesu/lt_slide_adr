@@ -1,0 +1,574 @@
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+
+/* 役割ごとに色数を絞った配色（文字は WCAG AA 以上）。teal=採用・推奨、amber=No・却下、ext=外部の発言 */
+:root {
+  /* 中立色 */
+  --bg: #f4f8fb;
+  --ink: #16293b;
+  --ink-2: #3a4d61;
+  --muted: #56697d;
+  --line: #c3d1dd;
+  --line-strong: #9fb2c4;
+  --arrow: #71879c;
+  --label-bg: #e8eff5;
+  --legacy-fill: #eef2f6;
+  /* プライマリ：採用・推奨（線と塗りは #008c95、文字は同系の濃色） */
+  --teal: #008c95;
+  --teal-ink: #00737b;
+  --teal-line: #5fb3b8;
+  --teal-fill: #e6f4f4;
+  /* No・却下・警告 */
+  --amber: #c57e08;
+  --amber-ink: #8a5500;
+  --amber-fill: #fff7e9;
+  --amber-label: #fdeecb;
+  /* 外部（Foundry）だけに使う */
+  --ext: #2563c9;
+  --ext-ink: #1f55ad;
+  --ext-fill: #eef4ff;
+  --ext-line: #8fb0e6;
+  /* サブ見出し */
+  --blue: #2f5f82;
+  /* 旧名の互換 */
+  --blue-fill: var(--ext-fill);
+  --green: var(--teal-line);
+  --green-fill: var(--teal-fill);
+  --green-ink: var(--teal-ink);
+  --indigo: var(--line-strong);
+  --indigo-fill: var(--legacy-fill);
+  --indigo-ink: var(--ink);
+
+  --surface: #fff;
+  --paper: #fff;
+  --font-sans: "Geist Variable", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
+  --shadow-1: 0 1px 1px rgba(22, 41, 59, 0.04), 0 10px 28px -16px rgba(22, 41, 59, 0.22);
+
+  /* 線は2段階：細線（接続・輪郭）と強調線（採用・却下の流れ） */
+  --w-hair: 1.5px;
+  --w-em: 2px;
+  /* 角丸は役割で4段階：箱、文書（紙面・窓）、チップ、文書の中の印 */
+  --r-box: 12px;
+  --r-doc: 6px;
+  --r-chip: 8px;
+  --r-mark: 5px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-move: cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* 章扉・表紙・結びは夜の配色。同じ変数を上書きして、図の部品をそのまま使う */
+.is-night {
+  --bg: #061019;
+  --surface: rgba(214, 236, 245, 0.045);
+  --ink: #eaf2f6;
+  --ink-2: #c3d2dc;
+  --muted: #8ba1b1;
+  --line: rgba(170, 205, 222, 0.18);
+  --line-strong: rgba(170, 205, 222, 0.3);
+  --arrow: #5d7688;
+  --label-bg: rgba(170, 205, 222, 0.1);
+  --legacy-fill: rgba(170, 205, 222, 0.06);
+  --teal: #1fc4c9;
+  --teal-ink: #5fdfe2;
+  --teal-line: rgba(47, 211, 214, 0.5);
+  --teal-fill: rgba(31, 196, 201, 0.09);
+  --ext: #6f9bff;
+  --ext-ink: #a3bfff;
+  --ext-fill: rgba(111, 155, 255, 0.08);
+  --ext-line: rgba(111, 155, 255, 0.5);
+  --blue: #9fc3dc;
+  --blue-fill: var(--ext-fill);
+  --green: var(--teal-line);
+  --green-fill: var(--teal-fill);
+  --green-ink: var(--teal-ink);
+  --indigo: var(--line-strong);
+  --indigo-fill: var(--legacy-fill);
+  --indigo-ink: var(--ink);
+  --shadow-1: 0 0 0 1px rgba(255, 255, 255, 0.02), 0 18px 40px -20px rgba(0, 0, 0, 0.8);
+  --amber: #f0a42b;
+  --amber-ink: #ffc766;
+  --amber-fill: rgba(240, 164, 43, 0.1);
+  --amber-label: rgba(240, 164, 43, 0.16);
+  --paper: #0c1923;
+  color-scheme: dark;
+}
+
+.slidev-layout {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "palt";
+  letter-spacing: 0.02em;
+}
+.slidev-layout h1 {
+  font-size: 31px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.005em;
+  margin: 0;
+}
+.slidev-layout p,
+.slidev-layout li {
+  line-height: 1.6;
+}
+.slidev-layout h1 + p { opacity: 1; margin-top: 0; margin-bottom: 0; }
+.slidev-layout :not(pre) > code {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.92em;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+}
+.slidev-layout .lead {
+  margin: 8px 0 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--blue);
+}
+.slidev-layout code,
+.fx-mono {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.92em;
+  background: none;
+  padding: 0;
+  color: inherit;
+  letter-spacing: 0;
+}
+
+/* ---------- 画面送り・v-click は控えめに ---------- */
+.fade-quiet-enter-active,
+.fade-quiet-leave-active {
+  transition: opacity 250ms ease-in-out;
+}
+.fade-quiet-enter-from,
+.fade-quiet-leave-to {
+  opacity: 0;
+}
+/* 昼と夜の境目だけ、左端の柱の位置から幕が開くように切り替える */
+.curtain-enter-active {
+  z-index: 10;
+  transition: clip-path 800ms var(--ease-move);
+}
+.curtain-enter-from {
+  clip-path: inset(0 100% 0 0);
+}
+.curtain-enter-to {
+  clip-path: inset(0 0 0 0);
+}
+.curtain-leave-active {
+  transition: filter 800ms var(--ease-move);
+}
+.curtain-leave-to {
+  filter: brightness(0.75);
+}
+
+.slidev-vclick-target {
+  transition:
+    opacity 350ms var(--ease-out),
+    transform 350ms var(--ease-out);
+}
+.slidev-vclick-target {
+  transition:
+    opacity 450ms var(--ease-out),
+    transform 550ms var(--ease-out),
+    filter 450ms var(--ease-out);
+}
+.slidev-vclick-hidden {
+  opacity: 0 !important;
+  transform: translateY(10px);
+  filter: blur(3px);
+}
+.swap-enter-active,
+.swap-leave-active {
+  transition:
+    opacity 150ms ease-in-out,
+    transform 150ms ease-in-out;
+}
+.swap-enter-from {
+  opacity: 0;
+  transform: translateY(3px);
+}
+.swap-leave-to {
+  opacity: 0;
+  transform: translateY(-3px);
+}
+
+/* ---------- 図の部品 ---------- */
+.fx-box {
+  box-sizing: border-box;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-box);
+  box-shadow: var(--shadow-1);
+}
+.fx-box--dashed,
+.fx-box--dashed-amber,
+.fx-box--dashed-green { box-shadow: none; }
+.fx-box--amber { background: var(--amber-fill); border-color: var(--amber); }
+.fx-box--blue { background: var(--ext-fill); border-color: var(--ext); }
+.fx-box--teal { background: var(--teal-fill); border-color: var(--teal-line); }
+.fx-box--green { background: var(--green-fill); border-color: var(--green); }
+.fx-box--indigo { background: var(--indigo-fill); border-color: var(--indigo); }
+.fx-box--dashed { border-style: dashed; }
+.fx-box--dashed-amber { background: transparent; border: 1.5px dashed var(--amber); }
+.fx-box--dashed-green { background: transparent; border: 1.5px dashed var(--teal-line); }
+
+.fx-chip {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: var(--r-chip);
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  font-size: 13px;
+  font-weight: 600;
+}
+.fx-chip--amber { background: var(--amber-fill); border-color: #e2b465; color: var(--amber-ink); }
+.fx-chip--blue { background: var(--teal-fill); border-color: var(--teal-line); color: var(--teal-ink); }
+.fx-chip--indigo { background: var(--legacy-fill); border-color: var(--line-strong); color: var(--ink-2); }
+.fx-chip--teal { background: var(--surface); border-color: var(--teal-line); color: var(--teal-ink); }
+
+.fx-team {
+  display: block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: var(--label-bg);
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: center;
+}
+.fx-team--amber { background: var(--amber-label); color: var(--amber-ink); }
+
+.fx-tag {
+  display: inline-block;
+  padding: 1px 10px;
+  border-radius: var(--r-chip);
+  border: 1.5px solid var(--teal-line);
+  background: var(--surface);
+  color: var(--teal-ink);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.fx-tag--amber { border-color: var(--amber); color: var(--amber-ink); background: var(--amber-fill); }
+.fx-tag--blue { border-color: var(--ext); color: var(--ext-ink); }
+.fx-tag--muted { border-color: var(--line); color: var(--muted); }
+
+.fx-bar {
+  box-sizing: border-box;
+  padding: 10px 22px;
+  border-radius: var(--r-box);
+  border: 1.5px solid var(--teal-line);
+  background: var(--teal-fill);
+}
+.fx-bar strong { display: block; font-size: 16px; font-weight: 700; }
+.fx-bar span { display: block; font-size: 12.5px; color: var(--muted); }
+.fx-bar--plain { background: var(--surface); border-color: var(--line); text-align: center; }
+.fx-bar--plain strong { font-size: 15px; }
+
+.fx-num {
+  font-weight: 700;
+  color: var(--amber);
+}
+
+.fx-icon {
+  display: inline-block;
+  flex: none;
+  object-fit: contain;
+}
+
+/* 線は描かれるように伸び、矢印の先は描き終わりに出る */
+.fx-edge {
+  fill: none;
+  stroke: var(--arrow);
+  stroke-width: var(--w-hair);
+  stroke-linejoin: round;
+  stroke-dasharray: 1 1.1;
+  stroke-dashoffset: 1.05;
+  transition: stroke-dashoffset 200ms ease-out, stroke 200ms ease;
+}
+.fx-head {
+  fill: var(--arrow);
+  opacity: 0;
+  transition: opacity 120ms ease-out, fill 200ms ease;
+}
+.is-on > .fx-edge {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 550ms var(--ease-move) var(--d, 0ms), stroke 200ms ease;
+}
+.is-on > .fx-head {
+  opacity: 1;
+  transition: opacity 150ms ease-out calc(var(--d, 0ms) + 480ms), fill 200ms ease;
+}
+.is-dashed > .fx-edge {
+  stroke-dasharray: 5 4;
+  stroke-dashoffset: 0;
+  opacity: 0;
+  transition: opacity 350ms var(--ease-out);
+}
+.is-dashed.is-on > .fx-edge {
+  opacity: 1;
+  transition: opacity 350ms var(--ease-out) var(--d, 0ms);
+}
+.is-teal > .fx-edge { stroke: var(--teal); stroke-width: var(--w-em); }
+.is-teal > .fx-head { fill: var(--teal); }
+.is-amber > .fx-edge { stroke: var(--amber); stroke-width: var(--w-em); }
+.is-amber > .fx-head { fill: var(--amber); }
+.is-blue > .fx-edge { stroke: var(--ext); }
+.is-blue > .fx-head { fill: var(--ext); }
+
+.fx-label {
+  position: absolute;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--muted);
+  background: var(--bg);
+  padding: 0 4px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+}
+.fx-label.is-on {
+  opacity: 1;
+  transition: opacity 200ms ease-out calc(var(--d, 0ms) + 250ms);
+}
+.fx-label--amber { color: var(--amber-ink); }
+.fx-label--teal { color: var(--teal-ink); }
+.fx-label--blue { color: var(--ext-ink); }
+
+/* 出入りする箱 */
+.fx-enter {
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 350ms var(--ease-out) var(--d, 0ms),
+    transform 350ms var(--ease-out) var(--d, 0ms);
+}
+.fx-enter.is-on {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- スライド本文の部品 ---------- */
+.grow { flex: 1; min-height: 0; }
+.stack { display: flex; flex-direction: column; gap: 12px; }
+.row { display: flex; gap: 14px; }
+.center-y { display: flex; flex-direction: column; justify-content: center; }
+.box-head { display: flex; align-items: center; gap: 12px; }
+.box-head strong { font-size: 17px; font-weight: 700; }
+.box-head small { display: block; font-size: 12.5px; color: var(--muted); font-weight: 400; }
+.muted { color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+    animation: none !important;
+  }
+}
+
+/* ---------- 組版：文節で折り返し、行末の1〜2文字の取り残しを防ぐ ---------- */
+.slidev-layout {
+  word-break: auto-phrase;
+  line-break: strict;
+  -webkit-font-smoothing: antialiased;
+}
+.slidev-layout :is(p, li, small, dd, span) { text-wrap: pretty; }
+.slidev-layout :is(h1, .lead) { text-wrap: balance; }
+.slidev-layout strong { text-wrap: pretty; }
+
+
+/* ---------- このデッキの語彙：No（打ち消し線）、revisit if（破線の条件）、ADR の紙面 ---------- */
+/* 却下した案。amber の線が文字の上を走る。折り返しても行ごとに線が引かれる */
+.fx-no {
+  color: var(--ink-2);
+  background-image: linear-gradient(var(--amber), var(--amber));
+  background-repeat: no-repeat;
+  background-position: 0 calc(50% + 1px);
+  background-size: 100% 1.5px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  width: fit-content;
+}
+.fx-no--draw {
+  background-size: 0% 1.5px;
+  transition: background-size 650ms var(--ease-move) var(--d, 0ms);
+}
+.fx-no--draw.is-on,
+.is-static .fx-no--draw {
+  background-size: 100% 1.5px;
+}
+
+.fx-revisit {
+  box-sizing: border-box;
+  border: var(--w-hair) dashed var(--teal-line);
+  border-radius: var(--r-chip);
+  padding: 7px 12px;
+}
+.fx-revisit__label,
+.fx-label-mono {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.fx-revisit__label { color: var(--teal-ink); }
+
+.fx-paper {
+  box-sizing: border-box;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r-doc);
+  box-shadow: var(--shadow-1);
+}
+.fx-paper__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px;
+  border-bottom: 1px dashed var(--line);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.fx-paper__body { padding: 12px 16px 14px; }
+.fx-paper__no {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--teal-ink);
+}
+.slidev-layout .fx-paper__title {
+  margin: 2px 0 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+.slidev-layout .fx-paper__h {
+  margin: 10px 0 3px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+.slidev-layout .fx-paper__h::before {
+  content: "## ";
+  color: var(--line-strong);
+}
+
+.fx-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.fx-status::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.fx-status--accepted { border-color: var(--teal-line); background: var(--teal-fill); color: var(--teal-ink); }
+.fx-status--proposed { border-style: dashed; color: var(--muted); }
+.fx-status--superseded { color: var(--muted); background: var(--legacy-fill); }
+.fx-status--deprecated { border-color: var(--amber); background: var(--amber-fill); color: var(--amber-ink); }
+
+/* 外部の発言の引用。引用符は ext の色 */
+.slidev-layout .fx-quote {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.fx-quote::before { content: "“"; color: var(--ext); }
+.fx-quote::after { content: "”"; color: var(--ext); }
+.slidev-layout .fx-cite {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ext-ink);
+}
+
+/* 静止画（書き出し・撮影）では、クリックで出る要素も完成形で見せる */
+.is-static .fx-enter { opacity: 1; transform: none; }
+.is-static .fx-edge { stroke-dashoffset: 0; }
+.is-static .is-dashed > .fx-edge { opacity: 1; }
+.is-static .fx-head,
+.is-static .fx-label { opacity: 1; }
+
+/* ---------- 本文スライドの余白：図は残りの高さの中央に置く ---------- */
+.fig h1 { margin-bottom: 22px; }
+.fig h1:has(+ .lead) { margin-bottom: 0; }
+.fig .lead { margin: 8px 0 20px; }
+.fig > :is(h1, .lead) + :not(.lead) { margin-top: auto; }
+.fig > :last-child { margin-bottom: auto; }
+
+.slidev-layout .cover-date {
+  margin: 28px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+.cover-date::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+/* 図の中のリストは記号も字下げも持たない（箇条書きの羅列はしない） */
+.slidev-layout :is(ul, ol) {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.slidev-layout :is(ul, ol) > li {
+  margin: 0;
+  padding: 0;
+}
+.nowrap { white-space: nowrap; }

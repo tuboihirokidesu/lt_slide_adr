@@ -1,0 +1,142 @@
+<script setup lang="ts">
+const unseen = ['Slack での合意', 'Google Docs の議論']
+const confluence = ['非エンジニアも読める', '複数リポジトリにまたがる決定も置ける']
+</script>
+
+<template>
+  <div class="where">
+    <figure class="where__quote">
+      <blockquote class="fx-quote">anything it can't access in-context while running effectively doesn't exist</blockquote>
+      <figcaption class="fx-cite">OpenAI · Harness engineering</figcaption>
+    </figure>
+
+    <div class="where__map">
+      <div class="where__seen">
+        <span class="fx-label-mono">エージェントから届く範囲</span>
+        <div class="fx-box fx-box--teal where__repo">
+          <strong>リポジトリ</strong>
+          <code>docs/adr/</code>
+          <span class="fx-tag">正本</span>
+        </div>
+      </div>
+
+      <svg class="where__edge" viewBox="0 0 90 20" width="90" height="20" aria-hidden="true">
+        <Edge d="M2 10 H86" :end="[86, 10]" dir="r" />
+      </svg>
+      <span class="where__edge-label">一方向に公開</span>
+
+      <div class="fx-box where__wiki">
+        <strong>wiki・社内サイト</strong>
+        <span>非エンジニア向けの写し</span>
+      </div>
+
+      <div class="where__unseen">
+        <span class="fx-label-mono">見えない ＝ 存在しない</span>
+        <p v-for="u in unseen" :key="u"><span class="fx-no">{{ u }}</span></p>
+      </div>
+    </div>
+
+    <p class="where__alt">
+      <span><b>willhaben と ZOZO は Confluence を選んだ。</b>{{ confluence.join('。') }}。</span>
+    </p>
+  </div>
+</template>
+
+<style scoped>
+.where__quote {
+  margin: 0 0 34px;
+  max-width: 760px;
+}
+.where__quote .fx-quote {
+  font-size: 30px;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+.where__map {
+  position: relative;
+  display: grid;
+  grid-template-columns: 320px 96px 230px 1fr;
+  align-items: center;
+  gap: 0;
+}
+.where__seen {
+  padding: 12px 16px 16px;
+  border-radius: var(--r-box);
+  border: 1.5px dashed var(--teal-line);
+}
+.where__seen .fx-label-mono {
+  color: var(--teal-ink);
+}
+.where__repo {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 18px;
+  box-shadow: none;
+}
+.where__repo strong {
+  font-size: 18px;
+}
+.where__repo code {
+  font-size: 13px;
+  color: var(--teal-ink);
+}
+.where__repo .fx-tag {
+  margin-left: auto;
+}
+.where__edge {
+  justify-self: center;
+}
+.where__edge-label {
+  position: absolute;
+  left: 320px;
+  width: 96px;
+  top: calc(50% + 8px);
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.where__wiki {
+  padding: 20px 18px;
+  box-shadow: none;
+}
+.where__wiki strong {
+  display: block;
+  font-size: 17px;
+}
+.where__wiki span {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.where__unseen {
+  margin-left: 32px;
+  padding-left: 20px;
+  border-left: 1px solid var(--line);
+}
+.where__unseen p {
+  margin: 8px 0 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+.where__unseen .fx-no {
+  color: var(--muted);
+}
+.where__alt {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 32px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+.where__alt b {
+  color: var(--ink);
+}
+</style>

@@ -1,0 +1,3 @@
+# playwright-chromium のブラウザ取得は書き出し(export)時だけ必要なので、install では実行しない
+allowBuilds:
+  playwright-chromium: false
