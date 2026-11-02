@@ -54,6 +54,7 @@ export const sources = {
   zozo: { group: 'ja', who: 'ZOZO', title: 'ZOZOFIT における ADR を利用した意思決定を残す文化作り', url: 'https://techblog.zozo.com/entry/adr-culture-of-zozofit' },
   layerx: { group: 'ja', who: 'LayerX', title: '不正検知システムを3日で設計し、3週間で本番リリースした話', url: 'https://tech.layerx.co.jp/entry/fraud-detection-development-accelerated-by-llm' },
   ebbing: { group: 'ja', who: 'Ebbing', title: '設計判断を 64 本の ADR に残している理由と書き方', url: 'https://zenn.dev/kam_labz/articles/ebbing-adr-with-claude-code' },
+  tokium: { group: 'ja', who: 'TOKIUM', title: 'AI が書く「読みづらい ADR」に発狂しかけたので、ADR のガイドラインを作った', url: 'https://zenn.dev/tokium_dev/articles/adr-authoring-guideline' },
   'zenn-guide': { group: 'ja', who: 'Zenn', title: 'ADR 完全ガイド', url: 'https://zenn.dev/miyan/articles/adr-format-guide-for-and-against' },
   willhaben: { group: 'ja', who: 'willhaben', title: '8 Learnings from using ADRs', url: 'https://tech.willhaben.at/8-learnings-from-using-architecture-decision-records-adrs-at-willhaben-5b1594ebaffe' },
 
