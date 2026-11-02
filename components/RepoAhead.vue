@@ -12,7 +12,7 @@ const index = [
 ]
 
 const facts: { file: SourceId; head: string; sub: string; quote?: string }[] = [
-  { file: 'kody-index', head: '自らを steering veto list と定義する。', sub: '新しいプリミティブ・サーフェス・保存先を提案する前に開く一覧。', quote: 'not as homework and not as a museum' },
+  { file: 'kody-index', head: '提案の前に、まず開く一覧。', sub: '新しいプリミティブ・サーフェス・保存先を足す前に、却下済みかを確かめる。', quote: 'not as homework and not as a museum' },
   { file: 'kody-index', head: 'Do not write an ADR on every PR.', sub: '毎 PR で書いた失敗例として、番号の衝突を挙げる。docs:check が重複を弾く。' },
   { file: 'kody-primitives', head: 'primitives:check がリンク切れを見つける。', sub: '関連 ADR が Superseded 済みか、存在しないものかを検出する。' },
   { file: 'kody-template', head: 'Context は、決定の後に書く。', sub: 'PR の設計概要として書かない。UI の微調整やライブラリの採用では書かない。' },
