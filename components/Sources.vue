@@ -6,7 +6,7 @@ const groups: { name: string; items: Src[] }[] = [
     name: '動画',
     items: [
       { title: 'Kent C. Dodds「Turn Your Agent on Auto-Pilot with ADRs」', site: 'youtube.com' },
-      { title: 'Kody の decisions とテンプレート', site: 'github.com/kentcdodds' },
+      { title: 'Kody の decisions とテンプレート', site: 'github.com/kody-hq/kody' },
       { title: 'Michael Keeling「Architecture Decision Records in Action」SATURN 2017', site: 'youtube.com' },
       { title: 'Vladas Diržys「Introduction to ADRs」Voxxed Days', site: 'youtube.com' },
       { title: 'David Ayers「Communicating and documenting architectural decisions」', site: 'youtube.com' },

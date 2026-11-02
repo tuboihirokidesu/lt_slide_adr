@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const repo = 'https://github.com/kentcdodds/kody/tree/main/docs/contributing/decisions'
-const file = (slug: string) => `https://github.com/kentcdodds/kody/blob/main/docs/contributing/decisions/${slug}.md`
+const repo = 'https://github.com/kody-hq/kody/tree/main/docs/contributing/decisions'
+const file = (slug: string) => `https://github.com/kody-hq/kody/blob/main/docs/contributing/decisions/${slug}.md`
 
 const nos = [
   { adr: '0001', slug: '0001-no-package-versioning', subject: 'ユーザー向けのパッケージバージョニング', verdict: 'しない' },
@@ -14,7 +14,7 @@ const nos = [
 <template>
   <div class="kody">
     <div class="fx-paper kody__list">
-      <div class="fx-paper__head"><a :href="repo" target="_blank" rel="noopener">kentcdodds/kody · docs/contributing/decisions</a><span>動画で挙がった例</span></div>
+      <div class="fx-paper__head"><a :href="repo" target="_blank" rel="noopener">kody-hq/kody · docs/contributing/decisions</a><span>動画で挙がった例</span></div>
       <ol>
         <li v-for="n in nos" :key="n.adr" :class="{ 'is-key': n.key }">
           <a :href="file(n.slug)" target="_blank" rel="noopener">{{ n.adr }}</a>
@@ -23,7 +23,7 @@ const nos = [
         </li>
       </ol>
       <a class="kody__repo" :href="repo" target="_blank" rel="noopener">
-        <span>github.com/kentcdodds/kody/tree/main/docs/contributing/decisions</span><i aria-hidden="true">↗</i>
+        <span>github.com/kody-hq/kody/tree/main/docs/contributing/decisions</span><i aria-hidden="true">↗</i>
       </a>
     </div>
 
