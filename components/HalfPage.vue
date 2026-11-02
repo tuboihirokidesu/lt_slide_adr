@@ -15,7 +15,7 @@ type Row = {
 const rows: Row[] = [
   { key: 'fm', src: { ref: 'azure', label: 'Azure' }, note: 'confidence（確信度）。deciders は Accepted にした人間。' },
   { key: 'title', src: { ref: 'nygard', label: 'Nygard' }, note: 'タイトルは決定そのもの。No なら「〜しない」。' },
-  { key: 'Context', head: 'Context', lines: [{ text: '集計クエリが多く、ORM の生成 SQL では実行計画を制御しにくい。' }], note: '事実だけを、決定の後に書く。' },
+  { key: 'Context', head: 'Context', lines: [{ text: '集計クエリが多く、ORM の生成 SQL では実行計画を制御しにくい。' }], note: '事実だけを書く。設計案の説明にしない。' },
   { key: 'Decision', head: 'Decision', lines: [{ text: 'ORM は入れない。SQL ファイルと型生成で書く。' }] },
   {
     key: 'Options',
@@ -59,7 +59,7 @@ const rows: Row[] = [
           </div>
         </div>
         <template v-if="r.note">
-          <i class="hp__leader" :class="{ 'is-amber': r.strong }" :style="{ gridRow: i + 2 }" aria-hidden="true" />
+          <i class="hp__leader" :class="{ 'is-teal': r.strong }" :style="{ gridRow: i + 2 }" aria-hidden="true" />
           <p class="hp__note" :class="{ 'is-strong': r.strong }" :style="{ gridRow: i + 2 }">
             <span v-if="r.src" class="hp__src"><RefText :text="r.src" /></span>{{ r.note }}
           </p>
@@ -170,9 +170,9 @@ const rows: Row[] = [
   border-radius: 50%;
   background: var(--line-strong);
 }
-.hp__leader.is-amber,
-.hp__leader.is-amber::before {
-  background: var(--amber);
+.hp__leader.is-teal,
+.hp__leader.is-teal::before {
+  background: var(--teal);
 }
 .hp__note {
   grid-column: 3;
@@ -193,7 +193,7 @@ const rows: Row[] = [
 .hp__note.is-strong {
   font-size: 15px;
   font-weight: 700;
-  color: var(--amber-ink);
+  color: var(--teal-ink);
 }
 .hp__foot {
   display: flex;

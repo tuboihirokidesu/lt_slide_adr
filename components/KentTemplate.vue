@@ -3,7 +3,7 @@ type Row = { kind: 'title' | 'meta' | 'section'; head?: string; bars?: number[];
 
 const rows: Row[] = [
   { kind: 'title', note: '番号と決定タイトル', sub: '何に No と言ったかを、一文で。', strong: true },
-  { kind: 'meta', note: 'Status と日付', sub: 'proposed / accepted / superseded' },
+  { kind: 'meta', note: 'Status と日付', sub: 'accepted / superseded' },
   { kind: 'section', head: 'Context', bars: [92, 64], note: 'Context', sub: '何がこの決定を迫ったか。' },
   { kind: 'section', head: 'Decision', bars: [74], note: 'Decision', sub: '何を決めたか。' },
   { kind: 'section', head: 'Consequences', bars: [86, 52], note: 'Consequences', sub: '良くなること、悪くなること。' },

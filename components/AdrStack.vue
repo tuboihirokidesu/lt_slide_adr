@@ -42,7 +42,7 @@ const rejectedFocus = computed(() => props.focus === 'rejected')
       :class="{ 'is-on': shown }"
       style="--d: 440ms"
       no="0005"
-      file="0005-no-own-cache-layer.md"
+      file="0005-no-cache-layer.md"
       title="独自のキャッシュ層を作らない。"
       status="accepted"
     >

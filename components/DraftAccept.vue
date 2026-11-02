@@ -19,17 +19,17 @@ const steps = [
       <div v-for="(s, i) in steps" :key="s.what" class="da__step fx-enter" :class="{ 'is-on': stage >= s.at }" >
         <p class="da__who"><span class="fx-label-mono">{{ s.who }}</span>{{ s.what }}</p>
 
-        <AdrPaper v-if="i === 0" class="da__paper" no="0005" file="0005-no-cache.md" status="proposed" title="独自のキャッシュ層を作らない。">
+        <AdrPaper v-if="i === 0" class="da__paper" no="0005" file="0005-no-cache-layer.md" status="proposed" title="独自のキャッシュ層を作らない。">
           <p class="fx-paper__h">Considered options</p>
           <p class="da__opt">Redis を前段に置く<em class="is-blank">却下理由: ＿＿＿</em></p>
         </AdrPaper>
 
-        <AdrPaper v-else-if="i === 1" class="da__paper" no="0005" file="0005-no-cache.md" status="proposed" title="独自のキャッシュ層を作らない。">
+        <AdrPaper v-else-if="i === 1" class="da__paper" no="0005" file="0005-no-cache-layer.md" status="proposed" title="独自のキャッシュ層を作らない。">
           <p class="fx-paper__h">Considered options</p>
           <p class="da__opt"><span class="fx-no">Redis を前段に置く</span><em class="is-human">運用できる人がいない</em></p>
         </AdrPaper>
 
-        <AdrPaper v-else class="da__paper is-locked" no="0005" file="0005-no-cache.md" status="accepted" title="独自のキャッシュ層を作らない。">
+        <AdrPaper v-else class="da__paper is-locked" no="0005" file="0005-no-cache-layer.md" status="accepted" title="独自のキャッシュ層を作らない。">
           <p class="da__lock"><b>CODEOWNERS</b><b>CI</b>エージェントは書き換えない</p>
         </AdrPaper>
       </div>
@@ -44,7 +44,7 @@ const steps = [
         </p>
         <p class="da__chain is-bad">
           <span>コード</span><svg class="da__arr" viewBox="0 0 28 12" width="28" height="12" aria-hidden="true"><Edge d="M1 6 H26" :end="[26, 6]" dir="r" tone="amber" /></svg><span>ADR</span>
-          <small>今の実装に合わせて、ADR が書き換えられる</small>
+          <small>今の実装に合わせて、ADR が黙って書き換えられる</small>
         </p>
       </div>
     </div>

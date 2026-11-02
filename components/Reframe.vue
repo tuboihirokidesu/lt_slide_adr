@@ -24,7 +24,7 @@ const gaps = ['レビュー', '承認', '番号の衝突', '陳腐化']
 
       <div class="rf__col fx-enter" :class="{ 'is-on': stage >= 1 }" style="--d: 300ms">
         <span class="fx-label-mono is-teal"><Ref id="kent" label="Kent" /> の捉え直し</span>
-        <AdrPaper class="rf__paper" no="0005" file="0005-no-own-cache-layer.md" title="独自のキャッシュ層を作らない。" status="accepted">
+        <AdrPaper class="rf__paper" no="0005" file="0005-no-cache-layer.md" title="独自のキャッシュ層を作らない。" status="accepted">
           <p class="fx-paper__h">Considered options</p>
           <p class="rf__opt"><span class="fx-no">Redis を前段に置く</span></p>
           <p class="fx-paper__h">Revisit if</p>
@@ -36,7 +36,7 @@ const gaps = ['レビュー', '承認', '番号の衝突', '陳腐化']
 
     <div class="rf__foot">
       <p class="rf__fail">
-        エージェントの失敗は <span class="fx-no">知らないこと</span> より、<br><strong>一般論として妥当な案を、自信をもって再提案すること。</strong>
+        <span class="rf__mine">私の見立て</span>エージェントの失敗は <span class="fx-no">知らないこと</span> より、<br><strong>一般論として妥当な案を、自信をもって再提案すること。</strong>
       </p>
       <div class="rf__gaps">
         <span class="fx-label-mono">動画が触れていない穴</span>
@@ -48,6 +48,14 @@ const gaps = ['レビュー', '承認', '番号の衝突', '陳腐化']
 </template>
 
 <style scoped>
+.rf__mine {
+  margin-right: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
 .rf__pair {
   display: grid;
   grid-template-columns: 1fr 64px 1fr;

@@ -14,8 +14,8 @@ const camps: { name: string; voices: { who: Inline[]; say: string }[] }[] = [
   {
     name: '書かせない派',
     voices: [
-      { who: [{ ref: 'therobertta', label: 'Sean Goedecke' }], say: 'コードは任せても、ADR・PR 説明・Slack は自分で書く。@therobertta_ による紹介で、原文は未確認。' },
       { who: [{ ref: 'haandol' }, '「抽象の逆転」'], say: 'エージェントが今の実装を意図されたアーキテクチャと思い込み、ADR をコードに合わせて書き換える。' },
+      { who: [{ ref: 'eth' }, ' 2026'], say: '人間が書いた文脈ファイルは、LLM が生成したものより成功率が有意に高い（p\u00a0=\u00a00.038）。対象は ADR ではなく AGENTS.md。' },
     ],
   },
 ]

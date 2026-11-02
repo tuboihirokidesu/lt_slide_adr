@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // 所要時間は分。幅があるものは [下限, 上限]
 const days = [
-  { title: '置き場所を作る', body: 'テンプレート、index.md、このやり方を採用する ADR‑0001 を docs/adr/ に置く。', min: [30, 30], label: '30分' },
+  { title: '置き場所を作る', body: 'テンプレート、index.md、このやり方を採用する ADR-0001 を docs/adr/ に置く。', min: [30, 30], label: '30分' },
   { title: '確定済みを3本書く', body: '下書きはエージェント。捨てた案と理由は、自分で直す。', min: [60, 120], label: '1〜2時間' },
   { title: 'つなぐ', body: 'AGENTS.md にポインタと運用ルール。CODEOWNERS と、PR テンプレートの ADR 欄。', min: [30, 30], label: '30分' },
   { title: '判定を skill に', body: '起票するかを3条件と No で判定。不要なら一言で報告させる。', min: [60, 60], label: '1時間' },

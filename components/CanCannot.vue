@@ -9,7 +9,7 @@ const can: { head: string; sub?: Inline[] }[] = [
 ]
 const cannot = [
   { head: ['境界違反の自動検出'], who: 'lint・CI の役目' },
-  { head: ['ADR が古いかどうかを、', 'エージェントが自分で判断する'], who: 'status 欄と索引で、人間が示す' },
+  { head: ['ADR が古いと判定して、', 'エージェントが書き換える'], who: 'できるのは報告まで。古さは status 欄と索引で人間が示す' },
 ]
 </script>
 

@@ -15,7 +15,7 @@ const facts: { file: SourceId; head: string; sub: string; quote?: string }[] = [
   { file: 'kody-index', head: '提案の前に、まず開く一覧。', sub: '新しいプリミティブ・サーフェス・保存先を足す前に、却下済みかを確かめる。', quote: 'not as homework and not as a museum' },
   { file: 'kody-index', head: 'Do not write an ADR on every PR.', sub: '毎 PR で書いた失敗例として、番号の衝突を挙げる。docs:check が重複を弾く。' },
   { file: 'kody-primitives', head: 'primitives:check がリンク切れを見つける。', sub: '関連 ADR が Superseded 済みか、存在しないものかを検出する。' },
-  { file: 'kody-template', head: 'Context は、決定の後に書く。', sub: 'PR の設計概要として書かない。UI の微調整やライブラリの採用では書かない。' },
+  { file: 'kody-template', head: '決定が済んでから書く。', sub: 'PR の設計概要にしない。UI の微調整やライブラリの採用では書かない。' },
 ]
 </script>
 
@@ -30,10 +30,11 @@ const facts: { file: SourceId; head: string; sub: string; quote?: string }[] = [
           </li>
           <li class="is-more"><b>⋮</b></li>
           <li><b>0095</b><i style="width: 68%" /></li>
-          <li class="repo__dup-label">同じ日に<br>2本ずつ</li>
+          <li class="repo__dup-label">同じ番号が<br>2本ずつ</li>
         </ul>
       </div>
       <div class="repo__term is-night">
+        <p class="is-note"># 出力の模型</p>
         <p><span class="is-prompt">$</span> npm run docs:check</p>
         <p class="is-fail">✗ ADR 番号の重複: 0028, 0029</p>
       </div>
@@ -129,6 +130,9 @@ const facts: { file: SourceId; head: string; sub: string; quote?: string }[] = [
 }
 .repo__term p {
   margin: 0;
+}
+.repo__term .is-note {
+  color: var(--muted);
 }
 .repo__term .is-prompt {
   color: var(--teal-ink);

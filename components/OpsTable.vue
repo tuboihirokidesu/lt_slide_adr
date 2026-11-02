@@ -7,10 +7,10 @@ const ebbing: Inline = { ref: 'ebbing' }
 
 const rows: { item: string; rec: string[]; src: (Inline | Inline[])[] }[] = [
   { item: '番号', rec: ['4桁の連番。再利用しない。', 'CI で重複を検出する。'], src: [{ ref: 'nygard', label: 'Nygard' }, { ref: 'kody-index', label: 'Kody の docs:check' }] },
-  { item: '起票のタイミング', rec: ['実装と同じ PR。「やらない」系は ADR だけの PR。', '合意前の提案を ADR で殴り合わない。'], src: [keeling, ebbing] },
+  { item: '起票のタイミング', rec: ['実装と同じ PR。「やらない」系は ADR だけの PR。', '合意前の議論を ADR の PR でしない。'], src: [keeling, ebbing] },
   { item: 'レビュー', rec: ['コードと同じ PR レビュー。docs/adr/ に CODEOWNERS。', 'Accepted への遷移は人間の承認を必須にする。'], src: [keeling, { ref: 'aws' }, [{ ref: 'haandol' }, ' 対策']] },
   { item: 'PR との結び付け', rec: ['PR テンプレートに「関連 ADR」欄を置く。', 'コメントやテストから ADR-NNNN を参照する。'], src: [zenn, ebbing] },
-  { item: '陳腐化対策', rec: ['revisit-if は四半期に一度だけ棚卸し。食い違ったらコードを正とし、', 'status を見直す PR を出す。エージェントには報告だけさせる。'], src: [{ ref: 'openai' }, ebbing, zenn] },
+  { item: '陳腐化対策', rec: ['revisit-if は四半期に一度だけ棚卸し。食い違ったら、事実はコードを正とし、', '意図を変えるかは人間が新しい ADR で決める。エージェントは報告だけ。'], src: [{ ref: 'openai' }, ebbing, zenn] },
   { item: 'ツール', rec: ['素の Markdown と小さな CI スクリプトで足りる。', 'adr-tools や log4brains は必須ではない。'], src: [zenn, { ref: 'kody' }] },
 ]
 const no = (i: number) => String(i + 1).padStart(2, '0')

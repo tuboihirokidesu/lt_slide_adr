@@ -24,7 +24,6 @@ const sides: { name: string; tone: 'teal' | 'amber'; voices: Voice[] }[] = [
       { ref: 'zenn-guide', label: 'Zenn「ADR 完全ガイド」', say: '1〜2人の開発や、3か月で捨てる PoC なら見送る。' },
       { ref: 'roeishous', say: 'エージェントには長すぎる。1決定1行のほうが効く。' },
       { ref: 'prapkim', say: '破壊的変更が多いと、すぐ古くなる。' },
-      { ref: 'uehra', say: 'AI が古い決定に従った。索引で現役を示して解決。' },
     ],
   },
 ]
@@ -35,7 +34,6 @@ const sides: { name: string; tone: 'teal' | 'amber'; voices: Voice[] }[] = [
     <section v-for="s in sides" :key="s.name" class="deb__side" :class="`is-${s.tone}`">
       <header>
         <strong>{{ s.name }}</strong>
-        <b>{{ s.voices.length }}</b>
       </header>
       <ul>
         <li v-for="v in s.voices" :key="v.ref">

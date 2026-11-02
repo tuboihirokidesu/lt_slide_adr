@@ -11,10 +11,10 @@ const sections = [
   <div class="tl">
     <div class="tl__stage">
       <svg class="tl__edges" viewBox="0 0 860 320" width="860" height="320" aria-hidden="true">
-        <Edge d="M300 207 C 420 207, 460 168, 554 168" :end="[554, 168]" dir="r" tone="amber" dashed />
+        <Edge d="M300 207 C 420 207, 460 168, 554 168" :end="[554, 168]" dir="r" tone="teal" dashed />
         <Edge d="M0 304 H856" :end="[856, 304]" dir="r" />
       </svg>
-      <span class="fx-label is-on fx-label--amber tl__cut">結論を切り出す</span>
+      <span class="fx-label is-on fx-label--teal tl__cut">結論を切り出す</span>
 
       <div class="tl__decision" aria-hidden="true"><span>決定</span></div>
       <span class="tl__axis">時間</span>
@@ -139,10 +139,10 @@ const sections = [
   margin: 4px -8px 0;
   padding: 0 8px 6px;
   border-radius: var(--r-mark);
-  border: 1.5px dashed var(--amber);
+  border: 1.5px dashed var(--teal-line);
 }
 .tl__sec.is-hit i {
-  background: color-mix(in srgb, var(--amber) 45%, transparent);
+  background: color-mix(in srgb, var(--teal) 40%, transparent);
 }
 .tl__opt {
   margin: 0;
