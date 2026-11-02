@@ -13,7 +13,7 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
     <div class="where__map">
       <div class="where__seen">
         <span class="fx-label-mono">エージェントから届く範囲</span>
-        <div class="fx-box fx-box--teal where__repo">
+        <div class="fx-box fx-box--recommend where__repo">
           <strong>リポジトリ</strong>
           <code>docs/adr/</code>
           <span class="fx-tag">正本</span>
@@ -47,9 +47,9 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
   margin: 0 0 40px;
 }
 .where__quote .fx-quote {
-  font-size: 34px;
+  font-size: var(--fs-title);
   line-height: 1.3;
-  letter-spacing: -0.015em;
+  letter-spacing: var(--ls-display);
 }
 .where__map {
   position: relative;
@@ -61,10 +61,10 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
 .where__seen {
   padding: 12px 16px 16px;
   border-radius: var(--r-box);
-  border: 1.5px dashed var(--teal-line);
+  border: 1.5px dashed var(--tone-recommend-line);
 }
 .where__seen .fx-label-mono {
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .where__repo {
   margin-top: 12px;
@@ -75,11 +75,11 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
   box-shadow: none;
 }
 .where__repo strong {
-  font-size: 19px;
+  font-size: var(--fs-body);
 }
 .where__repo code {
-  font-size: 13px;
-  color: var(--teal-ink);
+  font-size: var(--fs-label);
+  color: var(--tone-recommend-ink);
 }
 .where__repo .fx-tag {
   margin-left: auto;
@@ -93,7 +93,7 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
   width: 96px;
   top: calc(50% + 8px);
   text-align: center;
-  font-size: 12px;
+  font-size: var(--fs-note);
   font-weight: 600;
   color: var(--muted);
 }
@@ -103,12 +103,12 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
 }
 .where__wiki strong {
   display: block;
-  font-size: 17px;
+  font-size: var(--fs-body);
 }
 .where__wiki span {
   display: block;
   margin-top: 2px;
-  font-size: 13px;
+  font-size: var(--fs-note);
   color: var(--muted);
 }
 .where__unseen {
@@ -118,7 +118,7 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
 }
 .where__unseen p {
   margin: 8px 0 0;
-  font-size: 15px;
+  font-size: var(--fs-body);
   font-weight: 600;
 }
 .where__unseen .fx-no {
@@ -131,7 +131,7 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
   margin: 40px 0 0;
   padding-top: 16px;
   border-top: 1px solid var(--line);
-  font-size: 14px;
+  font-size: var(--fs-note);
   line-height: 1.6;
   color: var(--ink-2);
 }

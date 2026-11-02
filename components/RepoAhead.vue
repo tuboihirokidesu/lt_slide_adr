@@ -55,7 +55,7 @@ const facts: { file: SourceId; head: string; sub: string; quote?: string }[] = [
 .repo {
   display: grid;
   grid-template-columns: 330px 1fr;
-  gap: 40px;
+  gap: 32px;
   align-items: center;
 }
 .repo__index {
@@ -81,7 +81,8 @@ const facts: { file: SourceId; head: string; sub: string; quote?: string }[] = [
 .repo__index b {
   width: 34px;
   font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: var(--fs-label);
+  font-variant-numeric: tabular-nums;
   font-weight: 600;
   color: var(--muted);
 }
@@ -94,13 +95,13 @@ const facts: { file: SourceId; head: string; sub: string; quote?: string }[] = [
 .repo__index li.is-dup {
   grid-column: 1;
   margin-right: 0;
-  background: var(--amber-fill);
+  background: var(--tone-caution-fill);
 }
 .repo__index li.is-dup b {
-  color: var(--amber-ink);
+  color: var(--tone-caution-ink);
 }
 .repo__index li.is-dup i {
-  background: color-mix(in srgb, var(--amber) 45%, transparent);
+  background: color-mix(in srgb, var(--tone-caution) 45%, transparent);
 }
 .repo__index li.is-more {
   height: 16px;
@@ -111,12 +112,12 @@ const facts: { file: SourceId; head: string; sub: string; quote?: string }[] = [
   height: auto;
   margin: 3px 0;
   padding: 0 0 0 12px;
-  border-left: var(--w-em) solid var(--amber);
+  border-left: var(--w-em) solid var(--tone-caution);
   border-radius: 0;
-  font-size: 12px;
+  font-size: var(--fs-note);
   font-weight: 700;
   line-height: 1.5;
-  color: var(--amber-ink);
+  color: var(--tone-caution-ink);
 }
 .repo__term {
   margin-top: 12px;
@@ -124,7 +125,7 @@ const facts: { file: SourceId; head: string; sub: string; quote?: string }[] = [
   border-radius: var(--r-doc);
   background: var(--paper);
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-label);
   line-height: 1.7;
   color: var(--ink-2);
 }
@@ -135,10 +136,10 @@ const facts: { file: SourceId; head: string; sub: string; quote?: string }[] = [
   color: var(--muted);
 }
 .repo__term .is-prompt {
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .repo__term .is-fail {
-  color: var(--amber-ink);
+  color: var(--tone-caution-ink);
 }
 .repo__facts {
   display: grid;
@@ -155,12 +156,12 @@ const facts: { file: SourceId; head: string; sub: string; quote?: string }[] = [
 .repo__facts strong {
   display: block;
   margin-top: 3px;
-  font-size: 16px;
+  font-size: var(--fs-body);
   font-weight: 700;
 }
 .repo__facts p {
   margin: 3px 0 0;
-  font-size: 13.5px;
+  font-size: var(--fs-note);
   line-height: 1.6;
   color: var(--ink-2);
 }
@@ -168,7 +169,7 @@ const facts: { file: SourceId; head: string; sub: string; quote?: string }[] = [
   margin-top: 6px;
 }
 .repo__quote .fx-quote {
-  font-size: 15px;
+  font-size: var(--fs-body);
   font-weight: 600;
 }
 </style>

@@ -2,11 +2,11 @@
 import type { Inline } from '../data/sources'
 
 const circles = [
-  { cx: 118, cy: 110, label: '戻しにくい', sub: ['後で変える', 'コストが大きい'], lx: 84, ly: 86 },
-  { cx: 246, cy: 110, label: '文脈がないと驚く', sub: ['後から読んだ人が', '「なぜ？」と思う'], lx: 276, ly: 86 },
-  { cx: 182, cy: 222, label: '本当のトレードオフ', sub: ['実在する代替案から', '理由をもって選んだ'], lx: 182, ly: 258 },
+  { cx: 128, cy: 120, label: '戻しにくい', sub: ['後で変える', 'コストが大きい'], lx: 92, ly: 96 },
+  { cx: 270, cy: 120, label: '文脈がないと驚く', sub: ['後から読んだ人が', '「なぜ？」と思う'], lx: 306, ly: 96 },
+  { cx: 199, cy: 243, label: '本当のトレードオフ', sub: ['実在する代替案から', '理由をもって選んだ'], lx: 199, ly: 282 },
 ]
-const R = 100
+const R = 110
 
 const picks: { head: string; src: Inline[]; body: string; example?: string; tags?: string[] }[] = [
   {
@@ -27,17 +27,17 @@ const picks: { head: string; src: Inline[]; body: string; example?: string; tags
 <template>
   <div class="three">
     <figure class="three__venn">
-      <svg viewBox="0 0 364 330" width="364" height="330" role="img" aria-label="3つの条件がすべて重なるところで ADR を書く">
+      <svg viewBox="0 0 398 356" width="398" height="356" role="img" aria-label="3つの条件がすべて重なるところで ADR を書く">
         <g class="three__sets">
           <circle v-for="c in circles" :key="c.label" :cx="c.cx" :cy="c.cy" :r="R" class="three__circle" />
         </g>
         <g class="three__labels">
           <g v-for="c in circles" :key="`t-${c.label}`" class="three__text">
             <text :x="c.lx" :y="c.ly" class="three__label">{{ c.label }}</text>
-            <text v-for="(s, i) in c.sub" :key="s" :x="c.lx" :y="c.ly + 20 + i * 16" class="three__sub">{{ s }}</text>
+            <text v-for="(s, i) in c.sub" :key="s" :x="c.lx" :y="c.ly + 22 + i * 19" class="three__sub">{{ s }}</text>
           </g>
         </g>
-        <text x="182" y="160" class="three__core">書く</text>
+        <text x="199" y="178" class="three__core">書く</text>
       </svg>
       <figcaption>3つを<b>すべて</b>満たすときだけ書く。<br>基準は <Ref id="pocock" /> の <span class="nowrap">grill-with-docs</span>。</figcaption>
     </figure>
@@ -48,7 +48,7 @@ const picks: { head: string; src: Inline[]; body: string; example?: string; tags
         <div class="three__head"><strong>{{ p.head }}</strong><span><RefText :text="p.src" /></span></div>
         <p>{{ p.body }}</p>
         <p v-if="p.example" class="three__eg"><span class="fx-label-mono">例</span><span class="fx-no">{{ p.example }}</span></p>
-        <p v-if="p.tags" class="three__eg"><span class="fx-label-mono">例</span><span v-for="t in p.tags" :key="t" class="fx-tag fx-tag--muted">{{ t }}</span></p>
+        <p v-if="p.tags" class="three__eg"><span class="fx-label-mono">例</span><span class="three__tags"><span v-for="t in p.tags" :key="t" class="fx-tag fx-tag--muted">{{ t }}</span></span></p>
       </div>
     </div>
   </div>
@@ -57,8 +57,8 @@ const picks: { head: string; src: Inline[]; body: string; example?: string; tags
 <style scoped>
 .three {
   display: grid;
-  grid-template-columns: 364px 1fr;
-  gap: 40px;
+  grid-template-columns: 398px 1fr;
+  gap: 32px;
   align-items: center;
 }
 .three__venn {
@@ -69,9 +69,9 @@ const picks: { head: string; src: Inline[]; body: string; example?: string; tags
   overflow: visible;
 }
 .three__circle {
-  fill: var(--teal);
+  fill: var(--tone-recommend);
   fill-opacity: 0.08;
-  stroke: var(--teal-line);
+  stroke: var(--tone-recommend-line);
   stroke-width: var(--w-hair);
 }
 .three__text text {
@@ -79,30 +79,30 @@ const picks: { head: string; src: Inline[]; body: string; example?: string; tags
   font-family: var(--font-sans);
 }
 .three__label {
-  font-size: 14px;
+  font-size: var(--fs-body);
   font-weight: 700;
   fill: var(--ink);
 }
 .three__sub {
-  font-size: 12px;
+  font-size: var(--fs-note);
   font-weight: 500;
   fill: var(--muted);
 }
 .three__core {
   text-anchor: middle;
   font-family: var(--font-sans);
-  font-size: 18px;
+  font-size: var(--fs-body);
   font-weight: 800;
-  fill: var(--teal-ink);
+  fill: var(--tone-recommend-ink);
 }
 .three__venn figcaption {
   margin-top: 6px;
-  font-size: 12.5px;
+  font-size: var(--fs-note);
   line-height: 1.6;
   color: var(--muted);
 }
 .three__venn figcaption b {
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .three__picks {
   display: flex;
@@ -111,7 +111,7 @@ const picks: { head: string; src: Inline[]; body: string; example?: string; tags
 }
 .three__lead {
   margin: 0 0 2px;
-  font-size: 16px;
+  font-size: var(--fs-body);
   font-weight: 700;
 }
 .three__pick {
@@ -124,29 +124,33 @@ const picks: { head: string; src: Inline[]; body: string; example?: string; tags
   gap: 12px;
 }
 .three__head strong {
-  font-size: 16px;
+  font-size: var(--fs-body);
   font-weight: 700;
 }
 .three__head span {
-  font-size: 12px;
+  font-size: var(--fs-note);
   font-weight: 600;
-  color: var(--ext-ink);
+  color: var(--tone-source-ink);
   white-space: nowrap;
 }
 .three__pick p {
   margin: 4px 0 0;
-  font-size: 13.5px;
+  font-size: var(--fs-note);
   line-height: 1.6;
   color: var(--ink-2);
 }
 .three__pick .three__eg {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  align-items: baseline;
   gap: 8px;
   margin-top: 8px;
 }
 .three__eg .fx-label-mono {
   margin-right: 2px;
+}
+.three__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 </style>

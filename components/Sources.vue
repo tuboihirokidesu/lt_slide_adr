@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { sources, type Source, type SourceGroup, type SourceId } from '../data/sources'
 
-const groups: { key: SourceGroup; name: string }[] = [
-  { key: 'video', name: '動画' },
-  { key: 'primary', name: '一次資料・ガイド' },
-  { key: 'paper', name: '研究' },
-  { key: 'ja', name: '記事・企業ブログ' },
-  { key: 'x', name: 'X' },
+// 14px では1枚に収まらないので、出典一覧は2枚に分ける。part で、どちらの群を出すかを選ぶ
+const props = withDefaults(defineProps<{ part?: 1 | 2 }>(), { part: 1 })
+
+const groups: { key: SourceGroup; name: string; part: 1 | 2 }[] = [
+  { key: 'video', name: '動画', part: 1 },
+  { key: 'primary', name: '一次資料・ガイド', part: 1 },
+  { key: 'paper', name: '研究', part: 1 },
+  { key: 'ja', name: '記事・企業ブログ', part: 2 },
+  { key: 'x', name: 'X', part: 2 },
 ]
 
 const all = Object.entries(sources) as [SourceId, Source][]
@@ -15,8 +18,8 @@ const parts = (id: SourceId) => all.filter(([, s]) => 'partOf' in s && s.partOf 
 </script>
 
 <template>
-  <div class="src">
-    <section v-for="g in groups" :key="g.key" class="src__group" :class="`is-${g.key}`">
+  <div class="src" :class="`is-part-${props.part}`">
+    <section v-for="g in groups.filter((g) => g.part === props.part)" :key="g.key" class="src__group" :class="`is-${g.key}`">
       <header><span class="fx-label-mono">{{ g.name }}</span><b>{{ items(g.key).length }}</b></header>
       <ul>
         <li v-for="[id, s] in items(g.key)" :key="id">
@@ -30,11 +33,16 @@ const parts = (id: SourceId) => all.filter(([, s]) => 'partOf' in s && s.partOf 
 <style scoped>
 .src {
   display: grid;
-  grid-template-columns: 0.9fr 1.2fr 0.95fr 1.18fr;
-  grid-template-areas: 'video primary ja x' 'video primary ja paper';
-  grid-template-rows: auto 1fr;
-  gap: 14px 20px;
+  gap: 16px 40px;
   align-items: start;
+}
+.src.is-part-1 {
+  grid-template-columns: 1fr 1.15fr;
+  grid-template-areas: 'video primary' 'paper primary';
+}
+.src.is-part-2 {
+  grid-template-columns: 1.15fr 1fr;
+  grid-template-areas: 'ja x';
 }
 .src__group.is-video { grid-area: video; }
 .src__group.is-primary { grid-area: primary; }
@@ -52,13 +60,14 @@ const parts = (id: SourceId) => all.filter(([, s]) => 'partOf' in s && s.partOf 
 }
 .src__group header b {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
   color: var(--muted);
 }
 .src__group li {
-  padding: 3px 0;
-  font-size: 11px;
+  padding: 4px 0;
+  font-size: var(--fs-note);
   line-height: 1.5;
   color: var(--ink);
 }
@@ -70,24 +79,20 @@ const parts = (id: SourceId) => all.filter(([, s]) => 'partOf' in s && s.partOf 
 }
 .src__group li small {
   display: block;
-  font-size: 11px;
+  font-size: var(--fs-note);
 }
 .src__group.is-x li,
 .src__group.is-paper li {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 8px;
-  padding: 1px 0;
+  gap: 12px;
+  padding: 2px 0;
   white-space: nowrap;
 }
 .src__group.is-x .src__who {
   font-family: var(--font-mono);
   font-weight: 600;
-}
-.src__group.is-x li,
-.src__group.is-paper li {
-  font-size: 10.5px;
 }
 .src__group.is-paper li {
   justify-content: flex-start;
@@ -97,7 +102,6 @@ const parts = (id: SourceId) => all.filter(([, s]) => 'partOf' in s && s.partOf 
 }
 .src__group.is-paper small {
   display: inline;
-  font-size: 10.5px;
 }
 .src__group.is-x .src__title,
 .src__group.is-paper .src__title {

@@ -12,7 +12,7 @@ const no = (i: number) => String(i + 2).padStart(2, '0')
 
 <template>
   <div class="tldr">
-    <div class="fx-box fx-box--teal tldr__main">
+    <div class="fx-box fx-box--recommend tldr__main">
       <span class="tldr__no">01</span>
       <p class="tldr__yes">必要。</p>
       <p class="tldr__lede">ただし、<span class="fx-no">全部を記録する設計書</span>ではなく、</p>
@@ -33,78 +33,79 @@ const no = (i: number) => String(i + 2).padStart(2, '0')
 <style scoped>
 .tldr {
   display: grid;
-  grid-template-columns: 340px 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 14px;
-  height: 392px;
+  grid-template-columns: 320px 1fr 1fr;
+  grid-auto-rows: 1fr;
+  gap: 12px;
 }
 .tldr__main {
   grid-row: span 2;
   display: flex;
   flex-direction: column;
-  padding: 22px 26px;
+  padding: 20px 22px;
   box-shadow: none;
 }
 .tldr__no {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-label);
   font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--teal-ink);
+  letter-spacing: var(--ls-label);
+  font-variant-numeric: tabular-nums;
+  color: var(--tone-recommend-ink);
 }
 .tldr__yes {
-  margin: 8px 0 0;
-  font-size: 30px;
+  margin: 6px 0 0;
+  font-size: var(--fs-title);
   font-weight: 700;
   line-height: 1.2;
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .tldr__lede {
   margin: 8px 0 0;
-  font-size: 14px;
+  font-size: var(--fs-note);
   font-weight: 600;
   line-height: 1.7;
   color: var(--ink-2);
 }
 .tldr__conds {
-  margin: 12px 0 0;
+  margin: 10px 0 0;
   padding: 0;
   list-style: none;
   display: grid;
   gap: 6px;
 }
 .tldr__conds li {
-  padding: 6px 12px;
+  padding: 5px 12px;
   border-radius: var(--r-chip);
   background: var(--surface);
-  border: 1px solid var(--teal-line);
-  font-size: 13.5px;
+  border: 1px solid var(--tone-recommend-line);
+  font-size: var(--fs-note);
   font-weight: 700;
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .tldr__head {
   margin: 14px 0 0;
-  font-size: 18px;
+  font-size: var(--fs-body);
   font-weight: 700;
-  line-height: 1.45;
+  line-height: 1.55;
 }
 .tldr__sub {
   margin: auto 0 0;
-  font-size: 12.5px;
-  line-height: 1.7;
+  padding-top: 12px;
+  font-size: var(--fs-note);
+  line-height: 1.6;
   color: var(--muted);
 }
 .tldr__pt {
   display: flex;
   flex-direction: column;
-  padding: 18px 20px;
+  padding: 16px 18px;
 }
 .tldr__pt .tldr__no {
   color: var(--muted);
 }
 .tldr__pt strong {
-  margin-top: 10px;
-  font-size: 16px;
+  margin-top: 8px;
+  font-size: var(--fs-body);
   font-weight: 700;
   line-height: 1.5;
 }
@@ -113,9 +114,9 @@ const no = (i: number) => String(i + 2).padStart(2, '0')
   white-space: nowrap;
 }
 .tldr__pt p {
-  margin: 10px 0 0;
-  font-size: 13.5px;
-  line-height: 1.7;
+  margin: 8px 0 0;
+  font-size: var(--fs-note);
+  line-height: 1.6;
   color: var(--ink-2);
 }
 </style>

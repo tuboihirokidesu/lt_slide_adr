@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useIsSlideActive, useSlideContext } from '@slidev/client'
 
-defineProps<{ night?: boolean; accent?: 'teal' | 'amber' }>()
+defineProps<{ night?: boolean; accent?: 'recommend' | 'amber' }>()
 
 const active = useIsSlideActive()
 const { $renderContext } = useSlideContext()
@@ -10,7 +10,7 @@ const shown = computed(() => active.value || $renderContext.value !== 'slide')
 </script>
 
 <template>
-  <div class="slidev-layout cover-x" :class="{ 'is-shown': shown, 'is-night': night, 'is-amber': accent === 'amber' }">
+  <div class="slidev-layout cover-x" :class="{ 'is-shown': shown, 'is-night': night, 'is-caution': accent === 'caution' }">
     <div class="cover-x__glow" aria-hidden="true" />
     <div class="cover-x__grid" aria-hidden="true" />
 
@@ -43,7 +43,12 @@ const shown = computed(() => active.value || $renderContext.value !== 'slide')
   height: 520px;
   margin-top: -260px;
   border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(31, 196, 201, 0.22), rgba(31, 196, 201, 0.06) 55%, transparent);
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--tone-recommend) var(--glow-core, 22%), transparent),
+    color-mix(in srgb, var(--tone-recommend) var(--glow-edge, 6%), transparent) 55%,
+    transparent
+  );
   opacity: 0;
   transform: scale(0.85);
   transition: opacity 1200ms var(--ease-out) 300ms, transform 1600ms var(--ease-out) 300ms;
@@ -57,30 +62,23 @@ const shown = computed(() => active.value || $renderContext.value !== 'slide')
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(to right, rgba(170, 205, 222, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(170, 205, 222, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 46px 46px;
-  mask-image: radial-gradient(ellipse 70% 80% at 75% 50%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(ellipse 70% 80% at 75% 50%, black 20%, transparent 75%);
   pointer-events: none;
 }
-/* 昼の表紙：光と方眼を淡くし、強調語は濃い teal で読ませる */
-.cover-x:not(.is-night) .cover-x__glow {
-  background: radial-gradient(closest-side, rgba(0, 140, 149, 0.13), rgba(0, 140, 149, 0.04) 55%, transparent);
-}
-.cover-x:not(.is-night) .cover-x__grid {
-  background-image:
-    linear-gradient(to right, rgba(22, 41, 59, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(22, 41, 59, 0.06) 1px, transparent 1px);
-}
-.cover-x:not(.is-night) .copy :deep(h1 em) {
-  background-image: linear-gradient(100deg, var(--teal-ink), #0a9aa3);
+/* 昼の表紙は光を淡くする */
+.cover-x:not(.is-night) {
+  --glow-core: 13%;
+  --glow-edge: 4%;
 }
 .copy,
 .art {
   position: relative;
 }
 .copy :deep(h1) {
-  font-size: 42px;
+  font-size: var(--fs-display);
   word-break: keep-all;
   line-height: 1.32;
   letter-spacing: -0.01em;
@@ -88,22 +86,22 @@ const shown = computed(() => active.value || $renderContext.value !== 'slide')
 }
 .copy :deep(h1 em) {
   font-style: normal;
-  background: linear-gradient(100deg, var(--teal-ink), #b9f2f3);
+  background: linear-gradient(100deg, var(--tone-recommend-ink), var(--tone-recommend-glint));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 .copy :deep(.lead) {
   margin-top: 26px;
-  font-size: 16px;
+  font-size: var(--fs-body);
   line-height: 1.8;
   font-weight: 500;
   color: var(--ink-2);
 }
 
-/* 強調語を No・却下の色で光らせる */
-.cover-x.is-amber .copy :deep(h1 em) {
-  background-image: linear-gradient(100deg, #f0a42b, #ffd895);
+/* 表紙と結びの強調語は「No」そのものなので、却下の色で光らせる */
+.cover-x.is-caution .copy :deep(h1 em) {
+  background-image: linear-gradient(100deg, var(--tone-caution), var(--tone-caution-glint));
 }
 
 /* 見出しは1行ずつ、下から持ち上がる */

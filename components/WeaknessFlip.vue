@@ -43,15 +43,15 @@ withDefaults(defineProps<{ stage?: number }>(), { stage: 0 })
 }
 .flip__word {
   margin: 22px 0 0;
-  font-size: 56px;
+  font-size: var(--fs-display);
   white-space: nowrap;
   font-weight: 700;
   line-height: 1.25;
-  letter-spacing: -0.01em;
-  color: var(--amber-ink);
+  letter-spacing: var(--ls-display);
+  color: var(--tone-caution-ink);
 }
 .flip__word .fx-no {
-  color: var(--amber-ink);
+  color: var(--tone-caution-ink);
   background-size: 0% 3px;
 }
 .flip__word .fx-no.is-on,
@@ -64,36 +64,39 @@ withDefaults(defineProps<{ stage?: number }>(), { stage: 0 })
   align-items: baseline;
   gap: 8px;
   margin: 20px 0 0;
-  font-size: 13.5px;
+  font-size: var(--fs-note);
   line-height: 1.6;
   color: var(--muted);
+}
+.flip__src > :first-child {
+  flex: none;
 }
 .flip__why {
   margin: 56px 0 0;
   padding-left: 16px;
-  border-left: 2px solid var(--teal);
-  font-size: 17px;
+  border-left: 2px solid var(--tone-recommend);
+  font-size: var(--fs-body);
   font-weight: 700;
   line-height: 1.6;
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .flip__fix {
   margin-top: 56px;
   padding: 18px 24px;
   border-radius: var(--r-box);
-  border: 1.5px solid var(--teal-line);
-  background: var(--teal-fill);
+  border: 1.5px solid var(--tone-recommend-line);
+  background: var(--tone-recommend-fill);
 }
 .flip__fix strong {
   display: block;
-  font-size: 17px;
+  font-size: var(--fs-body);
   font-weight: 700;
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .flip__fix span {
   display: block;
   margin-top: 4px;
-  font-size: 13.5px;
+  font-size: var(--fs-note);
   line-height: 1.6;
   color: var(--ink-2);
 }

@@ -2,11 +2,11 @@
 import { useSlideContext } from '@slidev/client'
 import type { Inline } from '../data/sources'
 
-const chapters: { no: string; kicker: string; title: string; desc: Inline[] | string; tone: string }[] = [
-  { no: '01', kicker: 'Origin', title: '起点', desc: [{ ref: 'kent' }, ' の動画と、', { ref: 'kody' }, ' のリポジトリ。ADR を No のリストと捉え直す。'], tone: 'teal' },
-  { no: '02', kicker: 'Debate', title: '賛否', desc: '必要か。誰が書くか。守らせられるか。どこに置くか。4つの論点。', tone: 'amber' },
-  { no: '03', kicker: 'What to write', title: '何を書くか', desc: '3つの条件と、書かなくてよいもの。半ページのテンプレート。', tone: 'teal' },
-  { no: '04', kicker: 'How to run', title: 'どう管理するか', desc: '索引と status、PR での運用。置き場所ごとの役割と、最初の1週間。', tone: 'blue' },
+const chapters: { no: string; kicker: string; title: string; desc: Inline[] | string }[] = [
+  { no: '01', kicker: 'Origin', title: '起点', desc: [{ ref: 'kent' }, ' の動画と、', { ref: 'kody' }, ' のリポジトリ。ADR を No のリストと捉え直す。'] },
+  { no: '02', kicker: 'Debate', title: '賛否', desc: '必要か。誰が書くか。守らせられるか。どこに置くか。4つの論点。' },
+  { no: '03', kicker: 'What to write', title: '何を書くか', desc: '3つの条件と、書かなくてよいもの。半ページのテンプレート。' },
+  { no: '04', kicker: 'How to run', title: 'どう管理するか', desc: '索引と status、PR での運用。置き場所ごとの役割と、最初の1週間。' },
 ]
 
 // 章の範囲はデッキの frontmatter（章扉の chapter: "01"、本文の chapter: 01 起点）から数える
@@ -21,7 +21,7 @@ const pages = (no: string) => {
 <template>
   <div class="agenda-x">
     <ol class="agenda-x__cols">
-      <li v-for="c in chapters" :key="c.no" class="agenda-x__col" :class="`is-${c.tone}`">
+      <li v-for="c in chapters" :key="c.no" class="agenda-x__col">
         <span class="agenda-x__num">{{ c.no }}</span>
         <span class="agenda-x__kicker">{{ c.kicker }}</span>
         <strong>{{ c.title }}</strong>
@@ -41,8 +41,6 @@ const pages = (no: string) => {
   grid-template-columns: repeat(4, 1fr);
 }
 .agenda-x__col {
-  --c: var(--teal);
-  --c-ink: var(--teal-ink);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -53,6 +51,9 @@ const pages = (no: string) => {
   padding-left: 24px;
   border-left: 1px solid var(--line);
 }
+.agenda-x__col:last-child {
+  padding-right: 0;
+}
 .agenda-x__col::before {
   content: "";
   position: absolute;
@@ -60,52 +61,47 @@ const pages = (no: string) => {
   top: -1px;
   width: 48px;
   height: 3px;
-  background: var(--c);
+  background: var(--tone-recommend);
 }
 .agenda-x__col + .agenda-x__col::before {
   left: 24px;
 }
-.agenda-x__col.is-amber {
-  --c: var(--amber);
-  --c-ink: var(--amber-ink);
-}
-.agenda-x__col.is-blue {
-  --c: var(--ext);
-  --c-ink: var(--ext-ink);
-}
 .agenda-x__num {
-  font-size: 92px;
+  font-size: var(--fs-numeral);
   font-weight: 700;
   line-height: 0.9;
   letter-spacing: -0.05em;
-  color: var(--c);
+  color: var(--tone-recommend);
   font-variant-numeric: tabular-nums;
 }
 .agenda-x__kicker {
-  margin-top: 28px;
+  margin-top: 26px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--c-ink);
+  color: var(--tone-recommend-ink);
 }
 .agenda-x__col strong {
   margin-top: 6px;
-  font-size: 23px;
+  font-size: var(--fs-title);
   font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: var(--ls-display);
+  white-space: nowrap;
 }
 .agenda-x__col p {
   margin: 10px 0 0;
-  font-size: 13.5px;
-  line-height: 1.75;
+  font-size: var(--fs-note);
+  line-height: 1.7;
   color: var(--ink-2);
 }
 .agenda-x__pages {
   margin-top: auto;
-  padding: 22px 0 2px;
+  padding: 20px 0 2px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: 0.08em;
   color: var(--muted);

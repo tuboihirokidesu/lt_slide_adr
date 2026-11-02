@@ -14,7 +14,7 @@ transition: fade-quiet
 mdc: true
 layout: cover
 night: true
-accent: amber
+accent: caution
 ---
 
 # ADR は、<br>エージェントへの<br><em>「No」</em>のリスト。
@@ -71,7 +71,6 @@ layout: content
 layout: section
 chapter: "01"
 kicker: Kent C. Dodds — Turn Your Agent on Auto-Pilot with ADRs
-tone: teal
 ---
 
 # 新しいセッションは、<br>昨日の決定を知らない。
@@ -196,7 +195,6 @@ clicks: 1
 layout: section
 chapter: "02"
 kicker: 論点ごとの賛否
-tone: amber
 ---
 
 # 不要論の多くは、ADR ではなく、<br>下手な運用を責めている。
@@ -342,7 +340,6 @@ OpenAI の記事に、エージェントの視点から見ると、実行中に�
 layout: section
 chapter: "03"
 kicker: 何を書くか
-tone: teal
 ---
 
 # 書くのは、<br>3つの条件を満たす決定だけ。
@@ -407,7 +404,6 @@ chapter: 03 何を書くか
 layout: section
 chapter: "04"
 kicker: どう管理するか
-tone: blue
 ---
 
 # Accepted は書き換えない。<br>変えるときは、新しい ADR で。
@@ -542,10 +538,10 @@ chapter: 04 どう管理するか
 ---
 layout: cover
 night: true
-accent: amber
+accent: caution
 ---
 
-# 採用した案は、<br>コードに残る。<br><em>捨てた案</em>は、<br>ADR にしか残らない。
+# 採用した案は、<br>コードに残る。<br><em>捨てた案</em>は、<br>ADR にしか<br>残らない。
 
 <p class="lead">戻しにくく、理由が読めず、<br>エージェントが再提案してくる決定だけを、半ページで。<br>下書きはエージェント、捨てた案の理由は人間。</p>
 
@@ -557,19 +553,31 @@ accent: amber
 採用した案は、コードに残ります。でも、捨てた案は ADR にしか残りません。
 だから ADR に書くのは、戻しにくく、理由がコードから読めず、エージェントが再提案してくる決定だけでいい。それを半ページで残す。下書きはエージェントに任せて、捨てた案の理由だけは人間が書く。
 今日お伝えしたかったのは、これだけです。ありがとうございました。
-出典は、最後のスライドにまとめています。
+出典は、最後の2枚にまとめています。
 -->
 
 ---
 layout: content
 ---
 
-# 出典。
+# 出典（1/2）。
 
-<Sources />
+<Sources :part="1" />
 
 <!--
-出典の一覧です。動画、一次資料とガイド、日本語の記事と企業ブログ、X の投稿に分けています。
+出典の一覧です。1枚目は、動画、一次資料とガイド、研究です。
 今日の話は、Kent C. Dodds さんの動画と Kody のリポジトリを起点に、ここにある資料を読んで組み立てました。
+-->
+
+---
+layout: content
+---
+
+# 出典（2/2）。
+
+<Sources :part="2" />
+
+<!--
+2枚目は、日本語の記事と企業ブログ、X の投稿です。
 X の投稿の中には、ご本人の原文を確認できていないものもあります。そこは話の中でお伝えしたとおりです。気になったものは、ぜひ原文に当たってみてください。
 -->

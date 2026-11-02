@@ -28,11 +28,11 @@ const lint = [
 
       <div class="enf__mid">
         <svg viewBox="0 0 150 150" width="150" height="150" aria-hidden="true">
-          <Edge d="M2 46 H148" :end="[148, 46]" dir="r" tone="teal" :on="stage >= 1" />
-          <Edge d="M148 112 H2" :end="[2, 112]" dir="l" tone="amber" :on="stage >= 2" />
+          <Edge d="M2 46 H148" :end="[148, 46]" dir="r" tone="recommend" :on="stage >= 1" />
+          <Edge d="M148 112 H2" :end="[2, 112]" dir="l" tone="caution" :on="stage >= 2" />
         </svg>
-        <span class="fx-label fx-label--teal enf__l1" :class="{ 'is-on': stage >= 1 }">Enforcement 欄が<br>ルールを指す</span>
-        <span class="fx-label fx-label--amber enf__l2" :class="{ 'is-on': stage >= 2 }">エラーが<br>ADR 番号を引く</span>
+        <span class="fx-label fx-label--recommend enf__l1" :class="{ 'is-on': stage >= 1 }">Enforcement 欄が<br>ルールを指す</span>
+        <span class="fx-label fx-label--caution enf__l2" :class="{ 'is-on': stage >= 2 }">エラーが<br>ADR 番号を引く</span>
       </div>
 
       <div class="enf__col">
@@ -46,10 +46,10 @@ const lint = [
 
     <div class="enf__foot">
       <figure class="enf__quote">
-        <blockquote class="fx-quote">When documentation falls short, we promote the rule into code</blockquote>
+        <blockquote class="fx-quote">When documentation falls short,<br>we promote the rule into code</blockquote>
         <figcaption class="fx-cite"><Ref id="openai" label="OpenAI · Harness engineering" /></figcaption>
       </figure>
-      <p class="enf__note">強制できない「当面〜しない」系の決定は、ADR とレビューで守る。それで十分。</p>
+      <p class="enf__note">強制できない「当面〜しない」系の決定は、<br>ADR とレビューで守る。それで十分。</p>
     </div>
   </div>
 </template>
@@ -69,12 +69,12 @@ const lint = [
   align-items: baseline;
   gap: 10px;
   margin: 0 0 8px;
-  font-size: 13.5px;
+  font-size: var(--fs-note);
   font-weight: 600;
   color: var(--muted);
 }
 .enf__role b {
-  font-size: 18px;
+  font-size: var(--fs-body);
   font-weight: 700;
   color: var(--ink);
 }
@@ -84,21 +84,18 @@ const lint = [
 }
 .enf__text {
   margin: 0;
-  font-size: 13.5px;
-}
-.enf__text code {
-  font-size: 12.5px;
+  font-size: var(--fs-note);
 }
 .enf__field {
   margin: 10px -8px 0;
   padding: 0 8px 8px;
   border-radius: var(--r-chip);
-  background: var(--teal-fill);
-  border: 1.5px solid var(--teal-line);
+  background: var(--tone-recommend-fill);
+  border: 1.5px solid var(--tone-recommend-line);
 }
 .enf__field .fx-paper__h {
   margin-top: 6px;
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .enf__mid {
   position: relative;
@@ -115,7 +112,7 @@ const lint = [
   right: 0;
   text-align: center;
   white-space: normal;
-  font-size: 12px;
+  font-size: var(--fs-note);
   line-height: 1.4;
 }
 .enf__l1 {
@@ -130,7 +127,7 @@ const lint = [
   border-radius: var(--r-doc);
   background: var(--paper);
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-label);
   line-height: 1.75;
   color: var(--ink-2);
   white-space: pre;
@@ -148,7 +145,6 @@ const lint = [
   padding: 8px 12px;
   border-bottom: 1px solid var(--line);
   color: var(--muted);
-  font-size: 11px;
 }
 .enf__bar i {
   width: 8px;
@@ -164,38 +160,39 @@ const lint = [
   color: var(--muted);
 }
 .enf__term .is-err {
-  color: var(--amber-ink);
+  color: var(--tone-caution-ink);
 }
 .enf__term .is-ref {
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
   font-weight: 700;
 }
 .enf__term .is-sum {
   margin-top: 10px;
-  color: var(--amber-ink);
+  color: var(--tone-caution-ink);
   font-weight: 700;
 }
 .enf__foot {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 440px 1fr;
   gap: 32px;
   align-items: center;
-  margin-top: 22px;
-  padding-top: 16px;
+  margin-top: 14px;
+  padding-top: 12px;
   border-top: 1px solid var(--line-strong);
 }
 .enf__quote {
   margin: 0;
 }
 .enf__quote .fx-quote {
-  font-size: 18px;
+  font-size: var(--fs-body);
+  line-height: 1.5;
 }
 .enf__note {
   display: flex;
   align-items: baseline;
   gap: 10px;
   margin: 0;
-  font-size: 14px;
+  font-size: var(--fs-note);
   font-weight: 600;
   line-height: 1.65;
 }

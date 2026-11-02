@@ -36,9 +36,9 @@ const no = (i: number) => String(i + 1).padStart(2, '0')
 <style scoped>
 .ops__row {
   display: grid;
-  grid-template-columns: 28px 128px 1fr 200px;
+  grid-template-columns: 20px 124px 1fr 212px;
   align-items: baseline;
-  gap: 16px;
+  gap: 12px;
   padding: 8px 0;
   border-top: 1px solid var(--line);
 }
@@ -46,9 +46,9 @@ const no = (i: number) => String(i + 1).padStart(2, '0')
   padding: 0 0 8px;
   border-top: 0;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--ls-label);
   color: var(--muted);
 }
 .ops__row--head + .ops__row {
@@ -56,17 +56,18 @@ const no = (i: number) => String(i + 1).padStart(2, '0')
 }
 .ops__row b {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-label);
   font-weight: 600;
-  color: var(--teal-ink);
+  font-variant-numeric: tabular-nums;
+  color: var(--tone-recommend-ink);
 }
 .ops__row strong {
-  font-size: 15px;
+  font-size: var(--fs-body);
   font-weight: 700;
 }
 .ops__row p {
   margin: 0;
-  font-size: 13.5px;
+  font-size: var(--fs-note);
   line-height: 1.6;
 }
 .ops__row p > span {
@@ -75,11 +76,11 @@ const no = (i: number) => String(i + 1).padStart(2, '0')
 .ops__src {
   display: flex;
   flex-wrap: wrap;
-  gap: 2px 14px;
+  gap: 2px 10px;
 }
 .ops__row .ops__src > span {
   display: inline;
-  font-size: 12.5px;
+  font-size: var(--fs-note);
   font-weight: 600;
   line-height: 1.6;
   color: var(--ink-2);

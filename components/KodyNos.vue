@@ -35,9 +35,9 @@ const nos: { adr: SourceId; subject: string; verdict: string; later?: SourceId; 
 <style scoped>
 .kody {
   display: grid;
-  grid-template-columns: 1fr 290px;
+  grid-template-columns: 1fr 300px;
   align-items: center;
-  gap: 0 44px;
+  gap: 0 40px;
 }
 .kody__list ol {
   padding: 6px 18px 8px;
@@ -49,7 +49,7 @@ const nos: { adr: SourceId; subject: string; verdict: string; later?: SourceId; 
   gap: 12px;
   padding: 13px 0;
   border-top: 1px solid var(--line);
-  font-size: 15px;
+  font-size: var(--fs-body);
   font-weight: 600;
 }
 .kody__list li:first-child {
@@ -57,23 +57,24 @@ const nos: { adr: SourceId; subject: string; verdict: string; later?: SourceId; 
 }
 .kody__no {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-label);
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 .kody__subject small {
   display: block;
   margin-top: 4px;
   white-space: nowrap;
   font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: var(--fs-label);
   font-weight: 500;
   color: var(--muted);
 }
 .kody__list em {
   font-style: normal;
-  font-size: 13.5px;
+  font-size: var(--fs-note);
   font-weight: 700;
-  color: var(--amber-ink);
+  color: var(--tone-caution-ink);
   white-space: nowrap;
 }
 .kody__list li.is-key {
@@ -81,33 +82,34 @@ const nos: { adr: SourceId; subject: string; verdict: string; later?: SourceId; 
   padding: 13px 10px;
   border-radius: var(--r-mark);
   border-top-color: transparent;
-  background: var(--amber-fill);
+  background: var(--tone-emphasis-fill);
 }
 .kody__list li.is-key .fx-no {
-  color: var(--ink);
+  color: var(--tone-emphasis-ink);
 }
 .kody__note {
   padding: 8px 0 8px 24px;
-  border-left: 2px solid var(--amber);
+  border-left: var(--w-em) solid var(--tone-emphasis);
 }
 .kody__kicker {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
-  letter-spacing: 0.12em;
-  color: var(--amber-ink);
+  letter-spacing: var(--ls-label);
+  color: var(--tone-emphasis-ink);
 }
 .kody__push {
   margin: 8px 0 0;
-  font-size: 13.5px;
+  font-size: var(--fs-note);
   line-height: 1.7;
   color: var(--ink-2);
 }
 .kody__big {
   margin: 16px 0 0;
-  font-size: 21px;
+  font-size: var(--fs-title);
   font-weight: 700;
-  line-height: 1.5;
+  line-height: 1.4;
+  letter-spacing: var(--ls-display);
 }
 </style>

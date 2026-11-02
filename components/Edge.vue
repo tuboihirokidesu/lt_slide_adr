@@ -9,7 +9,7 @@ const props = withDefaults(
     end?: [number, number]
     dir?: Dir
     on?: boolean
-    tone?: 'muted' | 'teal' | 'amber' | 'blue'
+    tone?: 'muted' | 'recommend' | 'caution' | 'source'
     dashed?: boolean
     delay?: number
   }>(),

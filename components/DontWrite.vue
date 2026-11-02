@@ -32,7 +32,7 @@ const rows: { no: string; title: string; kind: string; why: Inline | Inline[] }[
   grid-template-columns: 44px 272px 1fr;
   align-items: baseline;
   gap: 14px;
-  padding: 12px 0;
+  padding: 11px 0;
   border-top: 1px solid var(--line);
 }
 .dont li:first-child {
@@ -40,22 +40,23 @@ const rows: { no: string; title: string; kind: string; why: Inline | Inline[] }[
 }
 .dont b {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-label);
   font-weight: 600;
-  color: var(--amber-ink);
+  font-variant-numeric: tabular-nums;
+  color: var(--tone-caution-ink);
 }
 .dont__title {
-  font-size: 17px;
+  font-size: var(--fs-body);
   font-weight: 700;
 }
 .dont__why {
-  font-size: 13px;
+  font-size: var(--fs-note);
   line-height: 1.6;
   color: var(--muted);
 }
 .dont__why strong {
   display: block;
-  font-size: 13.5px;
+  font-size: var(--fs-note);
   color: var(--ink);
 }
 </style>

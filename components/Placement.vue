@@ -36,8 +36,8 @@ const rows = [
 <style scoped>
 .pl {
   display: grid;
-  grid-template-columns: 40px 1fr;
-  gap: 12px;
+  grid-template-columns: 34px 1fr;
+  gap: 10px;
 }
 .pl__axis {
   position: relative;
@@ -46,7 +46,8 @@ const rows = [
   align-items: center;
   gap: 6px;
   padding: 30px 0 58px;
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
   font-weight: 700;
   color: var(--muted);
 }
@@ -58,14 +59,12 @@ const rows = [
 }
 .pl__axis b {
   position: absolute;
-  left: -2px;
+  left: -4px;
   top: 50%;
   transform: translateY(-50%);
   writing-mode: vertical-rl;
-  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.2em;
-  color: var(--muted);
+  letter-spacing: var(--ls-label);
 }
 .pl__axis span,
 .pl__axis i {
@@ -73,32 +72,32 @@ const rows = [
 }
 .pl__row {
   display: grid;
-  grid-template-columns: 170px 150px 1fr 150px;
+  grid-template-columns: 164px 158px 1fr 158px;
   align-items: baseline;
-  gap: 14px;
-  padding: 7px 12px;
+  gap: 12px;
+  padding: 7px 10px;
   border-top: 1px solid var(--line);
-  font-size: 13px;
+  font-size: var(--fs-note);
   line-height: 1.5;
 }
 .pl__row--head {
   padding-top: 0;
   border-top: 0;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--ls-label);
   color: var(--muted);
 }
 .pl__row strong {
   display: flex;
   flex-direction: column;
-  font-size: 13.5px;
+  font-size: var(--fs-body);
   font-weight: 700;
 }
 .pl__row strong small {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-label);
   font-weight: 500;
   color: var(--muted);
 }
@@ -111,15 +110,15 @@ const rows = [
 }
 .pl__row.is-hit {
   border-radius: var(--r-chip);
-  border: 1.5px solid var(--teal-line);
-  background: var(--teal-fill);
+  border: 1.5px solid var(--tone-recommend-line);
+  background: var(--tone-recommend-fill);
 }
 .pl__row.is-hit + .pl__row {
   border-top-color: transparent;
 }
 .pl__row.is-hit strong,
 .pl__row.is-hit .pl__read {
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .pl__row.is-aside {
   margin-top: 6px;
@@ -129,8 +128,8 @@ const rows = [
   display: flex;
   align-items: baseline;
   gap: 10px;
-  margin: 14px 0 0 80px;
-  font-size: 13.5px;
+  margin: 12px 0 0 70px;
+  font-size: var(--fs-note);
   line-height: 1.6;
   color: var(--ink-2);
 }

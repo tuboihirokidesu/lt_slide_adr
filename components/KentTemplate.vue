@@ -29,7 +29,7 @@ const rows: Row[] = [
             </div>
           </template>
         </div>
-        <i class="kt__leader" :class="{ 'is-teal': r.revisit }" :style="{ gridRow: i + 2 }" aria-hidden="true" />
+        <i class="kt__leader" :class="{ 'is-recommend': r.revisit }" :style="{ gridRow: i + 2 }" aria-hidden="true" />
         <div class="kt__note" :class="{ 'is-strong': r.strong, 'is-revisit': r.revisit }" :style="{ gridRow: i + 2 }">
           <strong>{{ r.note }}</strong>
           <span>{{ r.sub }}</span>
@@ -74,13 +74,13 @@ const rows: Row[] = [
 }
 .kt__title {
   margin: 4px 0 0;
-  font-size: 16px;
+  font-size: var(--fs-body);
   font-weight: 700;
 }
 .kt__title b {
   font-family: var(--font-mono);
-  font-size: 14px;
-  color: var(--teal-ink);
+  font-size: var(--fs-note);
+  color: var(--tone-recommend-ink);
 }
 .kt__meta {
   margin: 0;
@@ -88,7 +88,8 @@ const rows: Row[] = [
   align-items: center;
   gap: 10px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-label);
+  font-variant-numeric: tabular-nums;
   color: var(--muted);
 }
 .kt__bars,
@@ -108,7 +109,7 @@ const rows: Row[] = [
   margin-bottom: 8px;
 }
 .kt__revisit i {
-  background: var(--teal-line);
+  background: var(--tone-recommend-line);
   opacity: 0.6;
 }
 .kt__leader {
@@ -127,9 +128,9 @@ const rows: Row[] = [
   border-radius: 50%;
   background: var(--line-strong);
 }
-.kt__leader.is-teal,
-.kt__leader.is-teal::before {
-  background: var(--teal);
+.kt__leader.is-recommend,
+.kt__leader.is-recommend::before {
+  background: var(--tone-recommend);
 }
 .kt__note {
   grid-column: 3;
@@ -140,18 +141,19 @@ const rows: Row[] = [
 }
 .kt__note strong {
   flex: none;
-  width: 116px;
+  width: 128px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-label);
   font-weight: 600;
   color: var(--ink-2);
 }
 .kt__note span {
-  font-size: 13.5px;
+  font-size: var(--fs-note);
   color: var(--ink-2);
 }
 .kt__note.is-strong strong {
   font-family: var(--font-sans);
+  font-size: var(--fs-note);
   color: var(--ink);
 }
 .kt__note.is-strong span {
@@ -163,12 +165,12 @@ const rows: Row[] = [
   height: 46px;
   align-items: center;
   border-radius: var(--r-chip);
-  background: var(--teal-fill);
-  border: 1.5px dashed var(--teal-line);
+  background: var(--tone-recommend-fill);
+  border: 1.5px dashed var(--tone-recommend-line);
 }
 .kt__note.is-revisit strong,
 .kt__note.is-revisit span {
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
   font-weight: 700;
 }
 .kt__aside {
@@ -177,7 +179,7 @@ const rows: Row[] = [
   border-radius: var(--r-box);
   border: 1.5px solid var(--line);
   background: var(--surface);
-  font-size: 16px;
+  font-size: var(--fs-body);
   font-weight: 700;
   line-height: 1.6;
 }

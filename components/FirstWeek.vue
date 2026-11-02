@@ -27,7 +27,7 @@ const PX = 0.62
     </ol>
     <p class="wk__month">
       <span class="fx-label-mono">1か月後に数えるもの</span>
-      <span class="wk__line"><span class="fx-no">書いた本数</span>ではなく、<b>再提案を止めた件数</b>と、<b class="is-amber">古くて邪魔をした件数</b>。</span>
+      <span class="wk__line"><span class="fx-no">書いた本数</span>ではなく、<b>再提案を止めた件数</b>と、<b class="is-caution">古くて邪魔をした件数</b>。</span>
     </p>
   </div>
 </template>
@@ -41,7 +41,7 @@ const PX = 0.62
 .wk__days li {
   display: flex;
   flex-direction: column;
-  padding: 14px 18px 0;
+  padding: 14px 14px 0;
   border-left: 1px solid var(--line);
   border-top: 1px solid var(--line-strong);
 }
@@ -50,18 +50,19 @@ const PX = 0.62
   border-left: 0;
 }
 .wk__days li .fx-label-mono {
-  color: var(--teal-ink);
+  font-variant-numeric: tabular-nums;
+  color: var(--tone-recommend-ink);
 }
 .wk__days strong {
   margin-top: 6px;
-  font-size: 16px;
+  font-size: var(--fs-body);
   font-weight: 700;
   line-height: 1.45;
 }
 .wk__days p {
-  margin: 8px 0 0;
-  font-size: 13px;
-  line-height: 1.7;
+  margin: 6px 0 0;
+  font-size: var(--fs-note);
+  line-height: 1.6;
   color: var(--ink-2);
 }
 .wk__time {
@@ -76,7 +77,7 @@ const PX = 0.62
   position: relative;
   width: 14px;
   border-radius: 4px;
-  background: color-mix(in srgb, var(--teal) 22%, transparent);
+  background: color-mix(in srgb, var(--tone-recommend) 22%, transparent);
 }
 .wk__bar i {
   position: absolute;
@@ -84,10 +85,11 @@ const PX = 0.62
   right: 0;
   bottom: 0;
   border-radius: 4px;
-  background: var(--teal);
+  background: var(--tone-recommend);
 }
 .wk__time small {
-  font-size: 13px;
+  font-size: var(--fs-note);
+  font-variant-numeric: tabular-nums;
   font-weight: 700;
   color: var(--ink);
 }
@@ -102,15 +104,15 @@ const PX = 0.62
   background: var(--surface);
 }
 .wk__line {
-  font-size: 16px;
+  font-size: var(--fs-body);
   font-weight: 600;
   line-height: 1.6;
 }
 .wk__line b {
   font-weight: 700;
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
-.wk__line b.is-amber {
-  color: var(--amber-ink);
+.wk__line b.is-caution {
+  color: var(--tone-caution-ink);
 }
 </style>

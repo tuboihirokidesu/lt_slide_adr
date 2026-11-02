@@ -6,7 +6,7 @@ const rows: { claim: string; findings: Finding[]; limit: string }[] = [
   {
     claim: 'いちばんの失敗は、書かれないこと。',
     findings: [
-      { src: [{ ref: 'tang' }, ' 2006'], fig: '60.5%', body: '書かない理由の1位は「時間がない」。「役に立たない」は 9.9%。' },
+      { src: [{ ref: 'tang' }, ' 2006'], fig: '60.5%', body: '書かない理由の1位は「時間がない」。\n「役に立たない」は 9.9%。' },
       { src: [{ ref: 'buchgeher' }, ' 2023'], fig: '約半数', body: 'ADR を始めたリポジトリが、1〜5本で止まった割合。' },
     ],
     limit: '2005年の調査で回答81人。止まった理由は調べていない。',
@@ -14,7 +14,7 @@ const rows: { claim: string; findings: Finding[]; limit: string }[] = [
   {
     claim: '下書きは書けるが、人間に及ばない。',
     findings: [
-      { src: [{ ref: 'dhar' }, ' 2024'], fig: '人間が要る', body: '「not entirely autonomously」。記録の手伝いに使う。' },
+      { src: [{ ref: 'dhar' }, ' 2024'], fig: '人間が要る', body: '「not entirely autonomously」。\n記録の手伝いに使う。' },
       { src: [{ ref: 'eth' }, ' 2026'], fig: '+7%', body: '人間が書いたファイルが、LLM 生成を上回った（p = 0.038）。' },
     ],
     limit: 'Dhar は95本で GPT-4 世代。ETH の対象は ADR でなく AGENTS.md。',
@@ -23,7 +23,7 @@ const rows: { claim: string; findings: Finding[]; limit: string }[] = [
     claim: '読ませるのは、直近の数本でいい。',
     findings: [
       { src: [{ ref: 'gupta' }, ' 2026'], fig: '3〜5本', body: '直近の ADR をこれだけ読ませると最良。\n文脈なしでは、人間の約2倍の長さになる。' },
-      { src: [{ ref: 'eth-appendix', label: 'ETH 付録B' }], fig: '+2.7%', body: '効かない原因は既存文書との重複。文書がなければ人間も上回る。' },
+      { src: [{ ref: 'eth-appendix', label: 'ETH 付録B' }], fig: '+2.7%', body: '効かない原因は既存文書との重複。\n文書がなければ人間も上回る。' },
     ],
     limit: 'Gupta は人間の ADR との類似度で測った。付録B は文書を全部消した人工的な条件。',
   },
@@ -60,73 +60,75 @@ const no = (i: number) => String(i + 1).padStart(2, '0')
 <style scoped>
 .ev__row {
   display: grid;
-  grid-template-columns: 24px 250px 1fr;
-  gap: 24px;
+  grid-template-columns: 20px 276px 1fr;
+  gap: 18px;
   align-items: start;
-  padding: 10px 0;
+  padding: 7px 0;
   border-top: 1px solid var(--line);
 }
 .ev__row--head {
-  padding: 0 0 6px;
+  padding: 0 0 4px;
   border-top: 0;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--ls-label);
   color: var(--muted);
 }
 .ev__row--head + .ev__row {
   border-top: 1.5px solid var(--line-strong);
 }
 .ev__no {
-  padding-top: 2px;
+  padding-top: 3px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-label);
   font-weight: 600;
-  color: var(--teal-ink);
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
 }
 .ev__claim {
   display: block;
-  font-size: 15px;
+  font-size: var(--fs-body);
   font-weight: 700;
   line-height: 1.5;
 }
 .ev__limit {
-  margin: 5px 0 0;
-  font-size: 11px;
-  line-height: 1.55;
+  margin: 4px 0 0;
+  font-size: var(--fs-note);
+  line-height: 1.5;
   color: var(--muted);
 }
 .ev__limit span {
   margin-right: 6px;
   font-family: var(--font-mono);
+  font-size: var(--fs-label);
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--ls-label);
 }
 .ev__finds {
   margin: 0;
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 6px;
+  gap: 4px;
 }
 .ev__finds li {
   display: grid;
-  grid-template-columns: 84px 1fr;
-  gap: 12px;
+  grid-template-columns: 82px 1fr;
+  gap: 10px;
   align-items: baseline;
 }
 .ev__fig {
-  font-size: 16px;
+  font-size: var(--fs-body);
   font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--teal-ink);
+  font-variant-numeric: tabular-nums;
+  color: var(--tone-emphasis-ink);
   white-space: nowrap;
 }
 .ev__body {
   white-space: pre-line;
-  font-size: 12.5px;
-  line-height: 1.6;
+  font-size: var(--fs-note);
+  line-height: 1.5;
 }
 .ev__src {
   margin-right: 8px;
@@ -134,11 +136,11 @@ const no = (i: number) => String(i + 1).padStart(2, '0')
   color: var(--ink-2);
 }
 .ev__note {
-  margin: 8px 0 0;
-  padding-top: 8px;
+  margin: 4px 0 0;
+  padding-top: 6px;
   border-top: 1px solid var(--line);
-  font-size: 11px;
-  line-height: 1.6;
+  font-size: var(--fs-note);
+  line-height: 1.5;
   color: var(--muted);
 }
 </style>

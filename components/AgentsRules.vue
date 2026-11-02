@@ -42,7 +42,7 @@ const height = (l: Line) => (l.add ? `${12 + (l.rows ?? 1) * 21}px` : undefined)
 <style scoped>
 .ed {
   display: grid;
-  grid-template-columns: 620px 1fr;
+  grid-template-columns: 604px 1fr;
   gap: 0;
   align-items: end;
 }
@@ -62,7 +62,7 @@ const height = (l: Line) => (l.add ? `${12 + (l.rows ?? 1) * 21}px` : undefined)
   border-bottom: 1px solid var(--line);
   background: var(--legacy-fill);
   font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: var(--fs-label);
 }
 .ed__dots {
   display: flex;
@@ -82,7 +82,7 @@ const height = (l: Line) => (l.add ? `${12 + (l.rows ?? 1) * 21}px` : undefined)
 .ed__diff {
   margin-left: auto;
   font-weight: 600;
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .ed__code {
   padding: 8px 0 10px;
@@ -98,31 +98,31 @@ const height = (l: Line) => (l.add ? `${12 + (l.rows ?? 1) * 21}px` : undefined)
   align-items: baseline;
   padding: 2px 16px 2px 0;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-label);
   line-height: 1.65;
   color: var(--muted);
 }
 .ed__no {
   text-align: right;
   padding-right: 8px;
-  font-size: 11px;
+  font-variant-numeric: tabular-nums;
   color: var(--muted);
 }
 .ed__mark {
   text-align: center;
   font-weight: 700;
-  color: var(--teal);
+  color: var(--tone-recommend);
 }
 .ed__code li.is-add {
   padding-top: 5px;
-  background: var(--teal-fill);
-  box-shadow: inset 2px 0 0 var(--teal);
+  background: var(--tone-recommend-fill);
+  box-shadow: inset 2px 0 0 var(--tone-recommend);
 }
 .ed__code li.is-add .ed__text {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: var(--fs-note);
   font-weight: 600;
-  line-height: 1.6;
+  line-height: 21px;
   color: var(--ink);
 }
 .ed__notes {
@@ -137,11 +137,11 @@ const height = (l: Line) => (l.add ? `${12 + (l.rows ?? 1) * 21}px` : undefined)
   position: relative;
   align-items: flex-start;
   padding-top: 5px;
-  padding-left: 30px;
+  padding-left: 28px;
   line-height: 21px;
-  font-size: 13.5px;
+  font-size: var(--fs-body);
   font-weight: 700;
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .ed__notes li.is-note::before {
   content: "";
@@ -150,6 +150,6 @@ const height = (l: Line) => (l.add ? `${12 + (l.rows ?? 1) * 21}px` : undefined)
   top: 15px;
   width: 20px;
   height: 1px;
-  background: var(--teal-line);
+  background: var(--tone-recommend-line);
 }
 </style>

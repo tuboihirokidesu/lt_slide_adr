@@ -2,16 +2,15 @@
 import { computed } from 'vue'
 import { useIsSlideActive, useSlideContext } from '@slidev/client'
 
-const props = withDefaults(defineProps<{ chapter?: string; kicker?: string; tone?: 'teal' | 'amber' | 'blue' }>(), { tone: 'teal' })
+defineProps<{ chapter?: string; kicker?: string }>()
 
 const active = useIsSlideActive()
 const { $renderContext } = useSlideContext()
 const shown = computed(() => active.value || $renderContext.value !== 'slide')
-const toneClass = computed(() => `tone-${props.tone}`)
 </script>
 
 <template>
-  <div class="slidev-layout is-night section-x" :class="[toneClass, { 'is-shown': shown }]">
+  <div class="slidev-layout is-night section-x" :class="{ 'is-shown': shown }">
     <!-- 章番号は画面からはみ出す大きさで、奥に沈める -->
     <span v-if="chapter" class="section-x__num" aria-hidden="true">{{ chapter }}</span>
 
@@ -29,8 +28,8 @@ const toneClass = computed(() => `tone-${props.tone}`)
 
 <style scoped>
 .section-x {
-  --accent: var(--teal);
-  --accent-ink: var(--teal-ink);
+  --accent: var(--tone-recommend);
+  --accent-ink: var(--tone-recommend-ink);
   position: relative;
   overflow: hidden;
   height: 100%;
@@ -44,20 +43,12 @@ const toneClass = computed(() => `tone-${props.tone}`)
     radial-gradient(ellipse 60% 90% at 0% 50%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
     var(--bg);
 }
-.tone-amber {
-  --accent: #f0a42b;
-  --accent-ink: #ffc766;
-}
-.tone-blue {
-  --accent: var(--ext);
-  --accent-ink: var(--ext-ink);
-}
 .section-x__num {
   position: absolute;
   right: -24px;
   bottom: -96px;
   font-family: var(--font-sans);
-  font-size: 330px;
+  font-size: calc(var(--fs-numeral) * 3.4);
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.06em;
@@ -95,7 +86,7 @@ const toneClass = computed(() => `tone-${props.tone}`)
 .section-x__spine i {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent, var(--accent) 35%, #fff 50%, var(--accent) 65%, transparent);
+  background: linear-gradient(180deg, transparent, var(--accent) 35%, var(--glint) 50%, var(--accent) 65%, transparent);
   background-size: 100% 300%;
   background-position: 0 100%;
 }
@@ -115,7 +106,7 @@ const toneClass = computed(() => `tone-${props.tone}`)
   gap: 14px;
   margin: 0 0 20px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-label);
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -131,13 +122,13 @@ const toneClass = computed(() => `tone-${props.tone}`)
   opacity: 0.6;
 }
 .section-x :deep(h1) {
-  font-size: 54px;
+  font-size: var(--fs-display);
   line-height: 1.25;
-  letter-spacing: -0.01em;
+  letter-spacing: var(--ls-display);
 }
 .section-x :deep(.lead) {
   margin-top: 20px;
-  font-size: 17px;
+  font-size: var(--fs-body);
   font-weight: 500;
   color: var(--ink-2);
 }

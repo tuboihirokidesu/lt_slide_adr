@@ -8,8 +8,8 @@ const can: { head: string; sub?: Inline[] }[] = [
   { head: '人間の新メンバーのオンボーディングにも効く。', sub: [{ ref: 'keeling', label: 'Keeling' }, ' のデータで、最も確かな効果。'] },
 ]
 const cannot = [
-  { head: ['境界違反の自動検出'], who: 'lint・CI の役目' },
-  { head: ['ADR が古いと判定して、', 'エージェントが書き換える'], who: 'できるのは報告まで。古さは status 欄と索引で人間が示す' },
+  { head: ['境界違反の自動検出'], who: ['lint・CI の役目'] },
+  { head: ['ADR が古いと判定して、', 'エージェントが書き換える'], who: ['できるのは報告まで。', '古さは status 欄と索引で人間が示す'] },
 ]
 </script>
 
@@ -27,9 +27,9 @@ const cannot = [
     <section class="cc__col is-cannot">
       <header><span class="fx-label-mono">できないこと</span></header>
       <ul>
-        <li v-for="c in cannot" :key="c.who">
+        <li v-for="c in cannot" :key="c.head[0]">
           <p class="cc__no"><template v-for="(h, i) in c.head" :key="h"><br v-if="i"><span class="fx-no">{{ h }}</span></template></p>
-          <p class="cc__who"><svg viewBox="0 0 30 12" width="30" height="12" aria-hidden="true"><Edge d="M1 6 H28" :end="[28, 6]" dir="r" tone="teal" /></svg><span>{{ c.who }}</span></p>
+          <p class="cc__who"><svg viewBox="0 0 30 12" width="30" height="12" aria-hidden="true"><Edge d="M1 6 H28" :end="[28, 6]" dir="r" tone="recommend" /></svg><span><template v-for="(w, i) in c.who" :key="w"><br v-if="i">{{ w }}</template></span></p>
         </li>
       </ul>
     </section>
@@ -54,22 +54,22 @@ const cannot = [
   top: -1px;
   width: 48px;
   height: 3px;
-  background: var(--teal);
+  background: var(--tone-recommend);
 }
 .cc__col.is-cannot::before {
-  background: var(--amber);
+  background: var(--tone-caution);
 }
 .cc__col header {
   padding: 14px 0 6px;
 }
 .is-can .fx-label-mono {
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .is-cannot .fx-label-mono {
-  color: var(--amber-ink);
+  color: var(--tone-caution-ink);
 }
 .cc__col li {
-  padding: 16px 0;
+  padding: 20px 0;
   border-top: 1px solid var(--line);
 }
 .cc__col li:first-child {
@@ -82,28 +82,29 @@ const cannot = [
 }
 .is-can b {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-label);
   font-weight: 600;
-  color: var(--teal-ink);
+  font-variant-numeric: tabular-nums;
+  color: var(--tone-recommend-ink);
 }
 .is-can p {
   margin: 0;
 }
 .is-can strong {
   display: block;
-  font-size: 19px;
+  font-size: var(--fs-body);
   font-weight: 700;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 .is-can small {
   display: block;
-  margin-top: 2px;
-  font-size: 13.5px;
+  margin-top: 4px;
+  font-size: var(--fs-note);
   color: var(--muted);
 }
 .cc__no {
   margin: 0;
-  font-size: 19px;
+  font-size: var(--fs-body);
   font-weight: 700;
   line-height: 1.6;
 }
@@ -112,12 +113,13 @@ const cannot = [
 }
 .cc__who {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 8px;
-  margin: 10px 0 0;
-  font-size: 15px;
+  margin: 8px 0 0;
+  font-size: var(--fs-note);
+  line-height: 1.6;
   font-weight: 700;
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .cc__who svg {
   overflow: visible;

@@ -43,7 +43,7 @@ const history = [
       <div class="fx-paper tree__index">
         <div class="fx-paper__head"><span>docs/adr/index.md</span></div>
         <div class="fx-paper__body">
-          <p class="fx-paper__h is-teal">現役（steering）</p>
+          <p class="fx-paper__h is-recommend">現役（steering）</p>
           <p v-for="a in active" :key="a.no" class="tree__row"><b>{{ a.no }}</b>{{ a.title }}</p>
           <p class="fx-paper__h">履歴（superseded・deprecated）</p>
           <p v-for="h in history" :key="h.no" class="tree__row is-old">
@@ -86,7 +86,7 @@ const history = [
   flex-direction: column;
   padding: 3px 0;
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: var(--fs-label);
   line-height: 1.5;
 }
 .tree__files li.is-gap {
@@ -101,7 +101,7 @@ const history = [
 .tree__files small {
   margin-left: 18px;
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: var(--fs-note);
   color: var(--muted);
 }
 .tree__files li:first-child small,
@@ -113,29 +113,30 @@ const history = [
   margin-left: -6px;
   padding: 0 6px;
   border-radius: var(--r-mark);
-  background: var(--teal-fill);
-  color: var(--teal-ink);
+  background: var(--tone-recommend-fill);
+  color: var(--tone-recommend-ink);
   font-weight: 700;
 }
 .tree__index .fx-paper__body {
   padding-top: 4px;
 }
-.tree__index .fx-paper__h.is-teal {
-  color: var(--teal-ink);
+.tree__index .fx-paper__h.is-recommend {
+  color: var(--tone-recommend-ink);
 }
 .tree__row {
   display: flex;
   gap: 10px;
   margin: 0;
   padding: 3px 0;
-  font-size: 13px;
+  font-size: var(--fs-note);
   line-height: 1.5;
 }
 .tree__row b {
   font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: var(--fs-label);
   font-weight: 600;
-  color: var(--teal-ink);
+  font-variant-numeric: tabular-nums;
+  color: var(--tone-recommend-ink);
 }
 .tree__row.is-old {
   color: var(--muted);
@@ -146,7 +147,7 @@ const history = [
 .tree__row small {
   display: block;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-label);
   color: var(--muted);
 }
 .tree__fsm {
@@ -164,7 +165,7 @@ const history = [
 }
 .tree__rule {
   margin: 18px 0 0;
-  font-size: 13px;
+  font-size: var(--fs-note);
   line-height: 1.7;
   color: var(--ink-2);
 }
@@ -175,13 +176,13 @@ const history = [
   margin: 20px 0 0;
   padding-top: 14px;
   border-top: 1px solid var(--line);
-  font-size: 16px;
+  font-size: var(--fs-body);
   font-weight: 700;
 }
 .tree__foot span {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 500;
-  color: var(--ext-ink);
+  color: var(--tone-source-ink);
 }
 </style>

@@ -11,10 +11,10 @@ const sections = [
   <div class="tl">
     <div class="tl__stage">
       <svg class="tl__edges" viewBox="0 0 860 320" width="860" height="320" aria-hidden="true">
-        <Edge d="M300 207 C 420 207, 460 168, 554 168" :end="[554, 168]" dir="r" tone="teal" dashed />
+        <Edge d="M300 207 C 420 207, 460 168, 554 168" :end="[554, 168]" dir="r" tone="recommend" dashed />
         <Edge d="M0 304 H856" :end="[856, 304]" dir="r" />
       </svg>
-      <span class="fx-label is-on fx-label--teal tl__cut">結論を切り出す</span>
+      <span class="fx-label is-on fx-label--recommend tl__cut">結論を切り出す</span>
 
       <div class="tl__decision" aria-hidden="true"><span>決定</span></div>
       <span class="tl__axis">時間</span>
@@ -77,9 +77,9 @@ const sections = [
   transform: translateX(-50%);
   padding: 0 8px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--ls-label);
   color: var(--ink-2);
 }
 .tl__axis {
@@ -87,9 +87,9 @@ const sections = [
   right: 0;
   top: 312px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--ls-label);
   color: var(--muted);
 }
 .tl__side {
@@ -111,15 +111,15 @@ const sections = [
   gap: 2px;
 }
 .tl__dir strong {
-  font-size: 18px;
+  font-size: var(--fs-body);
   font-weight: 700;
 }
 .tl__dir span {
-  font-size: 13.5px;
+  font-size: var(--fs-note);
   color: var(--ink-2);
 }
 .tl__side--adr .tl__dir strong {
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .tl__dd .fx-paper__body {
   padding-top: 4px;
@@ -139,19 +139,19 @@ const sections = [
   margin: 4px -8px 0;
   padding: 0 8px 6px;
   border-radius: var(--r-mark);
-  border: 1.5px dashed var(--teal-line);
+  border: 1.5px dashed var(--tone-recommend-line);
 }
 .tl__sec.is-hit i {
-  background: color-mix(in srgb, var(--teal) 40%, transparent);
+  background: color-mix(in srgb, var(--tone-recommend) 40%, transparent);
 }
 .tl__opt {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--fs-note);
 }
 .tl__revisit {
   margin: 0;
   padding: 3px 10px;
-  font-size: 12px;
+  font-size: var(--fs-note);
   color: var(--ink-2);
 }
 .tl__note {
@@ -159,7 +159,7 @@ const sections = [
   align-items: baseline;
   gap: 10px;
   margin: 18px 0 0;
-  font-size: 13.5px;
+  font-size: var(--fs-note);
   color: var(--ink-2);
 }
 </style>

@@ -8,14 +8,14 @@ type Row = {
   lines?: Line[]
   revisit?: boolean
   src?: Inline
-  note?: string
+  note?: string[]
   strong?: boolean
 }
 
 const rows: Row[] = [
-  { key: 'fm', src: { ref: 'azure', label: 'Azure' }, note: 'confidence（確信度）。deciders は Accepted にした人間。' },
-  { key: 'title', src: { ref: 'nygard', label: 'Nygard' }, note: 'タイトルは決定そのもの。No なら「〜しない」。' },
-  { key: 'Context', head: 'Context', lines: [{ text: '集計クエリが多く、ORM の生成 SQL では実行計画を制御しにくい。' }], note: '事実だけを書く。設計案の説明にしない。' },
+  { key: 'fm', src: { ref: 'azure', label: 'Azure' }, note: ['confidence（確信度）。', 'deciders は Accepted にした人間。'] },
+  { key: 'title', src: { ref: 'nygard', label: 'Nygard' }, note: ['タイトルは決定そのもの。', 'No なら「〜しない」。'] },
+  { key: 'Context', head: 'Context', lines: [{ text: '集計クエリが多く、ORM の生成 SQL では実行計画を制御しにくい。' }], note: ['事実だけを書く。設計案の説明にしない。'] },
   { key: 'Decision', head: 'Decision', lines: [{ text: 'ORM は入れない。SQL ファイルと型生成で書く。' }] },
   {
     key: 'Options',
@@ -26,12 +26,12 @@ const rows: Row[] = [
       { text: 'クエリビルダー（却下：結局 SQL を読む力が要る）', cut: true },
     ],
     src: { ref: 'madr' },
-    note: 'ここが一番価値がある。',
+    note: ['ここが一番価値がある。'],
     strong: true,
   },
-  { key: 'Consequences', head: 'Consequences', lines: [{ text: '＋実行計画を読める　−定型の CRUD も手で書く' }], note: '悪い結果を必ず1つ以上。' },
-  { key: 'Revisit', head: 'Revisit if', lines: [{ text: 'CRUD 中心の画面が全体の半分を超えたら' }], revisit: true, src: { ref: 'kent' }, note: '見直す条件を、具体的に。' },
-  { key: 'Enforcement', head: 'Enforcement', lines: [{ text: 'lint: no-restricted-imports（ORM パッケージ）' }], src: { ref: 'kizuno' }, note: 'どう守らせているか。なければ「レビューのみ」。' },
+  { key: 'Consequences', head: 'Consequences', lines: [{ text: '＋実行計画を読める　−定型の CRUD も手で書く' }], note: ['悪い結果を必ず1つ以上。'] },
+  { key: 'Revisit', head: 'Revisit if', lines: [{ text: 'CRUD 中心の画面が全体の半分を超えたら' }], revisit: true, src: { ref: 'kent' }, note: ['見直す条件を、具体的に。'] },
+  { key: 'Enforcement', head: 'Enforcement', lines: [{ text: 'lint: no-restricted-imports（ORM パッケージ）' }], src: { ref: 'kizuno' }, note: ['どう守らせているか。', 'なければ「レビューのみ」。'] },
 ]
 </script>
 
@@ -39,7 +39,7 @@ const rows: Row[] = [
   <div class="hp">
     <div class="hp__grid">
       <div class="fx-paper hp__paper" aria-hidden="true" />
-      <div class="fx-paper__head hp__file"><span>docs/adr/0012-no-orm.md</span><span class="hp__eg">記入例（架空）</span></div>
+      <div class="fx-paper__head hp__file"><span>docs/adr/0012-no-orm.md</span><span>記入例（架空）</span></div>
 
       <template v-for="(r, i) in rows" :key="r.key">
         <div class="hp__cell" :style="{ gridRow: i + 2 }">
@@ -59,9 +59,9 @@ const rows: Row[] = [
           </div>
         </div>
         <template v-if="r.note">
-          <i class="hp__leader" :class="{ 'is-teal': r.strong }" :style="{ gridRow: i + 2 }" aria-hidden="true" />
+          <i class="hp__leader" :class="{ 'is-recommend': r.strong }" :style="{ gridRow: i + 2 }" aria-hidden="true" />
           <p class="hp__note" :class="{ 'is-strong': r.strong }" :style="{ gridRow: i + 2 }">
-            <span v-if="r.src" class="hp__src"><RefText :text="r.src" /></span>{{ r.note }}
+            <span v-if="r.src" class="hp__src"><RefText :text="r.src" /></span><template v-for="(n, k) in r.note" :key="n"><br v-if="k">{{ n }}</template>
           </p>
         </template>
       </template>
@@ -73,7 +73,7 @@ const rows: Row[] = [
 <style scoped>
 .hp__grid {
   display: grid;
-  grid-template-columns: 566px 34px 1fr;
+  grid-template-columns: 530px 30px 1fr;
   align-items: center;
 }
 .hp__paper {
@@ -86,15 +86,10 @@ const rows: Row[] = [
   grid-row: 1;
   position: relative;
 }
-.hp__eg {
-  font-family: var(--font-sans);
-  font-weight: 700;
-  color: var(--amber-ink);
-}
 .hp__cell {
   grid-column: 1;
   position: relative;
-  padding: 3px 18px;
+  padding: 2px 14px;
 }
 .hp__cell:last-of-type {
   padding-bottom: 12px;
@@ -103,10 +98,10 @@ const rows: Row[] = [
   display: flex;
   flex-wrap: wrap;
   gap: 0 16px;
-  padding: 6px 0 4px;
+  padding: 6px 0 2px;
   font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 1.65;
+  font-size: var(--fs-label);
+  line-height: 1.6;
   color: var(--ink-2);
 }
 .hp__fm i {
@@ -116,24 +111,26 @@ const rows: Row[] = [
 .hp__title {
   margin: 0;
   padding: 2px 0 4px;
-  font-size: 15px;
+  font-size: var(--fs-body);
   font-weight: 700;
+  line-height: 1.4;
 }
 .hp__title b {
   font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--teal-ink);
+  font-size: var(--fs-label);
+  color: var(--tone-recommend-ink);
 }
 .hp__sec {
   display: grid;
-  grid-template-columns: 152px 1fr;
+  grid-template-columns: 156px 1fr;
   align-items: baseline;
-  gap: 8px;
+  gap: 6px;
 }
 .hp__h {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
+  letter-spacing: 0;
   color: var(--muted);
 }
 .hp__h::before {
@@ -142,13 +139,14 @@ const rows: Row[] = [
 }
 .hp__sec p {
   margin: 0;
-  font-size: 12.5px;
-  line-height: 1.6;
+  font-size: var(--fs-note);
+  line-height: 1.5;
+  letter-spacing: 0;
   color: var(--ink);
 }
 .hp__sec p.is-kept {
   font-weight: 700;
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .hp__revisit {
   margin: 2px 0;
@@ -170,37 +168,37 @@ const rows: Row[] = [
   border-radius: 50%;
   background: var(--line-strong);
 }
-.hp__leader.is-teal,
-.hp__leader.is-teal::before {
-  background: var(--teal);
+.hp__leader.is-recommend,
+.hp__leader.is-recommend::before {
+  background: var(--tone-recommend);
 }
 .hp__note {
   grid-column: 3;
   margin: 0;
   padding-left: 10px;
-  font-size: 12.5px;
+  font-size: var(--fs-note);
   line-height: 1.5;
   color: var(--ink-2);
 }
 .hp__src {
-  display: block;
+  margin-right: 8px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: var(--ext-ink);
+  color: var(--tone-source-ink);
 }
 .hp__note.is-strong {
-  font-size: 15px;
+  font-size: var(--fs-body);
   font-weight: 700;
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .hp__foot {
   display: flex;
   align-items: baseline;
   gap: 10px;
   margin: 8px 0 0;
-  font-size: 12.5px;
+  font-size: var(--fs-note);
   color: var(--muted);
 }
 </style>

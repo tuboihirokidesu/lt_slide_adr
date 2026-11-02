@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useSlideContext } from '@slidev/client'
 
-const props = defineProps<{ tag?: string; chapter?: string }>()
+const props = defineProps<{ chapter?: string }>()
 
 const { $nav, $page, $renderContext } = useSlideContext()
 // 書き出し（自動操作のブラウザ）や一覧では、ループする光を止めて静止画として整える
@@ -22,7 +22,6 @@ const chapterName = computed(() => props.chapter?.split(' ').slice(1).join(' '))
       <span v-if="chapter" class="fig__chapter"><b>{{ chapterNo }}</b>{{ chapterName }}</span>
       <span class="fig__page" aria-hidden="true">{{ pageNo }}<b>/</b>{{ total }}</span>
     </p>
-    <span v-if="tag" class="fig__tag">{{ tag }}</span>
     <slot />
   </div>
 </template>
@@ -46,7 +45,7 @@ const chapterName = computed(() => props.chapter?.split(' ').slice(1).join(' '))
   align-items: center;
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -57,6 +56,8 @@ const chapterName = computed(() => props.chapter?.split(' ').slice(1).join(' '))
   align-items: center;
   gap: 10px;
   font-family: var(--font-sans);
+  font-size: var(--fs-note);
+  text-transform: none;
   letter-spacing: 0.08em;
 }
 .fig__chapter b {
@@ -84,17 +85,5 @@ const chapterName = computed(() => props.chapter?.split(' ').slice(1).join(' '))
 .fig__page b {
   font-weight: 400;
   opacity: 0.5;
-}
-.fig__tag {
-  position: absolute;
-  top: 56px;
-  right: 60px;
-  padding: 5px 14px;
-  border-radius: 999px;
-  border: 1px solid var(--amber);
-  background: var(--amber-fill);
-  color: var(--amber-ink);
-  font-size: 13px;
-  font-weight: 700;
 }
 </style>

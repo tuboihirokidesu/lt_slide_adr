@@ -3,10 +3,10 @@ import type { SourceId } from '../data/sources'
 
 type Voice = { ref: SourceId; label?: string; say: string }
 
-const sides: { name: string; tone: 'teal' | 'amber'; voices: Voice[] }[] = [
+const sides: { name: string; tone: 'recommend' | 'caution'; voices: Voice[] }[] = [
   {
     name: '必要派',
-    tone: 'teal',
+    tone: 'recommend',
     voices: [
       { ref: 'nygard', label: 'Nygard（2011）', say: '理由が分からないと、盲目的に受け入れるか変えるしかない。' },
       { ref: 'radar', say: '2017〜18年に Adopt。ただし現在の版には載っていない。' },
@@ -18,7 +18,7 @@ const sides: { name: string; tone: 'teal' | 'amber'; voices: Voice[] }[] = [
   },
   {
     name: '懐疑派',
-    tone: 'amber',
+    tone: 'caution',
     voices: [
       { ref: 'keeling', say: '一度読んだら、何か月も見返さない。' },
       { ref: 'zenn-guide', label: 'Zenn「ADR 完全ガイド」', say: '1〜2人の開発や、3か月で捨てる PoC なら見送る。' },
@@ -61,14 +61,14 @@ const sides: { name: string; tone: 'teal' | 'amber'; voices: Voice[] }[] = [
   border-left: 1px solid var(--line-strong);
 }
 .deb__side {
-  --c: var(--teal);
-  --c-ink: var(--teal-ink);
+  --c: var(--tone-recommend);
+  --c-ink: var(--tone-recommend-ink);
   padding-right: 32px;
   text-align: right;
 }
-.deb__side.is-amber {
-  --c: var(--amber);
-  --c-ink: var(--amber-ink);
+.deb__side.is-caution {
+  --c: var(--tone-caution);
+  --c-ink: var(--tone-caution-ink);
   padding: 0 0 0 32px;
   text-align: left;
 }
@@ -80,7 +80,7 @@ const sides: { name: string; tone: 'teal' | 'amber'; voices: Voice[] }[] = [
   gap: 14px;
   padding-bottom: 14px;
 }
-.deb__side.is-amber header {
+.deb__side.is-caution header {
   flex-direction: row-reverse;
 }
 .deb__side header::after {
@@ -92,27 +92,19 @@ const sides: { name: string; tone: 'teal' | 'amber'; voices: Voice[] }[] = [
   height: 3px;
   background: var(--c);
 }
-.deb__side.is-amber header::after {
+.deb__side.is-caution header::after {
   right: auto;
   left: -32px;
 }
 .deb__side header strong {
-  font-size: 18px;
+  font-size: var(--fs-body);
   font-weight: 700;
   color: var(--c-ink);
 }
-.deb__side header b {
-  font-size: 52px;
-  font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  font-variant-numeric: tabular-nums;
-  color: var(--c);
-}
 .deb__side ul {
   display: grid;
-  gap: 10px;
-  padding-top: 16px;
+  gap: 8px;
+  padding-top: 14px;
 }
 .deb__side li {
   display: grid;
@@ -120,16 +112,16 @@ const sides: { name: string; tone: 'teal' | 'amber'; voices: Voice[] }[] = [
 }
 .deb__who {
   justify-self: end;
-  font-size: 13px;
+  font-size: var(--fs-note);
   font-weight: 700;
   line-height: 1.5;
 }
-.deb__side.is-amber .deb__who {
+.deb__side.is-caution .deb__who {
   justify-self: start;
 }
 .deb__say {
-  font-size: 13.5px;
-  line-height: 1.55;
+  font-size: var(--fs-note);
+  line-height: 1.5;
   color: var(--ink-2);
 }
 </style>

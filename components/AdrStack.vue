@@ -13,8 +13,8 @@ const isStatic = computed(
 const shown = computed(() => active.value || isStatic.value)
 
 const back = [
-  { no: '0003', file: '0003-keep-monorepo.md', title: 'モノレポを分割しない。', x: 96, y: 0 },
-  { no: '0004', file: '0004-no-graphql.md', title: 'GraphQL を導入しない。', x: 48, y: 34 },
+  { no: '0003', file: '0003-keep-monorepo.md', title: 'モノレポを分割しない。', x: 80, y: 0 },
+  { no: '0004', file: '0004-no-graphql.md', title: 'GraphQL を導入しない。', x: 40, y: 34 },
 ]
 const options = [
   { text: 'CDN のキャッシュに任せる', kept: true },
@@ -69,7 +69,7 @@ const rejectedFocus = computed(() => props.focus === 'rejected')
 .stack-x__back,
 .stack-x__front {
   position: absolute;
-  width: 304px;
+  width: 320px;
 }
 .stack-x__back {
   height: 150px;
@@ -96,25 +96,25 @@ const rejectedFocus = computed(() => props.focus === 'rejected')
   align-items: baseline;
   justify-content: space-between;
   gap: 10px;
-  font-size: 13px;
+  font-size: var(--fs-note);
   line-height: 1.55;
 }
 .stack-x__opts li.is-kept {
   font-weight: 600;
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .stack-x__opts small {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 500;
   color: var(--muted);
 }
 .is-cut small {
-  color: var(--amber-ink);
+  color: var(--tone-caution-ink);
 }
 .stack-x__revisit {
   margin: 0;
-  font-size: 12.5px;
+  font-size: var(--fs-note);
   color: var(--ink-2);
 }
 
@@ -129,10 +129,10 @@ const rejectedFocus = computed(() => props.focus === 'rejected')
   opacity: 0.3;
 }
 .is-focus .is-cut .fx-no {
-  color: var(--amber-ink);
-  filter: drop-shadow(0 0 6px rgba(240, 164, 43, 0.55));
+  color: var(--tone-caution-ink);
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--tone-caution) 55%, transparent));
 }
 .is-focus .stack-x__front {
-  border-color: rgba(240, 164, 43, 0.28);
+  border-color: color-mix(in srgb, var(--tone-caution) 28%, transparent);
 }
 </style>

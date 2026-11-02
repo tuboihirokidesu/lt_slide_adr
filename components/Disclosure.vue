@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const crammed = [86, 72, 94, 60, 80, 90, 54, 76, 88, 66, 92, 58]
 
-const CARD = 196
-const STEP_X = 219
+const CARD = 212
+const STEP_X = 228
 const STEP_Y = 64
 const steps = [
   { label: 'Step 1', note: '毎回読む。中身は索引への1行だけ。' },
@@ -26,10 +26,10 @@ const indexRows = [
         <div class="disc__lines">
           <i v-for="(w, i) in crammed" :key="i" :style="{ width: `${w}%` }" />
         </div>
-        <svg class="disc__x" viewBox="0 0 190 176" width="190" height="176" aria-hidden="true">
+        <svg class="disc__x" viewBox="0 0 190 176" width="168" height="156" aria-hidden="true">
           <g class="disc__x-mark">
-            <Edge d="M27 24 L163 152" tone="amber" />
-            <Edge d="M163 24 L27 152" tone="amber" :delay="120" />
+            <Edge d="M27 24 L163 152" tone="caution" />
+            <Edge d="M163 24 L27 152" tone="caution" :delay="120" />
           </g>
         </svg>
       </div>
@@ -38,9 +38,9 @@ const indexRows = [
     </div>
 
     <div class="disc__stair">
-      <svg class="disc__edges" viewBox="0 0 634 330" width="634" height="330" aria-hidden="true">
-        <Edge :d="`M${CARD} 104 H${STEP_X - 1}`" :end="[STEP_X - 1, 104]" dir="r" tone="teal" />
-        <Edge :d="`M${STEP_X + CARD} 170 H${STEP_X * 2 - 1}`" :end="[STEP_X * 2 - 1, 170]" dir="r" tone="teal" />
+      <svg class="disc__edges" viewBox="0 0 668 330" width="668" height="330" aria-hidden="true">
+        <Edge :d="`M${CARD} 104 H${STEP_X - 1}`" :end="[STEP_X - 1, 104]" dir="r" tone="recommend" />
+        <Edge :d="`M${STEP_X + CARD} 170 H${STEP_X * 2 - 1}`" :end="[STEP_X * 2 - 1, 170]" dir="r" tone="recommend" />
       </svg>
 
       <div class="disc__step" :style="pos(0)">
@@ -74,7 +74,7 @@ const indexRows = [
         <p class="disc__note"><span class="fx-label-mono">{{ steps[2].label }}</span>{{ steps[2].note }}</p>
       </div>
 
-      <figure class="disc__quote">
+      <figure class="disc__quote" :style="{ left: `${STEP_X * 2}px` }">
         <blockquote class="fx-quote">progressively<br>disclosed way</blockquote>
         <figcaption class="fx-cite"><Ref id="kent" /></figcaption>
       </figure>
@@ -85,8 +85,8 @@ const indexRows = [
 <style scoped>
 .disc {
   display: grid;
-  grid-template-columns: 190px 1fr;
-  gap: 36px;
+  grid-template-columns: 168px 1fr;
+  gap: 24px;
   align-items: start;
 }
 .disc__crammed {
@@ -113,19 +113,19 @@ const indexRows = [
 }
 .disc__caption {
   margin: 14px 0 0;
-  font-size: 13.5px;
+  font-size: var(--fs-note);
   font-weight: 700;
 }
 .disc__sub {
   margin: 4px 0 0;
-  font-size: 12.5px;
+  font-size: var(--fs-note);
   line-height: 1.6;
   color: var(--muted);
 }
 .disc__stair {
   position: relative;
-  width: 634px;
-  height: 370px;
+  width: 668px;
+  height: 380px;
 }
 .disc__edges {
   position: absolute;
@@ -135,14 +135,14 @@ const indexRows = [
 }
 .disc__step {
   position: absolute;
-  width: 196px;
+  width: 212px;
 }
 .disc__code {
   display: grid;
   gap: 2px;
   padding: 10px 14px 12px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-label);
   line-height: 1.5;
 }
 .disc__code .is-dim {
@@ -153,67 +153,67 @@ const indexRows = [
   margin: 2px -6px 0;
   padding: 2px 6px;
   border-radius: var(--r-mark);
-  background: var(--teal-fill);
-  color: var(--teal-ink);
+  background: var(--tone-recommend-fill);
+  color: var(--tone-recommend-ink);
   font-weight: 700;
-}
-.disc__code .is-hit {
-  font-size: 12px;
 }
 .disc__index {
   display: grid;
-  gap: 3px;
-  padding: 10px 14px 12px;
+  gap: 2px;
+  padding: 10px 12px 12px;
 }
 .disc__index li {
   display: flex;
+  align-items: baseline;
   gap: 8px;
-  font-size: 12px;
+  font-size: var(--fs-note);
   line-height: 1.55;
   white-space: nowrap;
   color: var(--ink-2);
 }
 .disc__index b {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
+  font-variant-numeric: tabular-nums;
   font-weight: 600;
   color: var(--muted);
 }
 .disc__index .is-hit b {
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .disc__card :deep(.fx-paper__title) {
-  font-size: 13.5px;
+  font-size: var(--fs-body);
 }
 .disc__card :deep(.fx-paper__body) {
   padding: 10px 14px 12px;
 }
 .disc__revisit {
   margin: 0;
-  padding: 4px 10px;
-  font-size: 12px;
+  padding: 4px 8px;
+  font-size: var(--fs-note);
+  white-space: nowrap;
   color: var(--ink-2);
 }
 .disc__note {
   margin: 10px 0 0;
-  font-size: 12.5px;
+  font-size: var(--fs-note);
   line-height: 1.55;
   color: var(--ink-2);
 }
 .disc__note .fx-label-mono {
   margin-bottom: 2px;
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .disc__quote {
   position: absolute;
-  left: 438px;
   top: 0;
   margin: 0;
-  padding-left: 16px;
-  border-left: 2px solid var(--ext);
+  padding-left: 14px;
+  border-left: 2px solid var(--tone-source);
 }
 .disc__quote .fx-quote {
-  font-size: 22px;
+  font-size: var(--fs-title);
+  white-space: nowrap;
   line-height: 1.25;
 }
 </style>

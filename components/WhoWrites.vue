@@ -56,18 +56,19 @@ const camps: { name: string; voices: { who: Inline[]; say: string }[] }[] = [
   padding: 12px 0 2px;
 }
 .who header strong {
-  font-size: 17px;
+  font-size: var(--fs-body);
   font-weight: 700;
 }
 .who header span {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
   color: var(--muted);
 }
 .who__camp li {
   display: grid;
-  grid-template-columns: 168px 1fr;
+  grid-template-columns: 150px 1fr;
   gap: 16px;
   align-items: baseline;
   padding: 9px 0;
@@ -77,15 +78,16 @@ const camps: { name: string; voices: { who: Inline[]; say: string }[] }[] = [
   border-top: 0;
 }
 .who__name {
-  font-size: 12.5px;
+  word-break: keep-all;
+  font-size: var(--fs-note);
   font-weight: 700;
-  line-height: 1.55;
+  line-height: 1.5;
   color: var(--ink-2);
 }
 .who__camp p {
   margin: 0;
-  font-size: 13.5px;
-  line-height: 1.65;
+  font-size: var(--fs-note);
+  line-height: 1.6;
 }
 .who__common {
   grid-column: 1 / -1;
@@ -94,13 +96,13 @@ const camps: { name: string; voices: { who: Inline[]; say: string }[] }[] = [
   gap: 20px;
   margin: 18px 0 0;
   padding: 14px 0 0;
-  border-top: 1.5px solid var(--teal-line);
+  border-top: 1.5px solid var(--tone-recommend-line);
 }
 .who__common .fx-label-mono {
-  color: var(--teal-ink);
+  color: var(--tone-recommend-ink);
 }
 .who__common strong {
-  font-size: 17px;
+  font-size: var(--fs-body);
   font-weight: 700;
 }
 </style>

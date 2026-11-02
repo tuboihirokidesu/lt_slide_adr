@@ -20,12 +20,12 @@ const loopOn = () => props.stage >= 3
           d="M485 204 V238 Q485 250 473 250 H97 Q85 250 85 238 V206"
           :end="[85, 204]"
           dir="u"
-          tone="amber"
+          tone="caution"
           :on="loopOn()"
           :delay="100"
         />
       </svg>
-      <span class="fx-label fx-label--amber loop__return" :class="{ 'is-on': loopOn() }">毎回、人間が思い出させる</span>
+      <span class="fx-label fx-label--caution loop__return" :class="{ 'is-on': loopOn() }">毎回、人間が思い出させる</span>
 
       <div
         v-for="(s, i) in sessions"
@@ -91,27 +91,27 @@ const loopOn = () => props.stage >= 3
 .loop__who {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: 0.06em;
   color: var(--muted);
 }
 .loop__who--you {
   margin-top: 12px;
-  color: var(--amber-ink);
+  color: var(--tone-caution-ink);
 }
 .loop__msg {
   margin: 4px 0 0;
   padding: 8px 10px;
   border-radius: var(--r-chip);
   background: var(--label-bg);
-  font-size: 13px;
+  font-size: var(--fs-note);
   font-weight: 600;
   line-height: 1.55;
 }
 .loop__msg--you {
-  background: var(--amber-fill);
-  color: var(--amber-ink);
+  background: var(--tone-caution-fill);
+  color: var(--tone-caution-ink);
 }
 .loop__reset {
   position: absolute;
@@ -126,15 +126,15 @@ const loopOn = () => props.stage >= 3
 .loop__quote {
   margin: 0;
   padding-left: 22px;
-  border-left: 2px solid var(--ext);
+  border-left: 2px solid var(--tone-source);
 }
 .loop__quote .fx-quote {
-  font-size: 28px;
+  font-size: var(--fs-title);
   line-height: 1.25;
 }
 .loop__quote p {
   margin: 18px 0 0;
-  font-size: 13.5px;
+  font-size: var(--fs-note);
   line-height: 1.7;
   color: var(--ink-2);
 }

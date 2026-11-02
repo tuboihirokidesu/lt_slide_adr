@@ -19,11 +19,11 @@ const gaps = ['レビュー', '承認', '番号の衝突', '陳腐化']
       </div>
 
       <svg class="rf__arrow" viewBox="0 0 64 20" width="64" height="20" aria-hidden="true">
-        <Edge d="M4 10 H60" :end="[60, 10]" dir="r" tone="teal" :on="stage >= 1" />
+        <Edge d="M4 10 H60" :end="[60, 10]" dir="r" tone="recommend" :on="stage >= 1" />
       </svg>
 
       <div class="rf__col fx-enter" :class="{ 'is-on': stage >= 1 }" style="--d: 300ms">
-        <span class="fx-label-mono is-teal"><Ref id="kent" label="Kent" /> の捉え直し</span>
+        <span class="fx-label-mono is-recommend"><Ref id="kent" label="Kent" /> の捉え直し</span>
         <AdrPaper class="rf__paper" no="0005" file="0005-no-cache-layer.md" title="独自のキャッシュ層を作らない。" status="accepted">
           <p class="fx-paper__h">Considered options</p>
           <p class="rf__opt"><span class="fx-no">Redis を前段に置く</span></p>
@@ -51,7 +51,7 @@ const gaps = ['レビュー', '承認', '番号の衝突', '陳腐化']
 .rf__mine {
   margin-right: 10px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: 0.08em;
   color: var(--muted);
@@ -68,14 +68,14 @@ const gaps = ['レビュー', '承認', '番号の衝突', '陳腐化']
 .rf__col {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 .rf__col.is-old .rf__paper {
   box-shadow: none;
   background: var(--legacy-fill);
 }
-.fx-label-mono.is-teal {
-  color: var(--teal-ink);
+.fx-label-mono.is-recommend {
+  color: var(--tone-recommend-ink);
 }
 .rf__paper {
   flex: 1;
@@ -93,42 +93,42 @@ const gaps = ['レビュー', '承認', '番号の衝突', '陳腐化']
 }
 .rf__opt {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--fs-note);
 }
 .rf__revisit {
   margin: 2px 0 0;
   padding: 4px 10px;
-  font-size: 12px;
+  font-size: var(--fs-note);
   color: var(--ink-2);
 }
 .rf__cap {
-  margin: 2px 0 0;
-  font-size: 13.5px;
+  margin: 0;
+  font-size: var(--fs-note);
   line-height: 1.6;
   color: var(--ink-2);
 }
 .rf__cap strong {
   display: block;
-  font-size: 16px;
+  font-size: var(--fs-body);
   color: var(--ink);
 }
 .rf__foot {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
-  margin-top: 20px;
-  padding-top: 16px;
+  margin-top: 14px;
+  padding-top: 12px;
   border-top: 1px solid var(--line-strong);
 }
 .rf__fail {
   margin: 0;
   padding-right: 24px;
-  font-size: 13.5px;
+  font-size: var(--fs-note);
   line-height: 1.75;
   color: var(--ink-2);
 }
 .rf__fail strong {
-  font-size: 15px;
+  font-size: var(--fs-body);
   color: var(--ink);
 }
 .rf__gaps {
@@ -143,7 +143,7 @@ const gaps = ['レビュー', '承認', '番号の衝突', '陳腐化']
 }
 .rf__fill {
   margin: 6px 0 0;
-  font-size: 13.5px;
+  font-size: var(--fs-note);
   color: var(--ink-2);
 }
 </style>
