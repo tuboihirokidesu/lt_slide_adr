@@ -1,29 +1,34 @@
 <script setup lang="ts">
+const repo = 'https://github.com/kentcdodds/kody/tree/main/docs/contributing/decisions'
+const file = (slug: string) => `https://github.com/kentcdodds/kody/blob/main/docs/contributing/decisions/${slug}.md`
+
 const nos = [
-  { subject: 'ユーザー向けのパッケージバージョニング', verdict: 'しない' },
-  { subject: 'repo・package 向けの CI プリミティブ', verdict: '作らない' },
-  { subject: 'skills-over-MCP への対応', verdict: '仕様が固まるまで待つ' },
-  { subject: 'イベント購読の使い捨てコード', verdict: 'パッケージに統一する' },
-  { subject: 'パッケージサービスというプリミティブ', verdict: '削除する', key: true },
+  { adr: '0001', slug: '0001-no-package-versioning', subject: 'ユーザー向けのパッケージバージョニング', verdict: 'しない' },
+  { adr: '0006', slug: '0006-no-repo-ci-primitive', subject: 'repo・package 向けの CI プリミティブ', verdict: '作らない' },
+  { adr: '0015', slug: '0015-skills-over-mcp-wait', subject: 'skills-over-MCP への対応', verdict: '仕様が固まるまで待つ', later: 'のちに 0058 で置き換え' },
+  { adr: '0041', slug: '0041-no-hardcoded-operator-correspondence', subject: 'イベント購読の使い捨てコード', verdict: 'パッケージに統一する' },
+  { adr: '0025', slug: '0025-no-package-services-primitive', subject: 'パッケージサービスというプリミティブ', verdict: '削除する', key: true },
 ]
-const no = (i: number) => String(i + 1).padStart(2, '0')
 </script>
 
 <template>
   <div class="kody">
     <div class="fx-paper kody__list">
-      <div class="fx-paper__head"><span>kentcdodds/kody · docs/contributing/decisions</span><span>動画で挙がった例</span></div>
+      <div class="fx-paper__head"><a :href="repo" target="_blank" rel="noopener">kentcdodds/kody · docs/contributing/decisions</a><span>動画で挙がった例</span></div>
       <ol>
-        <li v-for="(n, i) in nos" :key="n.subject" :class="{ 'is-key': n.key }">
-          <b>{{ no(i) }}</b>
-          <span class="fx-no">{{ n.subject }}</span>
+        <li v-for="n in nos" :key="n.adr" :class="{ 'is-key': n.key }">
+          <a :href="file(n.slug)" target="_blank" rel="noopener">{{ n.adr }}</a>
+          <span class="kody__subject"><span class="fx-no">{{ n.subject }}</span><small v-if="n.later">{{ n.later }}</small></span>
           <em>{{ n.verdict }}</em>
         </li>
       </ol>
+      <a class="kody__repo" :href="repo" target="_blank" rel="noopener">
+        <span>github.com/kentcdodds/kody/tree/main/docs/contributing/decisions</span><i aria-hidden="true">↗</i>
+      </a>
     </div>
 
     <div class="kody__note">
-      <p class="kody__kicker">05 で起きたこと</p>
+      <p class="kody__kicker">0025 で起きたこと</p>
       <p class="kody__push">エージェントは「それは有用だ」と、何度も押し返してきた。</p>
       <p class="kody__big">ADR は、あるものが<br>もう存在しないことを<br>確かめる回帰テスト。</p>
       <p class="fx-cite">Kent C. Dodds の言葉から</p>
@@ -43,7 +48,7 @@ const no = (i: number) => String(i + 1).padStart(2, '0')
 }
 .kody__list li {
   display: grid;
-  grid-template-columns: 30px 1fr auto;
+  grid-template-columns: 40px 1fr auto;
   align-items: baseline;
   gap: 12px;
   padding: 13px 0;
@@ -54,11 +59,50 @@ const no = (i: number) => String(i + 1).padStart(2, '0')
 .kody__list li:first-child {
   border-top: 0;
 }
-.kody__list b {
+.kody__list li > a {
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 600;
   color: var(--muted);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 3px;
+}
+.kody__subject small {
+  display: block;
+  margin-top: 4px;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--muted);
+}
+.fx-paper__head a {
+  color: inherit;
+  text-decoration: none;
+}
+.kody__repo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 18px 12px;
+  border-top: 1px dashed var(--line-strong);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ext-ink);
+  text-decoration: none;
+}
+.kody__repo i {
+  font-style: normal;
+}
+:is(.kody__list li > a, .kody__repo, .fx-paper__head a) {
+  border-bottom: 0;
+}
+:is(.kody__list li > a, .kody__repo, .fx-paper__head a):hover {
+  color: var(--ext-ink);
+  text-decoration-color: currentColor;
 }
 .kody__list em {
   font-style: normal;
@@ -77,7 +121,7 @@ const no = (i: number) => String(i + 1).padStart(2, '0')
 .kody__list li.is-key .fx-no {
   color: var(--ink);
 }
-.kody__list li.is-key b {
+.kody__list li.is-key > a {
   color: var(--amber-ink);
 }
 .kody__note {
