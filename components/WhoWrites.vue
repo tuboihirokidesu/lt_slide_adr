@@ -8,6 +8,7 @@ const camps: { name: string; voices: { who: Inline[]; say: string }[] }[] = [
       { who: [{ ref: 'kent' }], say: 'エージェントに ADR を保存させる。自分から提案してくる状態を目指す。' },
       { who: [{ ref: 'ebbing' }, '（Zenn、4.5か月で64本）'], say: '書くのは Claude。人間は、捨てた案と理由が自分の言ったことと合っているかだけを見る。' },
       { who: [{ ref: 'layerx' }], say: 'LLM でたたき台を作り、人間が仕上げる。' },
+      { who: [{ ref: 'equalexperts' }, '（英国のコンサル）'], say: '記録のなかった決定を、遡って数十本。人間が決定の核を一文で書き、AI が周りを書く。' },
     ],
   },
   {
@@ -18,18 +19,12 @@ const camps: { name: string; voices: { who: Inline[]; say: string }[] }[] = [
     ],
   },
 ]
-
-const stats = [
-  { value: '+20%', unit: '以上', label: '推論コスト', tone: 'amber' },
-  { value: '上がらず', label: 'タスク成功率', tone: 'muted' },
-  { value: 'わずかに低下', label: 'LLM が生成したファイルの成功率', tone: 'amber' },
-]
 </script>
 
 <template>
   <div class="who">
     <section v-for="c in camps" :key="c.name" class="who__camp">
-      <header><strong>{{ c.name }}</strong></header>
+      <header><strong>{{ c.name }}</strong><span>{{ c.voices.length }}</span></header>
       <ul>
         <li v-for="v in c.voices" :key="v.say">
           <span class="who__name"><RefText :text="v.who" /></span>
@@ -38,127 +33,74 @@ const stats = [
       </ul>
     </section>
 
-    <section class="fx-box who__eth">
-      <header><strong><Ref id="eth" /> の研究</strong><span class="who__tag">arXiv 2602.11988</span></header>
-      <p class="who__paper">AGENTS.md 型のコンテキストファイルを評価した研究。</p>
-      <dl>
-        <div v-for="s in stats" :key="s.label" :class="`is-${s.tone}`">
-          <dt>{{ s.label }}</dt>
-          <dd><b>{{ s.value }}</b><small v-if="s.unit">{{ s.unit }}</small></dd>
-        </div>
-      </dl>
-      <p class="who__rec">推奨は、人間が書いた、非標準な慣行に絞った最小限の指示。</p>
-    </section>
+    <p class="who__common">
+      <span class="fx-label-mono">両派が一致する点</span>
+      <strong>「なぜ」と「捨てた案」を決めるのは、人間。</strong>
+    </p>
   </div>
 </template>
 
 <style scoped>
 .who {
   display: grid;
-  grid-template-columns: 1fr 1fr 290px;
-  gap: 28px;
-  align-items: stretch;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 48px;
 }
 .who__camp {
   border-top: 1px solid var(--line-strong);
 }
 .who header {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
-  gap: 8px;
-  padding: 14px 0 6px;
+  padding: 12px 0 2px;
 }
 .who header strong {
   font-size: 17px;
   font-weight: 700;
 }
-.who__eth header {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  padding-top: 18px;
-}
-.who__tag {
+.who header span {
   font-family: var(--font-mono);
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--muted);
 }
 .who__camp li {
-  padding: 10px 0;
+  display: grid;
+  grid-template-columns: 168px 1fr;
+  gap: 16px;
+  align-items: baseline;
+  padding: 9px 0;
   border-top: 1px solid var(--line);
 }
 .who__camp li:first-child {
   border-top: 0;
 }
 .who__name {
-  display: block;
   font-size: 12.5px;
   font-weight: 700;
+  line-height: 1.55;
   color: var(--ink-2);
 }
 .who__camp p {
-  margin: 3px 0 0;
+  margin: 0;
   font-size: 13.5px;
   line-height: 1.65;
 }
-.who__eth {
-  padding: 0 22px 18px;
-  display: flex;
-  flex-direction: column;
-}
-.who__paper {
-  margin: 0;
-  font-size: 12.5px;
-  line-height: 1.6;
-  color: var(--muted);
-}
-.who__eth dl {
-  margin: 12px 0 0;
-  display: grid;
-  gap: 10px;
-}
-.who__eth dl > div {
-  padding-top: 10px;
-  border-top: 1px solid var(--line);
-}
-.who__eth dt {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--muted);
-}
-.who__eth dd {
-  margin: 2px 0 0;
+.who__common {
+  grid-column: 1 / -1;
   display: flex;
   align-items: baseline;
-  gap: 6px;
+  gap: 20px;
+  margin: 18px 0 0;
+  padding: 14px 0 0;
+  border-top: 1.5px solid var(--teal-line);
 }
-.who__eth dd b {
-  font-size: 22px;
+.who__common .fx-label-mono {
+  color: var(--teal-ink);
+}
+.who__common strong {
+  font-size: 17px;
   font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-}
-.who__eth div:first-child dd b {
-  font-size: 40px;
-  letter-spacing: -0.03em;
-}
-.who__eth .is-amber dd b {
-  color: var(--amber-ink);
-}
-.who__eth dd small {
-  font-size: 13.5px;
-  font-weight: 700;
-  color: var(--amber-ink);
-}
-.who__rec {
-  margin: auto 0 0;
-  padding-top: 12px;
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.6;
-  color: var(--ink-2);
 }
 </style>

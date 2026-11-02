@@ -1,16 +1,16 @@
-// 出典レジストリ。スライドのリンクと31枚目の出典一覧は、すべてここから引く。
-export type SourceGroup = 'video' | 'primary' | 'ja' | 'x'
+// 出典レジストリ。スライドのリンクと最後の出典一覧は、すべてここから引く。
+export type SourceGroup = 'video' | 'primary' | 'paper' | 'ja' | 'x'
 
 type Base = {
   /** スライドに出す帰属の表示名 */
   who: string
-  /** 原典のタイトル（31枚目に出す） */
+  /** 原典のタイトル（出典一覧に出す） */
   title: string
   /** 原稿に URL がないものは持たない。Ref はプレーンテキストで描く */
   url?: string
 }
 
-/** 31枚目の4群のどれかに並ぶ出典か、別の出典の中の1ページ（31枚目では親の行にまとめる） */
+/** 出典一覧のどれかの群に並ぶ出典か、別の出典の中の1ページ（一覧では親の行にまとめる） */
 export type Source = Base & ({ group: SourceGroup } | { partOf: string })
 
 const kody = 'https://github.com/kody-hq/kody/blob/main/docs/contributing'
@@ -43,9 +43,17 @@ export const sources = {
   gcloud: { group: 'primary', who: 'Google Cloud', title: 'Architecture decision records overview', url: 'https://docs.cloud.google.com/architecture/architecture-decision-records' },
   azure: { group: 'primary', who: 'Azure Well-Architected', title: 'Maintain an ADR', url: 'https://learn.microsoft.com/en-us/azure/well-architected/architect-role/architecture-decision-record' },
   openai: { group: 'primary', who: 'OpenAI', title: 'Harness engineering', url: 'https://openai.com/index/harness-engineering/' },
-  eth: { group: 'primary', who: 'ETH Zurich', title: 'Gloaguen ほか「Evaluating AGENTS.md」2026', url: 'https://arxiv.org/abs/2602.11988' },
   pocock: { group: 'primary', who: 'Matt Pocock', title: 'grill-with-docs', url: 'https://github.com/mattpocock/skills' },
 
+  tang: { group: 'paper', who: 'Tang ほか', title: 'JSS 2006', url: 'https://doi.org/10.1016/j.jss.2006.04.029' },
+  buchgeher: { group: 'paper', who: 'Buchgeher ほか', title: 'IEEE Access 2023', url: 'https://doi.org/10.1109/ACCESS.2023.3287654' },
+  dhar: { group: 'paper', who: 'Dhar ほか', title: 'ICSA 2024', url: 'https://arxiv.org/abs/2403.01709' },
+  gupta: { group: 'paper', who: 'Gupta ほか', title: 'EASE 2026', url: 'https://arxiv.org/abs/2604.03826' },
+  eth: { group: 'paper', who: 'ETH Zurich', title: 'arXiv 2026', url: 'https://arxiv.org/abs/2602.11988' },
+  'eth-appendix': { partOf: 'eth', who: 'ETH Zurich', title: '付録B', url: 'https://arxiv.org/html/2602.11988v2' },
+  lulla: { group: 'paper', who: 'Lulla ほか', title: 'JAWs 2026', url: 'https://arxiv.org/abs/2601.20404' },
+
+  equalexperts: { group: 'ja', who: 'Equal Experts', title: 'Accelerating ADRs with Generative AI', url: 'https://www.equalexperts.com/blog/ai/accelerating-architectural-decision-records-adrs-with-generative-ai/' },
   zozo: { group: 'ja', who: 'ZOZO', title: 'ZOZOFIT における ADR を利用した意思決定を残す文化作り', url: 'https://techblog.zozo.com/entry/adr-culture-of-zozofit' },
   layerx: { group: 'ja', who: 'LayerX', title: '不正検知システムを3日で設計し、3週間で本番リリースした話', url: 'https://tech.layerx.co.jp/entry/fraud-detection-development-accelerated-by-llm' },
   ebbing: { group: 'ja', who: 'Ebbing', title: '設計判断を 64 本の ADR に残している理由と書き方', url: 'https://zenn.dev/kam_labz/articles/ebbing-adr-with-claude-code' },

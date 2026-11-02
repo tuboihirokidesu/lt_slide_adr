@@ -4,7 +4,8 @@ import { sources, type Source, type SourceGroup, type SourceId } from '../data/s
 const groups: { key: SourceGroup; name: string }[] = [
   { key: 'video', name: '動画' },
   { key: 'primary', name: '一次資料・ガイド' },
-  { key: 'ja', name: '日本語記事・企業ブログ' },
+  { key: 'paper', name: '研究' },
+  { key: 'ja', name: '記事・企業ブログ' },
   { key: 'x', name: 'X' },
 ]
 
@@ -30,9 +31,16 @@ const parts = (id: SourceId) => all.filter(([, s]) => 'partOf' in s && s.partOf 
 .src {
   display: grid;
   grid-template-columns: 0.9fr 1.2fr 0.95fr 1.18fr;
-  gap: 20px;
+  grid-template-areas: 'video primary ja x' 'video primary ja paper';
+  grid-template-rows: auto 1fr;
+  gap: 14px 20px;
   align-items: start;
 }
+.src__group.is-video { grid-area: video; }
+.src__group.is-primary { grid-area: primary; }
+.src__group.is-paper { grid-area: paper; }
+.src__group.is-ja { grid-area: ja; }
+.src__group.is-x { grid-area: x; }
 .src__group {
   border-top: 1px solid var(--line-strong);
 }
@@ -64,19 +72,35 @@ const parts = (id: SourceId) => all.filter(([, s]) => 'partOf' in s && s.partOf 
   display: block;
   font-size: 11px;
 }
-.src__group.is-x li {
+.src__group.is-x li,
+.src__group.is-paper li {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 8px;
-  padding: 2px 0;
+  padding: 1px 0;
   white-space: nowrap;
 }
 .src__group.is-x .src__who {
   font-family: var(--font-mono);
   font-weight: 600;
 }
-.src__group.is-x .src__title {
+.src__group.is-x li,
+.src__group.is-paper li {
+  font-size: 10.5px;
+}
+.src__group.is-paper li {
+  justify-content: flex-start;
+}
+.src__group.is-paper .src__title {
+  margin-left: auto;
+}
+.src__group.is-paper small {
+  display: inline;
+  font-size: 10.5px;
+}
+.src__group.is-x .src__title,
+.src__group.is-paper .src__title {
   color: var(--muted);
 }
 </style>
