@@ -1,18 +1,20 @@
 <script setup lang="ts">
+import type { Inline } from '../data/sources'
+
 type Line = { text: string; cut?: boolean; kept?: boolean }
 type Row = {
   key: string
   head?: string
   lines?: Line[]
   revisit?: boolean
-  src?: string
+  src?: Inline
   note?: string
   strong?: boolean
 }
 
 const rows: Row[] = [
-  { key: 'fm', src: 'Azure', note: 'confidence（確信度）。deciders は Accepted にした人間。' },
-  { key: 'title', src: 'Nygard', note: 'タイトルは決定そのもの。No なら「〜しない」。' },
+  { key: 'fm', src: { ref: 'azure', label: 'Azure' }, note: 'confidence（確信度）。deciders は Accepted にした人間。' },
+  { key: 'title', src: { ref: 'nygard', label: 'Nygard' }, note: 'タイトルは決定そのもの。No なら「〜しない」。' },
   { key: 'Context', head: 'Context', lines: [{ text: '集計クエリが多く、ORM の生成 SQL では実行計画を制御しにくい。' }], note: '事実だけを、決定の後に書く。' },
   { key: 'Decision', head: 'Decision', lines: [{ text: 'ORM は入れない。SQL ファイルと型生成で書く。' }] },
   {
@@ -23,13 +25,13 @@ const rows: Row[] = [
       { text: 'ORM を入れる（却下：集計の実行計画を制御できない）', cut: true },
       { text: 'クエリビルダー（却下：結局 SQL を読む力が要る）', cut: true },
     ],
-    src: 'MADR',
+    src: { ref: 'madr' },
     note: 'ここが一番価値がある。',
     strong: true,
   },
   { key: 'Consequences', head: 'Consequences', lines: [{ text: '＋実行計画を読める　−定型の CRUD も手で書く' }], note: '悪い結果を必ず1つ以上。' },
-  { key: 'Revisit', head: 'Revisit if', lines: [{ text: 'CRUD 中心の画面が全体の半分を超えたら' }], revisit: true, src: 'Kent C. Dodds', note: '見直す条件を、具体的に。' },
-  { key: 'Enforcement', head: 'Enforcement', lines: [{ text: 'lint: no-restricted-imports（ORM パッケージ）' }], src: 'Kizuno18', note: 'どう守らせているか。なければ「レビューのみ」。' },
+  { key: 'Revisit', head: 'Revisit if', lines: [{ text: 'CRUD 中心の画面が全体の半分を超えたら' }], revisit: true, src: { ref: 'kent' }, note: '見直す条件を、具体的に。' },
+  { key: 'Enforcement', head: 'Enforcement', lines: [{ text: 'lint: no-restricted-imports（ORM パッケージ）' }], src: { ref: 'kizuno' }, note: 'どう守らせているか。なければ「レビューのみ」。' },
 ]
 </script>
 
@@ -59,12 +61,12 @@ const rows: Row[] = [
         <template v-if="r.note">
           <i class="hp__leader" :class="{ 'is-amber': r.strong }" :style="{ gridRow: i + 2 }" aria-hidden="true" />
           <p class="hp__note" :class="{ 'is-strong': r.strong }" :style="{ gridRow: i + 2 }">
-            <span v-if="r.src" class="hp__src">{{ r.src }}</span>{{ r.note }}
+            <span v-if="r.src" class="hp__src"><RefText :text="r.src" /></span>{{ r.note }}
           </p>
         </template>
       </template>
     </div>
-    <p class="hp__foot"><span class="fx-label-mono">目安</span>全体で半ページ、40〜80行。Nygard と Kent の型に、選択肢・確信度・強制手段を足す。</p>
+    <p class="hp__foot"><span class="fx-label-mono">目安</span><span>全体で半ページ、40〜80行。<Ref id="nygard" label="Nygard" /> と <Ref id="kent" label="Kent" /> の型に、選択肢・確信度・強制手段を足す。</span></p>
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 // Usage: pnpm dev (port 3030) → node scripts/check.mjs [outDir] [slideNo...]
-// Captures every slide at its final click state and reports layout defects.
+// Captures every slide at its final click state and reports layout defects and links hidden under overlays.
 import { chromium } from 'playwright-chromium'
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs'
 import { homedir } from 'node:os'
@@ -25,7 +25,7 @@ const targets = only.length ? only : Array.from({ length: total }, (_, i) => i +
 const report = []
 for (const n of targets) {
   await page.goto(`${base}/${n}?clicks=99`, { waitUntil: 'networkidle' })
-  await page.addStyleTag({ content: '.slidev-nav-controls,#slidev-goto-dialog{display:none!important}' })
+  await page.addStyleTag({ content: '#slide-container nav,#slidev-goto-dialog{display:none!important}' })
   await page.evaluate(() => document.fonts.ready)
   await page.waitForTimeout(1600)
   const el = page.locator('#slide-content')
@@ -53,6 +53,13 @@ for (const n of targets) {
       if (clips && (e.scrollHeight > e.clientHeight + 2 || e.scrollWidth > e.clientWidth + 2) && e.textContent.trim()) {
         found.push(`clipped-content: ${label(e)} (${e.scrollWidth}x${e.scrollHeight} > ${e.clientWidth}x${e.clientHeight})`)
       }
+    }
+    // A link is usable only if a click at its centre lands on the link, not on an overlay drawn above it.
+    for (const a of root.querySelectorAll('a[href]')) {
+      const r = a.getClientRects()[0]
+      if (!r) continue
+      const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)
+      if (!hit || !a.contains(hit)) found.push(`covered-link: ${label(a)} under ${hit ? label(hit) : 'nothing'}`)
     }
     return found.slice(0, 12)
   })

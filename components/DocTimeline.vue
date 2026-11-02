@@ -42,7 +42,7 @@ const sections = [
         </AdrPaper>
       </div>
     </div>
-    <p class="tl__note">LayerX も Design Doc と ADR の2本立て。不正検知システムでは、3日で Design Doc 2本と ADR 5本を書いた。</p>
+    <p class="tl__note"><span><Ref id="layerx" /> も Design Doc と ADR の2本立て。不正検知システムでは、3日で Design Doc 2本と ADR 5本を書いた。</span></p>
   </div>
 </template>
 

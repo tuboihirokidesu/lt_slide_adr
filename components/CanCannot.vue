@@ -1,9 +1,11 @@
 <script setup lang="ts">
-const can = [
+import type { Inline } from '../data/sources'
+
+const can: { head: string; sub?: Inline[] }[] = [
   { head: '却下済みの案の再提案を防ぐ。' },
   { head: '新しいセッションの立ち上がりが速くなる。' },
   { head: 'レビューで「なぜ」を説明する手間が減る。' },
-  { head: '人間の新メンバーのオンボーディングにも効く。', sub: 'Keeling のデータで、最も確かな効果。' },
+  { head: '人間の新メンバーのオンボーディングにも効く。', sub: [{ ref: 'keeling', label: 'Keeling' }, ' のデータで、最も確かな効果。'] },
 ]
 const cannot = [
   { head: ['境界違反の自動検出'], who: 'lint・CI の役目' },
@@ -18,7 +20,7 @@ const cannot = [
       <ol>
         <li v-for="(c, i) in can" :key="c.head">
           <b>{{ String(i + 1).padStart(2, '0') }}</b>
-          <p><strong>{{ c.head }}</strong><small v-if="c.sub">{{ c.sub }}</small></p>
+          <p><strong>{{ c.head }}</strong><small v-if="c.sub"><RefText :text="c.sub" /></small></p>
         </li>
       </ol>
     </section>

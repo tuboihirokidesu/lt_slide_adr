@@ -279,6 +279,11 @@
   color: var(--amber);
 }
 
+/* 図の線や印は飾り。上に重なっても、下のリンクのクリックを奪わない */
+.slidev-layout svg[aria-hidden="true"] {
+  pointer-events: none;
+}
+
 .fx-icon {
   display: inline-block;
   flex: none;
@@ -527,6 +532,27 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ext-ink);
+}
+
+/* 出典へのリンク。帰属は ext の色で統一し、下線は細く控えめに、触れたときだけ濃くする */
+.slidev-layout a[href] {
+  color: var(--ext-ink);
+  border-bottom: 0;
+  text-decoration: underline 1px var(--line-strong);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 150ms ease;
+}
+.slidev-layout a[href]:hover {
+  color: var(--ext-ink);
+  text-decoration-color: currentColor;
+}
+
+/* 見出しそのものが誰かの言葉のときは、見出しの行末に帰属を添える */
+.slidev-layout h1 .fx-cite {
+  display: inline-block;
+  margin: 0 0 0 20px;
+  text-transform: none;
+  letter-spacing: 0.04em;
 }
 
 /* 静止画（書き出し・撮影）では、クリックで出る要素も完成形で見せる */

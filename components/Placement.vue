@@ -30,7 +30,7 @@ const rows = [
       </div>
     </div>
   </div>
-  <p class="pl__quote">Ebbing の作者は、CLAUDE.md には「結論と ADR 番号だけ」、ADR には「理由と却下した4案」、メモリには「私の好み」。</p>
+  <p class="pl__quote"><span><Ref id="ebbing" /> の作者は、CLAUDE.md には「結論と ADR 番号だけ」、ADR には「理由と却下した4案」、メモリには「私の好み」。</span></p>
 </template>
 
 <style scoped>

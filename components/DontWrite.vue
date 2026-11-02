@@ -1,10 +1,12 @@
 <script setup lang="ts">
-const rows = [
+import type { Inline } from '../data/sources'
+
+const rows: { no: string; title: string; kind: string; why: Inline | Inline[] }[] = [
   { no: '0031', title: 'TypeScript を使う', kind: 'コードや設定が表している選択', why: 'ロックインがなく、再燃もしない。コードを読めば分かる。' },
   { no: '0032', title: '保存ボタンの文言を変える', kind: 'UI の微調整・文言・バグ修正', why: '既存の方針に沿っただけの実装も同じ。' },
   { no: '0033', title: '決済 API の仕様', kind: '仕様・手順書・ガイドライン', why: '仕様は「今」を書く文書。ADR は「その時点」のログ。性質が逆。' },
-  { no: '0034', title: '週次定例の議事録', kind: '作業日記・議事録', why: 'Kent の警告。日記にしない、誰も開かないエッセイにしない。' },
-  { no: '0035', title: 'PR #1234 の設計メモ', kind: '毎 PR の ADR', why: 'Kody では同じ日に番号が衝突した。' },
+  { no: '0034', title: '週次定例の議事録', kind: '作業日記・議事録', why: [{ ref: 'kent', label: 'Kent' }, ' の警告。日記にしない、誰も開かないエッセイにしない。'] },
+  { no: '0035', title: 'PR #1234 の設計メモ', kind: '毎 PR の ADR', why: [{ ref: 'kody-index', label: 'Kody' }, ' では同じ日に番号が衝突した。'] },
 ]
 </script>
 
@@ -15,7 +17,7 @@ const rows = [
       <li v-for="r in rows" :key="r.no">
         <b>{{ r.no }}</b>
         <span class="dont__title"><span class="fx-no">{{ r.title }}</span></span>
-        <span class="dont__why"><strong>{{ r.kind }}</strong>{{ r.why }}</span>
+        <span class="dont__why"><strong>{{ r.kind }}</strong><RefText :text="r.why" /></span>
       </li>
     </ul>
   </div>

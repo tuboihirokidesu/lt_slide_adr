@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Inline } from '../data/sources'
+
 const circles = [
   { cx: 118, cy: 110, label: '戻しにくい', sub: ['後で変える', 'コストが大きい'], lx: 84, ly: 86 },
   { cx: 246, cy: 110, label: '文脈がないと驚く', sub: ['後から読んだ人が', '「なぜ？」と思う'], lx: 276, ly: 86 },
@@ -6,16 +8,16 @@ const circles = [
 ]
 const R = 100
 
-const picks = [
+const picks: { head: string; src: Inline[]; body: string; example?: string; tags?: string[] }[] = [
   {
     head: 'エージェントが再提案しそうな No',
-    src: 'Kent C. Dodds',
+    src: [{ ref: 'kent' }],
     body: '一般論として妥当なのに、うちでは捨てた案。',
     example: 'Redis を前段に置く',
   },
   {
     head: '標準からの意図的な逸脱',
-    src: 'LayerX、Matt Pocock',
+    src: [{ ref: 'layerx' }, '、', { ref: 'pocock' }],
     body: '放置すると、誰か（あるいはエージェント）が「直して」しまう。',
     tags: ['標準外の Python・DynamoDB', 'ORM ではなく生 SQL'],
   },
@@ -37,13 +39,13 @@ const picks = [
         </g>
         <text x="182" y="160" class="three__core">書く</text>
       </svg>
-      <figcaption>3つを<b>すべて</b>満たすときだけ書く。<br>基準は Matt Pocock の <span class="nowrap">grill-with-docs</span>。</figcaption>
+      <figcaption>3つを<b>すべて</b>満たすときだけ書く。<br>基準は <Ref id="pocock" /> の <span class="nowrap">grill-with-docs</span>。</figcaption>
     </figure>
 
     <div class="three__picks">
       <p class="three__lead">とくに条件を満たしやすい2つは、積極的に書く。</p>
       <div v-for="p in picks" :key="p.head" class="fx-box three__pick">
-        <div class="three__head"><strong>{{ p.head }}</strong><span>{{ p.src }}</span></div>
+        <div class="three__head"><strong>{{ p.head }}</strong><span><RefText :text="p.src" /></span></div>
         <p>{{ p.body }}</p>
         <p v-if="p.example" class="three__eg"><span class="fx-label-mono">例</span><span class="fx-no">{{ p.example }}</span></p>
         <p v-if="p.tags" class="three__eg"><span class="fx-label-mono">例</span><span v-for="t in p.tags" :key="t" class="fx-tag fx-tag--muted">{{ t }}</span></p>

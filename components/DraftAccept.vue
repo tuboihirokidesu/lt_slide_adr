@@ -36,7 +36,7 @@ const steps = [
     </div>
 
     <div class="da__inv fx-enter" :class="{ 'is-on': stage >= 2 }">
-      <span class="fx-label-mono">防ぎたい失敗：抽象の逆転（@haandol）</span>
+      <span class="fx-label-mono">防ぎたい失敗：抽象の逆転（<Ref id="haandol" />）</span>
       <div class="da__chains">
         <p class="da__chain is-ok">
           <span>要件</span><svg class="da__arr" viewBox="0 0 28 12" width="28" height="12" aria-hidden="true"><Edge d="M1 6 H26" :end="[26, 6]" dir="r" tone="teal" /></svg><span>ADR</span><svg class="da__arr" viewBox="0 0 28 12" width="28" height="12" aria-hidden="true"><Edge d="M1 6 H26" :end="[26, 6]" dir="r" tone="teal" /></svg><span>コード</span>

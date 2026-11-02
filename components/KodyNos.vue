@@ -1,37 +1,33 @@
 <script setup lang="ts">
-const repo = 'https://github.com/kody-hq/kody/tree/main/docs/contributing/decisions'
-const file = (slug: string) => `https://github.com/kody-hq/kody/blob/main/docs/contributing/decisions/${slug}.md`
+import type { SourceId } from '../data/sources'
 
-const nos = [
-  { adr: '0001', slug: '0001-no-package-versioning', subject: 'ユーザー向けのパッケージバージョニング', verdict: 'しない' },
-  { adr: '0006', slug: '0006-no-repo-ci-primitive', subject: 'repo・package 向けの CI プリミティブ', verdict: '作らない' },
-  { adr: '0015', slug: '0015-skills-over-mcp-wait', subject: 'skills-over-MCP への対応', verdict: '仕様が固まるまで待つ', later: 'のちに 0058 で置き換え' },
-  { adr: '0041', slug: '0041-no-hardcoded-operator-correspondence', subject: 'イベント購読の使い捨てコード', verdict: 'パッケージに統一する' },
-  { adr: '0025', slug: '0025-no-package-services-primitive', subject: 'パッケージサービスというプリミティブ', verdict: '削除する', key: true },
+const nos: { adr: SourceId; subject: string; verdict: string; later?: SourceId; key?: boolean }[] = [
+  { adr: 'kody-0001', subject: 'ユーザー向けのパッケージバージョニング', verdict: 'しない' },
+  { adr: 'kody-0006', subject: 'repo・package 向けの CI プリミティブ', verdict: '作らない' },
+  { adr: 'kody-0015', subject: 'skills-over-MCP への対応', verdict: '仕様が固まるまで待つ', later: 'kody-0058' },
+  { adr: 'kody-0041', subject: 'イベント購読の使い捨てコード', verdict: 'パッケージに統一する' },
+  { adr: 'kody-0025', subject: 'パッケージサービスというプリミティブ', verdict: '削除する', key: true },
 ]
 </script>
 
 <template>
   <div class="kody">
     <div class="fx-paper kody__list">
-      <div class="fx-paper__head"><a :href="repo" target="_blank" rel="noopener">kody-hq/kody · docs/contributing/decisions</a><span>動画で挙がった例</span></div>
+      <div class="fx-paper__head"><Ref id="kody" label="kody-hq/kody · docs/contributing/decisions" /><span>動画で挙がった例</span></div>
       <ol>
         <li v-for="n in nos" :key="n.adr" :class="{ 'is-key': n.key }">
-          <a :href="file(n.slug)" target="_blank" rel="noopener">{{ n.adr }}</a>
-          <span class="kody__subject"><span class="fx-no">{{ n.subject }}</span><small v-if="n.later">{{ n.later }}</small></span>
+          <Ref :id="n.adr" class="kody__no" />
+          <span class="kody__subject"><span class="fx-no">{{ n.subject }}</span><small v-if="n.later">のちに <Ref :id="n.later" /> で置き換え</small></span>
           <em>{{ n.verdict }}</em>
         </li>
       </ol>
-      <a class="kody__repo" :href="repo" target="_blank" rel="noopener">
-        <span>github.com/kody-hq/kody/tree/main/docs/contributing/decisions</span><i aria-hidden="true">↗</i>
-      </a>
     </div>
 
     <div class="kody__note">
       <p class="kody__kicker">0025 で起きたこと</p>
       <p class="kody__push">エージェントは「それは有用だ」と、何度も押し返してきた。</p>
       <p class="kody__big">ADR は、あるものが<br>もう存在しないことを<br>確かめる回帰テスト。</p>
-      <p class="fx-cite">Kent C. Dodds の言葉から</p>
+      <p class="fx-cite"><Ref id="kent" /> の言葉から</p>
     </div>
   </div>
 </template>
@@ -59,14 +55,10 @@ const nos = [
 .kody__list li:first-child {
   border-top: 0;
 }
-.kody__list li > a {
+.kody__no {
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 600;
-  color: var(--muted);
-  text-decoration: underline;
-  text-decoration-color: var(--line-strong);
-  text-underline-offset: 3px;
 }
 .kody__subject small {
   display: block;
@@ -76,33 +68,6 @@ const nos = [
   font-size: 11.5px;
   font-weight: 500;
   color: var(--muted);
-}
-.fx-paper__head a {
-  color: inherit;
-  text-decoration: none;
-}
-.kody__repo {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 10px 18px 12px;
-  border-top: 1px dashed var(--line-strong);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--ext-ink);
-  text-decoration: none;
-}
-.kody__repo i {
-  font-style: normal;
-}
-:is(.kody__list li > a, .kody__repo, .fx-paper__head a) {
-  border-bottom: 0;
-}
-:is(.kody__list li > a, .kody__repo, .fx-paper__head a):hover {
-  color: var(--ext-ink);
-  text-decoration-color: currentColor;
 }
 .kody__list em {
   font-style: normal;
@@ -120,9 +85,6 @@ const nos = [
 }
 .kody__list li.is-key .fx-no {
   color: var(--ink);
-}
-.kody__list li.is-key > a {
-  color: var(--amber-ink);
 }
 .kody__note {
   padding: 8px 0 8px 24px;

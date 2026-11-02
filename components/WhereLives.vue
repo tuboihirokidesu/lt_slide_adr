@@ -7,7 +7,7 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
   <div class="where">
     <figure class="where__quote">
       <blockquote class="fx-quote">anything it can't access in-context while running effectively doesn't exist</blockquote>
-      <figcaption class="fx-cite">OpenAI · Harness engineering</figcaption>
+      <figcaption class="fx-cite"><Ref id="openai" label="OpenAI · Harness engineering" /></figcaption>
     </figure>
 
     <div class="where__map">
@@ -37,18 +37,17 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
     </div>
 
     <p class="where__alt">
-      <span><b>willhaben と ZOZO は Confluence を選んだ。</b>{{ confluence.join('。') }}。</span>
+      <span><b><Ref id="willhaben" /> と <Ref id="zozo" /> は Confluence を選んだ。</b>{{ confluence.join('。') }}。</span>
     </p>
   </div>
 </template>
 
 <style scoped>
 .where__quote {
-  margin: 0 0 34px;
-  max-width: 760px;
+  margin: 0 0 40px;
 }
 .where__quote .fx-quote {
-  font-size: 30px;
+  font-size: 34px;
   line-height: 1.3;
   letter-spacing: -0.015em;
 }
@@ -72,11 +71,11 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 20px 18px;
+  padding: 26px 20px;
   box-shadow: none;
 }
 .where__repo strong {
-  font-size: 18px;
+  font-size: 19px;
 }
 .where__repo code {
   font-size: 13px;
@@ -99,7 +98,7 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
   color: var(--muted);
 }
 .where__wiki {
-  padding: 20px 18px;
+  padding: 26px 20px;
   box-shadow: none;
 }
 .where__wiki strong {
@@ -129,10 +128,10 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
   display: flex;
   align-items: baseline;
   gap: 10px;
-  margin: 32px 0 0;
-  padding-top: 14px;
+  margin: 40px 0 0;
+  padding-top: 16px;
   border-top: 1px solid var(--line);
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.6;
   color: var(--ink-2);
 }

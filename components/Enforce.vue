@@ -47,7 +47,7 @@ const lint = [
     <div class="enf__foot">
       <figure class="enf__quote">
         <blockquote class="fx-quote">When documentation falls short, we promote the rule into code</blockquote>
-        <figcaption class="fx-cite">OpenAI · Harness engineering</figcaption>
+        <figcaption class="fx-cite"><Ref id="openai" label="OpenAI · Harness engineering" /></figcaption>
       </figure>
       <p class="enf__note">強制できない「当面〜しない」系の決定は、ADR とレビューで守る。それで十分。</p>
     </div>

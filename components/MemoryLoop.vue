@@ -54,7 +54,7 @@ const loopOn = () => props.stage >= 3
 
     <figure class="loop__quote fx-enter" :class="{ 'is-on': loopOn() }" style="--d: 350ms">
       <blockquote class="fx-quote">now you are<br>the memory</blockquote>
-      <figcaption class="fx-cite">Kent C. Dodds</figcaption>
+      <figcaption class="fx-cite"><Ref id="kent" /></figcaption>
       <p>新しいセッションは、過去の会話で下した製品判断を知らない。</p>
     </figure>
   </div>

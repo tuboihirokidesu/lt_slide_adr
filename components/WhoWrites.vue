@@ -1,18 +1,20 @@
 <script setup lang="ts">
-const camps = [
+import type { Inline } from '../data/sources'
+
+const camps: { name: string; voices: { who: Inline[]; say: string }[] }[] = [
   {
     name: '書かせる派',
     voices: [
-      { who: 'Kent C. Dodds', say: 'エージェントに ADR を保存させる。自分から提案してくる状態を目指す。' },
-      { who: 'Ebbing（Zenn、4.5か月で64本）', say: '書くのは Claude。人間は、捨てた案と理由が自分の言ったことと合っているかだけを見る。' },
-      { who: 'LayerX', say: 'LLM でたたき台を作り、人間が仕上げる。' },
+      { who: [{ ref: 'kent' }], say: 'エージェントに ADR を保存させる。自分から提案してくる状態を目指す。' },
+      { who: [{ ref: 'ebbing' }, '（Zenn、4.5か月で64本）'], say: '書くのは Claude。人間は、捨てた案と理由が自分の言ったことと合っているかだけを見る。' },
+      { who: [{ ref: 'layerx' }], say: 'LLM でたたき台を作り、人間が仕上げる。' },
     ],
   },
   {
     name: '書かせない派',
     voices: [
-      { who: 'Sean Goedecke', say: 'コードは任せても、ADR・PR 説明・Slack は自分で書く。@therobertta_ による紹介で、原文は未確認。' },
-      { who: '@haandol「抽象の逆転」', say: 'エージェントが今の実装を意図されたアーキテクチャと思い込み、ADR をコードに合わせて書き換える。' },
+      { who: [{ ref: 'therobertta', label: 'Sean Goedecke' }], say: 'コードは任せても、ADR・PR 説明・Slack は自分で書く。@therobertta_ による紹介で、原文は未確認。' },
+      { who: [{ ref: 'haandol' }, '「抽象の逆転」'], say: 'エージェントが今の実装を意図されたアーキテクチャと思い込み、ADR をコードに合わせて書き換える。' },
     ],
   },
 ]
@@ -29,15 +31,15 @@ const stats = [
     <section v-for="c in camps" :key="c.name" class="who__camp">
       <header><strong>{{ c.name }}</strong></header>
       <ul>
-        <li v-for="v in c.voices" :key="v.who">
-          <span class="who__name">{{ v.who }}</span>
+        <li v-for="v in c.voices" :key="v.say">
+          <span class="who__name"><RefText :text="v.who" /></span>
           <p>{{ v.say }}</p>
         </li>
       </ul>
     </section>
 
     <section class="fx-box who__eth">
-      <header><strong>ETH Zurich の研究</strong><span class="who__tag">arXiv 2602.11988</span></header>
+      <header><strong><Ref id="eth" /> の研究</strong><span class="who__tag">arXiv 2602.11988</span></header>
       <p class="who__paper">AGENTS.md 型のコンテキストファイルを評価した研究。</p>
       <dl>
         <div v-for="s in stats" :key="s.label" :class="`is-${s.tone}`">
@@ -94,7 +96,7 @@ const stats = [
   display: block;
   font-size: 12.5px;
   font-weight: 700;
-  color: var(--ext-ink);
+  color: var(--ink-2);
 }
 .who__camp p {
   margin: 3px 0 0;

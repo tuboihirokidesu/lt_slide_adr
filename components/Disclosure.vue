@@ -76,7 +76,7 @@ const indexRows = [
 
       <figure class="disc__quote">
         <blockquote class="fx-quote">progressively<br>disclosed way</blockquote>
-        <figcaption class="fx-cite">Kent C. Dodds</figcaption>
+        <figcaption class="fx-cite"><Ref id="kent" /></figcaption>
       </figure>
     </div>
   </div>

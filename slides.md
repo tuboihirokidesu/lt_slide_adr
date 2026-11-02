@@ -286,7 +286,7 @@ chapter: 02 賛否
 clicks: 2
 ---
 
-# 散文は、コンパイルされない。
+# 散文は、コンパイルされない。<span class="fx-cite"><Ref id="kizuno" /> の言葉</span>
 
 <Enforce :stage="$clicks" />
 

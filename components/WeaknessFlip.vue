@@ -7,7 +7,7 @@ withDefaults(defineProps<{ stage?: number }>(), { stage: 0 })
     <div class="flip__col">
       <span class="fx-label-mono">人間だけのチーム</span>
       <p class="flip__word"><span class="fx-no fx-no--draw" :class="{ 'is-on': stage >= 1 }">読まれない</span></p>
-      <p class="flip__src">Michael Keeling「一度読んだら、何か月も見返さない」</p>
+      <p class="flip__src"><Ref id="keeling" />「一度読んだら、何か月も見返さない」</p>
       <p class="flip__why fx-enter" :class="{ 'is-on': stage >= 1 }">エージェントは毎セッション、<br>関係する ADR を読み直す。</p>
     </div>
 
@@ -18,7 +18,7 @@ withDefaults(defineProps<{ stage?: number }>(), { stage: 0 })
     <div class="flip__col fx-enter" :class="{ 'is-on': stage >= 1 }" style="--d: 250ms">
       <span class="fx-label-mono">エージェントと働くチーム</span>
       <p class="flip__word is-new">古い ADR に従う</p>
-      <p class="flip__src">@masayoshi_uehra「ADR が多すぎて、AI が古い決定に従った」</p>
+      <p class="flip__src"><Ref id="uehra" />「ADR が多すぎて、AI が古い決定に従った」</p>
       <div class="flip__fix fx-enter" :class="{ 'is-on': stage >= 2 }">
         <strong>対策は、status 欄と索引。</strong>
         <span>現役（steering）と履歴（superseded）を分け、古さを欄で示す。</span>
@@ -30,20 +30,20 @@ withDefaults(defineProps<{ stage?: number }>(), { stage: 0 })
 <style scoped>
 .flip {
   display: grid;
-  grid-template-columns: 1fr 64px 1.12fr;
+  grid-template-columns: 1fr 64px 1.2fr;
   gap: 0 28px;
   align-items: start;
 }
 .flip__arrow {
-  margin-top: 72px;
+  margin-top: 84px;
 }
 .flip__col {
   display: flex;
   flex-direction: column;
 }
 .flip__word {
-  margin: 18px 0 0;
-  font-size: 48px;
+  margin: 22px 0 0;
+  font-size: 56px;
   white-space: nowrap;
   font-weight: 700;
   line-height: 1.25;
@@ -63,30 +63,30 @@ withDefaults(defineProps<{ stage?: number }>(), { stage: 0 })
   display: flex;
   align-items: baseline;
   gap: 8px;
-  margin: 16px 0 0;
-  font-size: 13px;
+  margin: 20px 0 0;
+  font-size: 13.5px;
   line-height: 1.6;
   color: var(--muted);
 }
 .flip__why {
-  margin: 34px 0 0;
-  padding-left: 14px;
+  margin: 56px 0 0;
+  padding-left: 16px;
   border-left: 2px solid var(--teal);
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   line-height: 1.6;
   color: var(--teal-ink);
 }
 .flip__fix {
-  margin-top: 34px;
-  padding: 14px 20px;
+  margin-top: 56px;
+  padding: 18px 24px;
   border-radius: var(--r-box);
   border: 1.5px solid var(--teal-line);
   background: var(--teal-fill);
 }
 .flip__fix strong {
   display: block;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--teal-ink);
 }

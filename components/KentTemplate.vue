@@ -15,7 +15,7 @@ const rows: Row[] = [
   <div class="kt">
     <div class="kt__grid">
       <div class="fx-paper kt__paper" aria-hidden="true" />
-      <div class="fx-paper__head kt__file"><span>0000-template.md</span><span>Kent C. Dodds の型</span></div>
+      <div class="fx-paper__head kt__file"><Ref id="kody-template" /><span><Ref id="kent" /> の型</span></div>
       <template v-for="(r, i) in rows" :key="r.note">
         <div class="kt__cell" :style="{ gridRow: i + 2 }">
           <p v-if="r.kind === 'title'" class="kt__title"><b>NNNN:</b> ◯◯ はしない。</p>

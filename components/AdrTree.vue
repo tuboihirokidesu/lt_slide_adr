@@ -68,7 +68,7 @@ const history = [
       <p class="tree__rule">Accepted は書き換えない。<br>変えるときは新しい ADR を起こし、<br>旧 ADR に superseded by を付ける。</p>
     </section>
   </div>
-  <p class="tree__foot">古さは、推測ではなく欄で表す。<span>@EvgeniiKonev</span></p>
+  <p class="tree__foot">古さは、推測ではなく欄で表す。<span><Ref id="konev" /></span></p>
 </template>
 
 <style scoped>

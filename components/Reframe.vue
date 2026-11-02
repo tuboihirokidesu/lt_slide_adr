@@ -8,7 +8,7 @@ const gaps = ['レビュー', '承認', '番号の衝突', '陳腐化']
   <div class="rf">
     <div class="rf__pair">
       <div class="rf__col is-old">
-        <span class="fx-label-mono">Nygard 以来の語られ方</span>
+        <span class="fx-label-mono"><Ref id="nygard" label="Nygard" /> 以来の語られ方</span>
         <AdrPaper class="rf__paper" no="0003" file="0003-use-postgresql.md" title="PostgreSQL を採用する。" status="accepted">
           <p class="fx-paper__h">Context</p>
           <div class="rf__bars"><i style="width: 88%" /><i style="width: 60%" /></div>
@@ -23,7 +23,7 @@ const gaps = ['レビュー', '承認', '番号の衝突', '陳腐化']
       </svg>
 
       <div class="rf__col fx-enter" :class="{ 'is-on': stage >= 1 }" style="--d: 300ms">
-        <span class="fx-label-mono is-teal">Kent の捉え直し</span>
+        <span class="fx-label-mono is-teal"><Ref id="kent" label="Kent" /> の捉え直し</span>
         <AdrPaper class="rf__paper" no="0005" file="0005-no-own-cache-layer.md" title="独自のキャッシュ層を作らない。" status="accepted">
           <p class="fx-paper__h">Considered options</p>
           <p class="rf__opt"><span class="fx-no">Redis を前段に置く</span></p>
@@ -41,7 +41,7 @@ const gaps = ['レビュー', '承認', '番号の衝突', '陳腐化']
       <div class="rf__gaps">
         <span class="fx-label-mono">動画が触れていない穴</span>
         <p class="rf__chips"><span v-for="g in gaps" :key="g" class="fx-tag fx-tag--muted">{{ g }}</span></p>
-        <p class="rf__fill">リポジトリの index.md と docs:check が埋めている。</p>
+        <p class="rf__fill">リポジトリの <Ref id="kody-index" /> と docs:check が埋めている。</p>
       </div>
     </div>
   </div>
