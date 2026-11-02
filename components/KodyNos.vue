@@ -24,7 +24,7 @@ const nos: { adr: SourceId; subject: string; verdict: string; later?: SourceId; 
     </div>
 
     <div class="kody__note">
-      <p class="kody__kicker">0025 で起きたこと</p>
+      <p class="kody__kicker"><code>0025</code> で起きたこと</p>
       <p class="kody__push">エージェントは「それは有用だ」と、何度も押し返してきた。</p>
       <p class="kody__big">ADR は、あるものが<br>もう存在しないことを<br>確かめる回帰テスト。</p>
       <p class="fx-cite"><Ref id="kent" /> の言葉から</p>
@@ -50,7 +50,6 @@ const nos: { adr: SourceId; subject: string; verdict: string; later?: SourceId; 
   padding: 13px 0;
   border-top: 1px solid var(--line);
   font-size: var(--fs-body);
-  font-weight: 600;
 }
 .kody__list li:first-child {
   border-top: 0;
@@ -58,7 +57,6 @@ const nos: { adr: SourceId; subject: string; verdict: string; later?: SourceId; 
 .kody__no {
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 .kody__subject small {
@@ -73,7 +71,6 @@ const nos: { adr: SourceId; subject: string; verdict: string; later?: SourceId; 
 .kody__list em {
   font-style: normal;
   font-size: var(--fs-note);
-  font-weight: 700;
   color: var(--tone-caution-ink);
   white-space: nowrap;
 }
@@ -85,6 +82,7 @@ const nos: { adr: SourceId; subject: string; verdict: string; later?: SourceId; 
   background: var(--tone-emphasis-fill);
 }
 .kody__list li.is-key .fx-no {
+  font-weight: 500;
   color: var(--tone-emphasis-ink);
 }
 .kody__note {
@@ -93,10 +91,7 @@ const nos: { adr: SourceId; subject: string; verdict: string; later?: SourceId; 
 }
 .kody__kicker {
   margin: 0;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: var(--ls-label);
+  font-size: var(--fs-note);
   color: var(--tone-emphasis-ink);
 }
 .kody__push {

@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useIsSlideActive, useSlideContext } from '@slidev/client'
 
-// cover: 3枚の紙面が重なって現れる。rejected: 結びで、捨てた案の行だけが光る
+// cover: 3枚の紙面が重なって現れる。rejected: 結びで、捨てた案の行だけを残す
 const props = withDefaults(defineProps<{ focus?: 'cover' | 'rejected' }>(), { focus: 'cover' })
 
 const active = useIsSlideActive()
@@ -48,9 +48,8 @@ const rejectedFocus = computed(() => props.focus === 'rejected')
     >
       <p class="fx-paper__h">Considered options</p>
       <ul class="stack-x__opts">
-        <li v-for="(o, i) in options" :key="o.text" :class="o.kept ? 'is-kept' : 'is-cut'">
-          <span v-if="o.kept">{{ o.text }}</span>
-          <span v-else class="fx-no fx-no--draw" :class="{ 'is-on': shown }" :style="{ '--d': `${780 + i * 140}ms` }">{{ o.text }}</span>
+        <li v-for="o in options" :key="o.text" :class="o.kept ? 'is-kept' : 'is-cut'">
+          <span>{{ o.text }}</span>
           <small>{{ o.kept ? '採用' : '却下' }}</small>
         </li>
       </ul>
@@ -100,13 +99,13 @@ const rejectedFocus = computed(() => props.focus === 'rejected')
   line-height: 1.55;
 }
 .stack-x__opts li.is-kept {
-  font-weight: 600;
   color: var(--tone-recommend-ink);
 }
+.stack-x__opts li.is-cut {
+  color: var(--ink-2);
+}
 .stack-x__opts small {
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 500;
+  font-size: var(--fs-note);
   color: var(--muted);
 }
 .is-cut small {
@@ -128,9 +127,12 @@ const rejectedFocus = computed(() => props.focus === 'rejected')
 .is-focus .stack-x__revisit {
   opacity: 0.3;
 }
-.is-focus .is-cut .fx-no {
-  color: var(--tone-caution-ink);
-  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--tone-caution) 55%, transparent));
+.is-focus .is-cut {
+  margin: 0 -6px;
+  padding: 0 6px;
+  border-radius: var(--r-mark);
+  background: var(--tone-caution-fill);
+  color: var(--ink);
 }
 .is-focus .stack-x__front {
   border-color: color-mix(in srgb, var(--tone-caution) 28%, transparent);

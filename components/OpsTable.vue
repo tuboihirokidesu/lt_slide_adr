@@ -13,20 +13,17 @@ const rows: { item: string; rec: string[]; src: (Inline | Inline[])[] }[] = [
   { item: '陳腐化対策', rec: ['revisit-if は四半期に一度だけ棚卸し。食い違ったら、事実はコードを正とし、', '意図を変えるかは人間が新しい ADR で決める。エージェントは報告だけ。'], src: [{ ref: 'openai' }, ebbing, zenn] },
   { item: 'ツール', rec: ['素の Markdown と小さな CI スクリプトで足りる。', 'adr-tools や log4brains は必須ではない。'], src: [zenn, { ref: 'kody' }] },
 ]
-const no = (i: number) => String(i + 1).padStart(2, '0')
 </script>
 
 <template>
   <div class="ops">
     <div class="ops__row ops__row--head">
-      <span />
       <span>項目</span>
       <span>推奨</span>
       <span>根拠</span>
     </div>
-    <div v-for="(r, i) in rows" :key="r.item" class="ops__row">
-      <b>{{ no(i) }}</b>
-      <strong>{{ r.item }}</strong>
+    <div v-for="r in rows" :key="r.item" class="ops__row">
+      <span class="ops__item">{{ r.item }}</span>
       <p><span v-for="l in r.rec" :key="l">{{ l }}</span></p>
       <p class="ops__src"><span v-for="(s, j) in r.src" :key="j"><RefText :text="s" /></span></p>
     </div>
@@ -36,7 +33,7 @@ const no = (i: number) => String(i + 1).padStart(2, '0')
 <style scoped>
 .ops__row {
   display: grid;
-  grid-template-columns: 20px 124px 1fr 212px;
+  grid-template-columns: 144px 1fr 212px;
   align-items: baseline;
   gap: 12px;
   padding: 8px 0;
@@ -45,25 +42,15 @@ const no = (i: number) => String(i + 1).padStart(2, '0')
 .ops__row--head {
   padding: 0 0 8px;
   border-top: 0;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: var(--ls-label);
+  font-size: var(--fs-note);
   color: var(--muted);
 }
 .ops__row--head + .ops__row {
   border-top: 1.5px solid var(--line-strong);
 }
-.ops__row b {
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  color: var(--tone-recommend-ink);
-}
-.ops__row strong {
+.ops__item {
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 500;
 }
 .ops__row p {
   margin: 0;
@@ -81,7 +68,6 @@ const no = (i: number) => String(i + 1).padStart(2, '0')
 .ops__row .ops__src > span {
   display: inline;
   font-size: var(--fs-note);
-  font-weight: 600;
   line-height: 1.6;
   color: var(--ink-2);
 }

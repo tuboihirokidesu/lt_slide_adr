@@ -15,9 +15,9 @@ const rows: { no: string; title: string; kind: string; why: Inline | Inline[] }[
     <div class="fx-paper__head"><span>docs/adr/index.md に載せないもの</span><span>記入例（架空）</span></div>
     <ul>
       <li v-for="r in rows" :key="r.no">
-        <b>{{ r.no }}</b>
+        <span class="dont__no">{{ r.no }}</span>
         <span class="dont__title"><span class="fx-no">{{ r.title }}</span></span>
-        <span class="dont__why"><strong>{{ r.kind }}</strong><RefText :text="r.why" /></span>
+        <span class="dont__why"><span class="dont__kind">{{ r.kind }}</span><RefText :text="r.why" /></span>
       </li>
     </ul>
   </div>
@@ -38,25 +38,23 @@ const rows: { no: string; title: string; kind: string; why: Inline | Inline[] }[
 .dont li:first-child {
   border-top: 0;
 }
-.dont b {
+.dont__no {
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  font-weight: 600;
   font-variant-numeric: tabular-nums;
   color: var(--tone-caution-ink);
 }
 .dont__title {
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 500;
 }
 .dont__why {
   font-size: var(--fs-note);
   line-height: 1.6;
   color: var(--muted);
 }
-.dont__why strong {
+.dont__kind {
   display: block;
-  font-size: var(--fs-note);
   color: var(--ink);
 }
 </style>

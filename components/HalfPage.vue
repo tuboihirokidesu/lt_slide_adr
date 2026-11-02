@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Inline } from '../data/sources'
 
-type Line = { text: string; cut?: boolean; kept?: boolean }
+type Line = { text: string; rejected?: string; kept?: boolean }
 type Row = {
   key: string
   head?: string
@@ -13,17 +13,17 @@ type Row = {
 }
 
 const rows: Row[] = [
-  { key: 'fm', src: { ref: 'azure', label: 'Azure' }, note: ['confidence（確信度）。', 'deciders は Accepted にした人間。'] },
+  { key: 'fm', src: { ref: 'azure', label: 'Azure' }, note: ['confidence は確信度。', 'deciders は Accepted にした人間。'] },
   { key: 'title', src: { ref: 'nygard', label: 'Nygard' }, note: ['タイトルは決定そのもの。', 'No なら「〜しない」。'] },
-  { key: 'Context', head: 'Context', lines: [{ text: '集計クエリが多く、ORM の生成 SQL では実行計画を制御しにくい。' }], note: ['事実だけを書く。設計案の説明にしない。'] },
+  { key: 'Context', head: 'Context', lines: [{ text: '集計クエリが多く、ORM の生成 SQL では実行計画を制御しにくい。' }], note: ['事実だけを書く。'] },
   { key: 'Decision', head: 'Decision', lines: [{ text: 'ORM は入れない。SQL ファイルと型生成で書く。' }] },
   {
     key: 'Options',
     head: 'Considered options',
     lines: [
       { text: '生 SQL ＋型生成（採用）', kept: true },
-      { text: 'ORM を入れる（却下：集計の実行計画を制御できない）', cut: true },
-      { text: 'クエリビルダー（却下：結局 SQL を読む力が要る）', cut: true },
+      { text: 'ORM を入れる', rejected: '集計の実行計画を制御できない' },
+      { text: 'クエリビルダー', rejected: '結局 SQL を読む力が要る' },
     ],
     src: { ref: 'madr' },
     note: ['ここが一番価値がある。'],
@@ -45,15 +45,14 @@ const rows: Row[] = [
         <div class="hp__cell" :style="{ gridRow: i + 2 }">
           <div v-if="r.key === 'fm'" class="hp__fm">
             <span><i>status:</i> accepted</span><span><i>date:</i> 2026-10-30</span><span><i>confidence:</i> medium</span>
-            <span><i>deciders:</i> "@backend-lead"</span><span><i>related:</i> [ADR-0007]</span>
+            <span><i>deciders:</i> "@backend-lead"</span>
           </div>
           <p v-else-if="r.key === 'title'" class="hp__title"><b>0012:</b> ORM を導入しない。クエリは生 SQL で書く。</p>
           <div v-else class="hp__sec">
             <span class="hp__h">{{ r.head }}</span>
             <div :class="{ 'fx-revisit hp__revisit': r.revisit }">
-              <p v-for="l in r.lines" :key="l.text" :class="{ 'is-kept': l.kept }">
-                <span v-if="l.cut" class="fx-no">{{ l.text }}</span>
-                <template v-else>{{ l.text }}</template>
+              <p v-for="l in r.lines" :key="l.text" :class="{ 'is-kept': l.kept, 'is-rejected': l.rejected }">
+                {{ l.text }}<template v-if="l.rejected">（<span class="hp__rejected">却下</span>：{{ l.rejected }}）</template>
               </p>
             </div>
           </div>
@@ -66,7 +65,7 @@ const rows: Row[] = [
         </template>
       </template>
     </div>
-    <p class="hp__foot"><span class="fx-label-mono">目安</span><span>全体で半ページ、40〜80行。<Ref id="nygard" label="Nygard" /> と <Ref id="kent" label="Kent" /> の型に、選択肢・確信度・強制手段を足す。</span></p>
+    <p class="hp__foot"><span class="fx-caption">目安</span><span>全体で半ページ、40〜80行。<Ref id="nygard" label="Nygard" /> と <Ref id="kent" label="Kent" /> の型に、選択肢・確信度・強制手段を足す。</span></p>
   </div>
 </template>
 
@@ -112,7 +111,7 @@ const rows: Row[] = [
   margin: 0;
   padding: 2px 0 4px;
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.4;
 }
 .hp__title b {
@@ -129,7 +128,6 @@ const rows: Row[] = [
 .hp__h {
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  font-weight: 600;
   letter-spacing: 0;
   color: var(--muted);
 }
@@ -145,8 +143,13 @@ const rows: Row[] = [
   color: var(--ink);
 }
 .hp__sec p.is-kept {
-  font-weight: 700;
   color: var(--tone-recommend-ink);
+}
+.hp__sec p.is-rejected {
+  color: var(--muted);
+}
+.hp__rejected {
+  color: var(--tone-caution-ink);
 }
 .hp__revisit {
   margin: 2px 0;
@@ -182,10 +185,8 @@ const rows: Row[] = [
 }
 .hp__src {
   margin-right: 8px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-size: var(--fs-note);
+  font-weight: 400;
   color: var(--tone-source-ink);
 }
 .hp__note.is-strong {

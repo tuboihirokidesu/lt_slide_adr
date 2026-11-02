@@ -7,12 +7,12 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
   <div class="where">
     <figure class="where__quote">
       <blockquote class="fx-quote">anything it can't access in-context while running effectively doesn't exist</blockquote>
-      <figcaption class="fx-cite"><Ref id="openai" label="OpenAI · Harness engineering" /></figcaption>
+      <figcaption class="fx-cite"><Ref id="openai" label="OpenAI の記事「Harness engineering」" /></figcaption>
     </figure>
 
     <div class="where__map">
       <div class="where__seen">
-        <span class="fx-label-mono">エージェントから届く範囲</span>
+        <span class="fx-caption">エージェントから届く範囲</span>
         <div class="fx-box fx-box--recommend where__repo">
           <strong>リポジトリ</strong>
           <code>docs/adr/</code>
@@ -26,18 +26,18 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
       <span class="where__edge-label">一方向に公開</span>
 
       <div class="fx-box where__wiki">
-        <strong>wiki・社内サイト</strong>
+        <span class="where__wiki-name">wiki・社内サイト</span>
         <span>非エンジニア向けの写し</span>
       </div>
 
       <div class="where__unseen">
-        <span class="fx-label-mono">見えない ＝ 存在しない</span>
-        <p v-for="u in unseen" :key="u"><span class="fx-no">{{ u }}</span></p>
+        <span class="fx-caption">見えない ＝ 存在しない</span>
+        <p v-for="u in unseen" :key="u">{{ u }}</p>
       </div>
     </div>
 
     <p class="where__alt">
-      <span><b><Ref id="willhaben" /> と <Ref id="zozo" /> は Confluence を選んだ。</b>{{ confluence.join('。') }}。</span>
+      <span><span class="where__alt-who"><Ref id="willhaben" /> と <Ref id="zozo" /> は Confluence を選んだ。</span>{{ confluence.join('。') }}。</span>
     </p>
   </div>
 </template>
@@ -63,7 +63,7 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
   border-radius: var(--r-box);
   border: 1.5px dashed var(--tone-recommend-line);
 }
-.where__seen .fx-label-mono {
+.where__seen .fx-caption {
   color: var(--tone-recommend-ink);
 }
 .where__repo {
@@ -94,18 +94,18 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
   top: calc(50% + 8px);
   text-align: center;
   font-size: var(--fs-note);
-  font-weight: 600;
   color: var(--muted);
 }
 .where__wiki {
   padding: 26px 20px;
   box-shadow: none;
 }
-.where__wiki strong {
+.where__wiki-name {
   display: block;
   font-size: var(--fs-body);
+  font-weight: 500;
 }
-.where__wiki span {
+.where__wiki span:not(.where__wiki-name) {
   display: block;
   margin-top: 2px;
   font-size: var(--fs-note);
@@ -119,9 +119,6 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
 .where__unseen p {
   margin: 8px 0 0;
   font-size: var(--fs-body);
-  font-weight: 600;
-}
-.where__unseen .fx-no {
   color: var(--muted);
 }
 .where__alt {
@@ -135,7 +132,8 @@ const confluence = ['非エンジニアも読める', '複数リポジトリに�
   line-height: 1.6;
   color: var(--ink-2);
 }
-.where__alt b {
+.where__alt-who {
+  font-weight: 500;
   color: var(--ink);
 }
 </style>

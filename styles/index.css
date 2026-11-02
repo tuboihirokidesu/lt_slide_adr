@@ -126,7 +126,7 @@
 .slidev-layout h1 + p { opacity: 1; margin-top: 0; margin-bottom: 0; }
 .slidev-layout :not(pre) > code {
   font-family: var(--font-mono);
-  font-weight: 700;
+  font-weight: 500;
   font-size: 0.92em;
   background: none;
   padding: 0;
@@ -136,12 +136,12 @@
 .slidev-layout .lead {
   margin: 8px 0 0;
   font-size: var(--fs-body);
-  font-weight: 600;
+  font-weight: 400;
   color: var(--ink-lead);
 }
 .slidev-layout code {
   font-family: var(--font-mono);
-  font-weight: 700;
+  font-weight: 500;
   font-size: 0.92em;
   background: none;
   padding: 0;
@@ -158,23 +158,6 @@
 .fade-quiet-leave-to {
   opacity: 0;
 }
-/* 昼と夜の境目だけ、左端の柱の位置から幕が開くように切り替える */
-.curtain-enter-active {
-  z-index: 10;
-  transition: clip-path 800ms var(--ease-move);
-}
-.curtain-enter-from {
-  clip-path: inset(0 100% 0 0);
-}
-.curtain-enter-to {
-  clip-path: inset(0 0 0 0);
-}
-.curtain-leave-active {
-  transition: filter 800ms var(--ease-move);
-}
-.curtain-leave-to {
-  filter: brightness(0.75);
-}
 
 .slidev-vclick-target {
   transition:
@@ -186,20 +169,6 @@
   opacity: 0 !important;
   transform: translateY(10px);
   filter: blur(3px);
-}
-.swap-enter-active,
-.swap-leave-active {
-  transition:
-    opacity 150ms ease-in-out,
-    transform 150ms ease-in-out;
-}
-.swap-enter-from {
-  opacity: 0;
-  transform: translateY(3px);
-}
-.swap-leave-to {
-  opacity: 0;
-  transform: translateY(-3px);
 }
 
 /* ---------- 図の部品 ---------- */
@@ -221,7 +190,7 @@
   background: var(--surface);
   color: var(--tone-recommend-ink);
   font-size: var(--fs-note);
-  font-weight: 700;
+  font-weight: 500;
   white-space: nowrap;
 }
 
@@ -275,7 +244,7 @@
 .fx-label {
   position: absolute;
   font-size: var(--fs-note);
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.35;
   color: var(--muted);
   background: var(--bg);
@@ -351,17 +320,14 @@
   border-radius: var(--r-chip);
   padding: 7px 12px;
 }
-.fx-revisit__label,
-.fx-label-mono {
+/* 図の中の小さな見出し。和文の通常ウェイトで、本文より一段小さく置く */
+.fx-caption {
   display: block;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: var(--ls-label);
-  text-transform: uppercase;
+  font-size: var(--fs-note);
+  font-weight: 400;
+  letter-spacing: 0.02em;
   color: var(--muted);
 }
-.fx-revisit__label { color: var(--tone-recommend-ink); }
 
 .fx-paper {
   box-sizing: border-box;
@@ -384,25 +350,33 @@
   color: var(--muted);
   white-space: nowrap;
 }
+.fx-paper__head span {
+  text-wrap: nowrap;
+}
+/* 見出しの右の注記は和文なので、等幅ではなく本文の書体にする */
+.fx-paper__head > span + span:not([class]) {
+  font-family: var(--font-sans);
+  font-size: var(--fs-note);
+}
 .fx-paper__body { padding: 12px 16px 14px; }
 .fx-paper__no {
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.04em;
   color: var(--tone-recommend-ink);
 }
 .slidev-layout .fx-paper__title {
   margin: 2px 0 0;
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.45;
 }
 .slidev-layout .fx-paper__h {
   margin: 10px 0 3px;
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--muted);
 }
@@ -420,7 +394,7 @@
   border: 1px solid var(--line-strong);
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.5;
   letter-spacing: 0.02em;
   color: var(--ink-2);
@@ -456,11 +430,9 @@
 .slidev-layout .fx-cite {
   display: block;
   margin-top: 6px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: var(--fs-note);
+  font-weight: 400;
+  letter-spacing: 0.02em;
   color: var(--tone-source-ink);
 }
 
@@ -481,8 +453,6 @@
 .slidev-layout h1 .fx-cite {
   display: inline-block;
   margin: 0 0 0 20px;
-  text-transform: none;
-  letter-spacing: 0.04em;
 }
 
 /* 静止画（書き出し・撮影）では、クリックで出る要素も完成形で見せる */
@@ -499,15 +469,30 @@
 .fig > :is(h1, .lead) + :not(.lead) { margin-top: auto; }
 .fig > :last-child { margin-bottom: auto; }
 
+/* 結論の1枚：図を置かず、見出しを表紙と同じ大きさで中央に置く */
+.fig.conclusion h1 {
+  margin-top: auto;
+  font-size: var(--fs-display);
+  line-height: 1.3;
+  letter-spacing: var(--ls-display);
+}
+.fig.conclusion h1 em {
+  font-style: normal;
+  color: var(--tone-caution-ink);
+}
+.fig.conclusion .lead {
+  margin-top: 24px;
+  color: var(--ink-2);
+}
+
 .slidev-layout .cover-date {
   margin: 28px 0 0;
   display: flex;
   align-items: center;
   gap: 12px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 500;
-  letter-spacing: 0.16em;
+  font-size: var(--fs-note);
+  font-weight: 400;
+  letter-spacing: 0.04em;
   color: var(--muted);
 }
 .cover-date::before {

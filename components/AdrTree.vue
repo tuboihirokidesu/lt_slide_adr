@@ -29,7 +29,7 @@ const history = [
 <template>
   <div class="tree">
     <section class="tree__col">
-      <span class="fx-label-mono">置き場所</span>
+      <span class="fx-caption">置き場所</span>
       <ul class="tree__files">
         <li v-for="t in tree" :key="t.name" :class="{ 'is-hit': t.hit, 'is-gap': t.gap }">
           <span class="tree__name"><i>{{ t.pre }}</i>{{ t.name }}</span>
@@ -39,22 +39,22 @@ const history = [
     </section>
 
     <section class="tree__col">
-      <span class="fx-label-mono">index.md を2つに分ける</span>
+      <span class="fx-caption">index.md を2つに分ける</span>
       <div class="fx-paper tree__index">
         <div class="fx-paper__head"><span>docs/adr/index.md</span></div>
         <div class="fx-paper__body">
-          <p class="fx-paper__h is-recommend">現役（steering）</p>
-          <p v-for="a in active" :key="a.no" class="tree__row"><b>{{ a.no }}</b>{{ a.title }}</p>
-          <p class="fx-paper__h">履歴（superseded・deprecated）</p>
+          <p class="fx-paper__h is-recommend">現役</p>
+          <p v-for="a in active" :key="a.no" class="tree__row"><span class="tree__no">{{ a.no }}</span>{{ a.title }}</p>
+          <p class="fx-paper__h">履歴</p>
           <p v-for="h in history" :key="h.no" class="tree__row is-old">
-            <b>{{ h.no }}</b><span>{{ h.title }}<small>{{ h.status }}</small></span>
+            <span class="tree__no">{{ h.no }}</span><span>{{ h.title }}<small>{{ h.status }}</small></span>
           </p>
         </div>
       </div>
     </section>
 
     <section class="tree__col">
-      <span class="fx-label-mono">status の遷移</span>
+      <span class="fx-caption">status の遷移</span>
       <div class="tree__fsm">
         <svg class="tree__flow" viewBox="0 0 250 162" width="250" height="162" aria-hidden="true">
           <g class="tree__edges">
@@ -78,7 +78,7 @@ const history = [
   gap: 30px;
   align-items: start;
 }
-.tree__col > .fx-label-mono {
+.tree__col > .fx-caption {
   margin-bottom: 10px;
 }
 .tree__files li {
@@ -115,7 +115,6 @@ const history = [
   border-radius: var(--r-mark);
   background: var(--tone-recommend-fill);
   color: var(--tone-recommend-ink);
-  font-weight: 700;
 }
 .tree__index .fx-paper__body {
   padding-top: 4px;
@@ -131,17 +130,16 @@ const history = [
   font-size: var(--fs-note);
   line-height: 1.5;
 }
-.tree__row b {
+.tree__no {
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  font-weight: 600;
   font-variant-numeric: tabular-nums;
   color: var(--tone-recommend-ink);
 }
 .tree__row.is-old {
   color: var(--muted);
 }
-.tree__row.is-old b {
+.tree__row.is-old .tree__no {
   color: var(--muted);
 }
 .tree__row small {
@@ -177,12 +175,11 @@ const history = [
   padding-top: 14px;
   border-top: 1px solid var(--line);
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 600;
 }
 .tree__foot span {
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 500;
+  font-size: var(--fs-note);
+  font-weight: 400;
   color: var(--tone-source-ink);
 }
 </style>

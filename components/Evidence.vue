@@ -28,21 +28,18 @@ const rows: { claim: string; findings: Finding[]; limit: string }[] = [
     limit: 'Gupta は人間の ADR との類似度で測った。付録B は文書を全部消した人工的な条件。',
   },
 ]
-const no = (i: number) => String(i + 1).padStart(2, '0')
 </script>
 
 <template>
   <div class="ev">
     <div class="ev__row ev__row--head">
-      <span />
-      <span>主張と限界</span>
-      <span>根拠</span>
+      <span class="fx-caption">主張と限界</span>
+      <span class="fx-caption">根拠</span>
     </div>
-    <div v-for="(r, i) in rows" :key="r.claim" class="ev__row">
-      <b class="ev__no">{{ no(i) }}</b>
+    <div v-for="r in rows" :key="r.claim" class="ev__row">
       <div>
-        <strong class="ev__claim">{{ r.claim }}</strong>
-        <p class="ev__limit"><span>限界</span>{{ r.limit }}</p>
+        <p class="ev__claim">{{ r.claim }}</p>
+        <p class="ev__limit">限界：{{ r.limit }}</p>
       </div>
       <ul class="ev__finds">
         <li v-for="f in r.findings" :key="f.fig">
@@ -51,66 +48,40 @@ const no = (i: number) => String(i + 1).padStart(2, '0')
         </li>
       </ul>
     </div>
-    <p class="ev__note">
-      ETH の「LLM が生成したファイルで成功率がわずかに下がった」は有意差なし。コストは約 +20% で有意だが、<Ref id="lulla" /> 2026 では実行時間の中央値が −28.64% と、結果は割れている。
-    </p>
   </div>
 </template>
 
 <style scoped>
 .ev__row {
   display: grid;
-  grid-template-columns: 20px 276px 1fr;
-  gap: 18px;
+  grid-template-columns: 296px 1fr;
+  gap: 28px;
   align-items: start;
-  padding: 7px 0;
+  padding: 10px 0;
   border-top: 1px solid var(--line);
 }
 .ev__row--head {
   padding: 0 0 4px;
   border-top: 0;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: var(--ls-label);
-  color: var(--muted);
 }
 .ev__row--head + .ev__row {
   border-top: 1.5px solid var(--line-strong);
 }
-.ev__no {
-  padding-top: 3px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  color: var(--muted);
-}
-.ev__claim {
-  display: block;
+.slidev-layout .ev__claim {
+  margin: 0;
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.5;
 }
-.ev__limit {
+.slidev-layout .ev__limit {
   margin: 4px 0 0;
   font-size: var(--fs-note);
   line-height: 1.5;
   color: var(--muted);
 }
-.ev__limit span {
-  margin-right: 6px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: var(--ls-label);
-}
 .ev__finds {
-  margin: 0;
-  padding: 0;
-  list-style: none;
   display: grid;
-  gap: 4px;
+  gap: 6px;
 }
 .ev__finds li {
   display: grid;
@@ -120,7 +91,7 @@ const no = (i: number) => String(i + 1).padStart(2, '0')
 }
 .ev__fig {
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 500;
   font-variant-numeric: tabular-nums;
   color: var(--tone-emphasis-ink);
   white-space: nowrap;
@@ -132,15 +103,6 @@ const no = (i: number) => String(i + 1).padStart(2, '0')
 }
 .ev__src {
   margin-right: 8px;
-  font-weight: 700;
   color: var(--ink-2);
-}
-.ev__note {
-  margin: 4px 0 0;
-  padding-top: 6px;
-  border-top: 1px solid var(--line);
-  font-size: var(--fs-note);
-  line-height: 1.5;
-  color: var(--muted);
 }
 </style>

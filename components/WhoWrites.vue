@@ -24,7 +24,7 @@ const camps: { name: string; voices: { who: Inline[]; say: string }[] }[] = [
 <template>
   <div class="who">
     <section v-for="c in camps" :key="c.name" class="who__camp">
-      <header><strong>{{ c.name }}</strong><span>{{ c.voices.length }}</span></header>
+      <header><span class="who__camp-name">{{ c.name }}</span><span class="who__count">{{ c.voices.length }}件</span></header>
       <ul>
         <li v-for="v in c.voices" :key="v.say">
           <span class="who__name"><RefText :text="v.who" /></span>
@@ -34,7 +34,7 @@ const camps: { name: string; voices: { who: Inline[]; say: string }[] }[] = [
     </section>
 
     <p class="who__common">
-      <span class="fx-label-mono">両派が一致する点</span>
+      <span class="fx-caption">両派が一致する点</span>
       <strong>「なぜ」と「捨てた案」を決めるのは、人間。</strong>
     </p>
   </div>
@@ -55,15 +55,12 @@ const camps: { name: string; voices: { who: Inline[]; say: string }[] }[] = [
   justify-content: space-between;
   padding: 12px 0 2px;
 }
-.who header strong {
+.who__camp-name {
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 500;
 }
-.who header span {
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
+.who__count {
+  font-size: var(--fs-note);
   color: var(--muted);
 }
 .who__camp li {
@@ -80,7 +77,7 @@ const camps: { name: string; voices: { who: Inline[]; say: string }[] }[] = [
 .who__name {
   word-break: keep-all;
   font-size: var(--fs-note);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.5;
   color: var(--ink-2);
 }
@@ -98,7 +95,7 @@ const camps: { name: string; voices: { who: Inline[]; say: string }[] }[] = [
   padding: 14px 0 0;
   border-top: 1.5px solid var(--tone-recommend-line);
 }
-.who__common .fx-label-mono {
+.who__common .fx-caption {
   color: var(--tone-recommend-ink);
 }
 .who__common strong {

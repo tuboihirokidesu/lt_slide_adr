@@ -33,7 +33,7 @@ const sides: { name: string; tone: 'recommend' | 'caution'; voices: Voice[] }[] 
   <div class="deb">
     <section v-for="s in sides" :key="s.name" class="deb__side" :class="`is-${s.tone}`">
       <header>
-        <strong>{{ s.name }}</strong>
+        <span class="deb__name">{{ s.name }}</span>
       </header>
       <ul>
         <li v-for="v in s.voices" :key="v.ref">
@@ -96,9 +96,9 @@ const sides: { name: string; tone: 'recommend' | 'caution'; voices: Voice[] }[] 
   right: auto;
   left: -32px;
 }
-.deb__side header strong {
+.deb__name {
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 500;
   color: var(--c-ink);
 }
 .deb__side ul {
@@ -113,7 +113,7 @@ const sides: { name: string; tone: 'recommend' | 'caution'; voices: Voice[] }[] 
 .deb__who {
   justify-self: end;
   font-size: var(--fs-note);
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.5;
 }
 .deb__side.is-caution .deb__who {

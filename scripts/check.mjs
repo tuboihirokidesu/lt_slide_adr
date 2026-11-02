@@ -9,6 +9,8 @@ import { resolve } from 'node:path'
 
 const MIN_LABEL_PX = 12
 const MIN_SENTENCE_PX = 14
+// Bold marks the one conclusion of a slide. The h1 does not count.
+const MAX_BOLD = 2
 const NOTE_CHARS_PER_MIN = 300
 const NOTE_MAX_CHARS = 500
 
@@ -28,7 +30,19 @@ const RULES = [
     test: /--(?:teal|amber|ext|blue|green|indigo)\b(?!-)|--(?:teal|amber|ext)-|\b(?:is|tone)-(?:teal|amber|blue)\b|\b(?:tone|accent)[=:]\s*["']?(?:teal|amber|blue)\b/g,
     why: '色の名前ではなく、recommend・caution・source・emphasis の用途で呼ぶ',
   },
+  {
+    id: 'ornament',
+    test: /radial-gradient|background-clip:\s*text|-webkit-text-stroke|drop-shadow|box-shadow:\s*0 0 /g,
+    why: '発光、グラデーションの文字、輪郭だけの数字は使わない',
+  },
+  {
+    id: 'uppercase-label',
+    test: /text-transform:\s*uppercase/g,
+    why: 'ラベルは英語の大文字にせず、和文で書く',
+  },
 ]
+// The strike-through is the deck's symbol for a rejected option, so only the two slides that list rejections may draw it.
+const STRIKE_FILES = new Set(['components/KodyNos.vue', 'components/DontWrite.vue', 'styles/index.css'])
 
 const root = resolve(import.meta.dirname, '..')
 const sources = ['slides.md', 'styles/index.css', ...['components', 'layouts'].flatMap((d) => readdirSync(`${root}/${d}`).filter((f) => f.endsWith('.vue')).map((f) => `${d}/${f}`))]
@@ -50,6 +64,11 @@ const lint = () => {
     const text = readFileSync(`${root}/${file}`, 'utf8')
     const lines = text.split('\n')
     const lineAt = (i) => text.slice(0, i).split('\n').length
+    if (!STRIKE_FILES.has(file)) {
+      for (const m of text.matchAll(/\bfx-no\b|line-through/g)) {
+        found.push(`strike-outside-rejection-list: ${file}:${lineAt(m.index)} "${m[0]}" (打ち消し線は Kody の却下リストと、書かなくてよいものの2枚だけ)`)
+      }
+    }
     for (const [from, to] of cssRegions(file, text)) {
       const region = text.slice(from, to)
       for (const rule of RULES) {
@@ -112,13 +131,14 @@ for (const n of targets) {
   const el = page.locator('#slide-content')
   await el.screenshot({ path: `${out}/${String(n).padStart(2, '0')}.png` })
 
-  const issues = await page.evaluate(({ minLabel, minSentence }) => {
+  const issues = await page.evaluate(({ minLabel, minSentence, maxBold }) => {
     if (document.querySelector('vite-error-overlay')) return ['vite-error-overlay: the slide failed to compile']
     const root = document.querySelector('#slide-content .slidev-page:not([style*="display: none"]) .slidev-layout')
       ?? document.querySelector('#slide-content .slidev-layout')
     if (!root) return ['no .slidev-layout found']
     const frame = document.querySelector('#slide-content').getBoundingClientRect()
     const found = []
+    const bold = []
     const label = (e) => `${e.tagName.toLowerCase()}.${[...e.classList].join('.')} "${(e.textContent ?? '').trim().slice(0, 28)}"`
     for (const e of root.querySelectorAll('*')) {
       const cs = getComputedStyle(e)
@@ -140,8 +160,10 @@ for (const n of targets) {
         const px = parseFloat(cs.fontSize)
         const floor = /mono/i.test(cs.fontFamily.split(',')[0]) ? minLabel : minSentence
         if (px < floor - 0.01) found.push(`small-text: ${label(e)} ${px}px < ${floor}px`)
+        if (Number(cs.fontWeight) >= 600 && !e.closest('h1')) bold.push(label(e))
       }
     }
+    if (bold.length > maxBold) found.push(`bold-overuse: ${bold.length} bold runs > ${maxBold} (${bold.slice(0, 4).join(', ')})`)
     // A link is usable only if a click at its centre lands on the link, not on an overlay drawn above it.
     for (const a of root.querySelectorAll('a[href]')) {
       const r = a.getClientRects()[0]
@@ -150,7 +172,7 @@ for (const n of targets) {
       if (!hit || !a.contains(hit)) found.push(`covered-link: ${label(a)} under ${hit ? label(hit) : 'nothing'}`)
     }
     return found.slice(0, 12)
-  }, { minLabel: MIN_LABEL_PX, minSentence: MIN_SENTENCE_PX })
+  }, { minLabel: MIN_LABEL_PX, minSentence: MIN_SENTENCE_PX, maxBold: MAX_BOLD })
   report.push({ slide: n, issues })
   console.log(`${String(n).padStart(2, '0')} ${issues.length ? '✗ ' + issues.join('\n   ') : '✓'}`)
 }

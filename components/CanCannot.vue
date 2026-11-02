@@ -16,19 +16,19 @@ const cannot = [
 <template>
   <div class="cc">
     <section class="cc__col is-can">
-      <header><span class="fx-label-mono">できること</span></header>
-      <ol>
-        <li v-for="(c, i) in can" :key="c.head">
-          <b>{{ String(i + 1).padStart(2, '0') }}</b>
-          <p><strong>{{ c.head }}</strong><small v-if="c.sub"><RefText :text="c.sub" /></small></p>
+      <header><span class="fx-caption">できること</span></header>
+      <ul>
+        <li v-for="c in can" :key="c.head">
+          <p class="cc__head">{{ c.head }}</p>
+          <p v-if="c.sub" class="cc__sub"><RefText :text="c.sub" /></p>
         </li>
-      </ol>
+      </ul>
     </section>
     <section class="cc__col is-cannot">
-      <header><span class="fx-label-mono">できないこと</span></header>
+      <header><span class="fx-caption">できないこと</span></header>
       <ul>
         <li v-for="c in cannot" :key="c.head[0]">
-          <p class="cc__no"><template v-for="(h, i) in c.head" :key="h"><br v-if="i"><span class="fx-no">{{ h }}</span></template></p>
+          <p class="cc__head"><template v-for="(h, i) in c.head" :key="h"><br v-if="i">{{ h }}</template></p>
           <p class="cc__who"><svg viewBox="0 0 30 12" width="30" height="12" aria-hidden="true"><Edge d="M1 6 H28" :end="[28, 6]" dir="r" tone="recommend" /></svg><span><template v-for="(w, i) in c.who" :key="w"><br v-if="i">{{ w }}</template></span></p>
         </li>
       </ul>
@@ -62,54 +62,29 @@ const cannot = [
 .cc__col header {
   padding: 14px 0 6px;
 }
-.is-can .fx-label-mono {
+.is-can .fx-caption {
   color: var(--tone-recommend-ink);
 }
-.is-cannot .fx-label-mono {
+.is-cannot .fx-caption {
   color: var(--tone-caution-ink);
 }
 .cc__col li {
-  padding: 20px 0;
+  padding: 18px 0;
   border-top: 1px solid var(--line);
 }
 .cc__col li:first-child {
   border-top: 0;
 }
-.is-can li {
-  display: grid;
-  grid-template-columns: 34px 1fr;
-  align-items: baseline;
-}
-.is-can b {
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  color: var(--tone-recommend-ink);
-}
-.is-can p {
+.cc__head {
   margin: 0;
-}
-.is-can strong {
-  display: block;
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.6;
 }
-.is-can small {
-  display: block;
-  margin-top: 4px;
+.cc__sub {
+  margin: 4px 0 0;
   font-size: var(--fs-note);
   color: var(--muted);
-}
-.cc__no {
-  margin: 0;
-  font-size: var(--fs-body);
-  font-weight: 700;
-  line-height: 1.6;
-}
-.cc__no .fx-no {
-  color: var(--ink-2);
 }
 .cc__who {
   display: flex;
@@ -118,7 +93,6 @@ const cannot = [
   margin: 8px 0 0;
   font-size: var(--fs-note);
   line-height: 1.6;
-  font-weight: 700;
   color: var(--tone-recommend-ink);
 }
 .cc__who svg {

@@ -20,7 +20,7 @@ const parts = (id: SourceId) => all.filter(([, s]) => 'partOf' in s && s.partOf 
 <template>
   <div class="src" :class="`is-part-${props.part}`">
     <section v-for="g in groups.filter((g) => g.part === props.part)" :key="g.key" class="src__group" :class="`is-${g.key}`">
-      <header><span class="fx-label-mono">{{ g.name }}</span><b>{{ items(g.key).length }}</b></header>
+      <header><span class="fx-caption">{{ g.name }}</span></header>
       <ul>
         <li v-for="[id, s] in items(g.key)" :key="id">
           <Ref :id="id" class="src__who" /> <span class="src__title">{{ s.title }}</span><small v-if="parts(id).length"><template v-for="([pid, p], i) in parts(id)" :key="pid">{{ i ? '・' : '' }}<Ref :id="pid" :label="p.title" /></template></small>
@@ -53,17 +53,7 @@ const parts = (id: SourceId) => all.filter(([, s]) => 'partOf' in s && s.partOf 
   border-top: 1px solid var(--line-strong);
 }
 .src__group header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
   padding: 10px 0 4px;
-}
-.src__group header b {
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  color: var(--muted);
 }
 .src__group li {
   padding: 4px 0;
@@ -72,7 +62,7 @@ const parts = (id: SourceId) => all.filter(([, s]) => 'partOf' in s && s.partOf 
   color: var(--ink);
 }
 .src__who {
-  font-weight: 700;
+  font-weight: 500;
 }
 .src__title {
   color: var(--ink-2);
@@ -89,10 +79,6 @@ const parts = (id: SourceId) => all.filter(([, s]) => 'partOf' in s && s.partOf 
   gap: 12px;
   padding: 2px 0;
   white-space: nowrap;
-}
-.src__group.is-x .src__who {
-  font-family: var(--font-mono);
-  font-weight: 600;
 }
 .src__group.is-paper li {
   justify-content: flex-start;

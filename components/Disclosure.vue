@@ -1,83 +1,81 @@
 <script setup lang="ts">
-const crammed = [86, 72, 94, 60, 80, 90, 54, 76, 88, 66, 92, 58]
-
-const CARD = 212
-const STEP_X = 228
-const STEP_Y = 64
-const steps = [
-  { label: 'Step 1', note: '毎回読む。中身は索引への1行だけ。' },
-  { label: 'Step 2', note: '必要なときに開く。現役の一覧。' },
-  { label: 'Step 3', note: '該当する1本だけを読む。' },
+const crammed = [
+  'キャッシュ層を作らない',
+  'ORM を導入しない',
+  'GraphQL にしない',
+  'キューを自作しない',
+  '認証は外部に任せる',
+  'モノレポを分けない',
+  '依存を固定しない',
 ]
-const pos = (i: number) => ({ left: `${i * STEP_X}px`, top: `${i * STEP_Y}px` })
-const indexRows = [
-  { no: '0003', title: 'GraphQL にしない' },
-  { no: '0004', title: 'ORM を入れない' },
-  { no: '0005', title: 'キャッシュ層を作らない', hit: true },
-  { no: '0006', title: 'キューを自作しない' },
+
+// Kody の decisions/index.md「Steering list」の並び順のまま、0025 の前後だけを抜き出す
+const steering = [
+  { no: '0024', title: 'Packages outrank synthesized providers; …' },
+  { no: '0025', title: 'No package services primitive', hit: true },
+  { no: '0032', title: 'No unattached jobs; …' },
 ]
 </script>
 
 <template>
   <div class="disc">
     <div class="disc__bad">
-      <div class="fx-paper disc__crammed" aria-hidden="true">
-        <div class="fx-paper__head"><span>AGENTS.md</span><span>全部入り</span></div>
-        <div class="disc__lines">
-          <i v-for="(w, i) in crammed" :key="i" :style="{ width: `${w}%` }" />
-        </div>
-        <svg class="disc__x" viewBox="0 0 190 176" width="168" height="156" aria-hidden="true">
-          <g class="disc__x-mark">
-            <Edge d="M27 24 L163 152" tone="caution" />
-            <Edge d="M163 24 L27 152" tone="caution" :delay="120" />
-          </g>
-        </svg>
-      </div>
-      <p class="disc__caption"><span class="fx-no">全部 AGENTS.md に書く</span></p>
-      <p class="disc__sub">毎回すべてが文脈に載り、エージェントの文脈を圧迫する。</p>
-    </div>
-
-    <div class="disc__stair">
-      <svg class="disc__edges" viewBox="0 0 668 330" width="668" height="330" aria-hidden="true">
-        <Edge :d="`M${CARD} 104 H${STEP_X - 1}`" :end="[STEP_X - 1, 104]" dir="r" tone="recommend" />
-        <Edge :d="`M${STEP_X + CARD} 170 H${STEP_X * 2 - 1}`" :end="[STEP_X * 2 - 1, 170]" dir="r" tone="recommend" />
-      </svg>
-
-      <div class="disc__step" :style="pos(0)">
-        <div class="fx-paper disc__card">
-          <div class="fx-paper__head"><span>AGENTS.md</span></div>
-          <div class="disc__code">
-            <span class="is-dim">## Commands</span>
-            <span class="is-dim">pnpm test</span>
-            <span class="is-dim">## Decisions</span>
-            <span class="is-hit">docs/adr/index.md</span>
-          </div>
-        </div>
-        <p class="disc__note"><span class="fx-label-mono">{{ steps[0].label }}</span>{{ steps[0].note }}</p>
-      </div>
-
-      <div class="disc__step" :style="pos(1)">
-        <div class="fx-paper disc__card">
-          <div class="fx-paper__head"><span>docs/adr/index.md</span></div>
-          <ul class="disc__index">
-            <li v-for="r in indexRows" :key="r.no" :class="{ 'is-hit': r.hit }"><b>{{ r.no }}</b>{{ r.title }}</li>
+      <span class="fx-caption">全部入りにした場合</span>
+      <div class="fx-paper disc__crammed">
+        <div class="fx-paper__head"><span>AGENTS.md</span></div>
+        <div class="fx-paper__body">
+          <p class="fx-paper__h">Commands</p>
+          <p class="disc__cmd">pnpm test · pnpm lint</p>
+          <p class="fx-paper__h">Decisions</p>
+          <ul class="disc__lines">
+            <li v-for="l in crammed" :key="l">- {{ l }}</li>
+            <li class="is-more">…</li>
           </ul>
         </div>
-        <p class="disc__note"><span class="fx-label-mono">{{ steps[1].label }}</span>{{ steps[1].note }}</p>
+      </div>
+      <p class="disc__sub">全部が毎回、エージェントの文脈に載る。</p>
+    </div>
+
+    <div class="disc__good">
+      <span class="fx-caption"><Ref id="kody" label="Kody" /> の場合（抜粋）</span>
+      <div class="disc__top">
+        <div class="fx-paper disc__card">
+          <div class="fx-paper__head"><span>AGENTS.md</span><span class="disc__step">1段目　毎回読む</span></div>
+          <div class="disc__body">
+            <p class="is-dim">Open the page that owns the task:</p>
+            <p>- Docs map: <mark>contributing</mark> · principles · skills</p>
+          </div>
+        </div>
+        <figure class="disc__quote">
+          <blockquote class="fx-quote">progressively<br>disclosed way</blockquote>
+          <figcaption class="fx-cite"><Ref id="kent" /></figcaption>
+        </figure>
       </div>
 
-      <div class="disc__step" :style="pos(2)">
-        <AdrPaper class="disc__card" no="0005" file="0005-no-cache-layer.md" title="独自のキャッシュ層を作らない。">
-          <p class="fx-paper__h">Revisit if</p>
-          <p class="fx-revisit disc__revisit">p95 が 800ms を超えたら</p>
-        </AdrPaper>
-        <p class="disc__note"><span class="fx-label-mono">{{ steps[2].label }}</span>{{ steps[2].note }}</p>
+      <div class="fx-paper disc__card disc__hop is-2">
+        <div class="fx-paper__head">
+          <span><Ref id="kody-index" label="decisions/index.md" /></span>
+          <span class="disc__step">2段目　contributor map 経由で開く</span>
+        </div>
+        <div class="disc__body">
+          <p class="fx-paper__h">Steering list</p>
+          <p>Open these before proposing a new primitive, surface, or storage home.</p>
+          <ul class="disc__index">
+            <li v-for="r in steering" :key="r.no" :class="{ 'is-hit': r.hit }"><code>{{ r.no }}</code> — {{ r.title }}</li>
+          </ul>
+        </div>
       </div>
 
-      <figure class="disc__quote" :style="{ left: `${STEP_X * 2}px` }">
-        <blockquote class="fx-quote">progressively<br>disclosed way</blockquote>
-        <figcaption class="fx-cite"><Ref id="kent" /></figcaption>
-      </figure>
+      <div class="fx-paper disc__card disc__hop is-3">
+        <div class="fx-paper__head">
+          <span><Ref id="kody-0025" label="0025-no-package-services-primitive.md" /></span>
+          <span class="disc__step">3段目　該当する1本だけ</span>
+        </div>
+        <div class="disc__body">
+          <p class="fx-paper__h">Decision</p>
+          <p>Delete the package services primitive, including <code>kody.services</code>, the services MCP domain, and <code>PackageServiceInstance</code>.</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -85,135 +83,142 @@ const indexRows = [
 <style scoped>
 .disc {
   display: grid;
-  grid-template-columns: 168px 1fr;
-  gap: 24px;
+  grid-template-columns: 214px 1fr;
+  gap: 28px;
   align-items: start;
 }
+.disc__bad,
+.disc__good {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 .disc__crammed {
-  position: relative;
-  height: 210px;
   box-shadow: none;
   background: var(--legacy-fill);
 }
-.disc__lines {
-  display: grid;
-  gap: 7px;
-  padding: 12px 14px;
+.disc__crammed .fx-paper__body {
+  padding: 4px 12px 10px;
 }
-.disc__lines i {
-  display: block;
-  height: 6px;
-  border-radius: 3px;
-  background: var(--line);
+.disc__crammed .fx-paper__h {
+  margin: 6px 0 2px;
 }
-.disc__x {
-  position: absolute;
-  left: 0;
-  top: 34px;
+.disc__cmd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--ink-2);
 }
-.disc__caption {
-  margin: 14px 0 0;
+.disc__lines li {
   font-size: var(--fs-note);
-  font-weight: 700;
+  line-height: 1.5;
+  white-space: nowrap;
+  color: var(--ink-2);
+}
+.disc__lines .is-more {
+  color: var(--muted);
 }
 .disc__sub {
-  margin: 4px 0 0;
+  margin: 0;
   font-size: var(--fs-note);
   line-height: 1.6;
-  color: var(--muted);
+  color: var(--ink-2);
 }
-.disc__stair {
+.disc__top {
+  display: grid;
+  grid-template-columns: 372px 1fr;
+  gap: 22px;
+  align-items: start;
+}
+.disc__card {
   position: relative;
-  width: 668px;
-  height: 380px;
+  box-shadow: none;
 }
-.disc__edges {
-  position: absolute;
-  inset: 0;
-  overflow: visible;
-  z-index: 1;
+.disc__card .fx-paper__head {
+  padding: 5px 12px;
 }
 .disc__step {
-  position: absolute;
-  width: 212px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-note);
+  color: var(--tone-recommend-ink);
 }
-.disc__code {
-  display: grid;
-  gap: 2px;
-  padding: 10px 14px 12px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
+.disc__body {
+  padding: 5px 12px 6px;
+}
+.disc__body p {
+  margin: 0;
+  font-size: var(--fs-note);
   line-height: 1.5;
+  color: var(--ink);
 }
-.disc__code .is-dim {
+.disc__body .is-dim {
   color: var(--muted);
 }
-.disc__code .is-hit,
+.disc__body .fx-paper__h {
+  margin: 0 0 2px;
+  font-size: var(--fs-label);
+  color: var(--muted);
+}
+.disc__body p + .fx-paper__h {
+  margin-top: 4px;
+}
+.disc__body mark,
 .disc__index .is-hit {
-  margin: 2px -6px 0;
-  padding: 2px 6px;
-  border-radius: var(--r-mark);
   background: var(--tone-recommend-fill);
   color: var(--tone-recommend-ink);
-  font-weight: 700;
+  border-radius: var(--r-mark);
+}
+.disc__body mark {
+  padding: 0 4px;
 }
 .disc__index {
-  display: grid;
-  gap: 2px;
-  padding: 10px 12px 12px;
+  margin-top: 4px;
 }
 .disc__index li {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
+  margin: 0 -6px;
+  padding: 0 6px;
   font-size: var(--fs-note);
   line-height: 1.55;
   white-space: nowrap;
   color: var(--ink-2);
 }
-.disc__index b {
-  font-family: var(--font-mono);
+.disc__index code {
   font-size: var(--fs-label);
-  font-variant-numeric: tabular-nums;
-  font-weight: 600;
-  color: var(--muted);
 }
-.disc__index .is-hit b {
-  color: var(--tone-recommend-ink);
+/* 段を下りるごとに右へずらし、前の段から L 字の矢印でつなぐ */
+.disc__hop.is-2 { margin: 12px 0 0 36px; }
+.disc__hop.is-3 { margin: 12px 0 0 72px; }
+.disc__hop::before {
+  content: "";
+  position: absolute;
+  left: -24px;
+  top: -13px;
+  width: 20px;
+  height: 34px;
+  border-left: var(--w-em) solid var(--tone-recommend);
+  border-bottom: var(--w-em) solid var(--tone-recommend);
+  border-bottom-left-radius: var(--r-mark);
 }
-.disc__card :deep(.fx-paper__title) {
-  font-size: var(--fs-body);
-}
-.disc__card :deep(.fx-paper__body) {
-  padding: 10px 14px 12px;
-}
-.disc__revisit {
-  margin: 0;
-  padding: 4px 8px;
-  font-size: var(--fs-note);
-  white-space: nowrap;
-  color: var(--ink-2);
-}
-.disc__note {
-  margin: 10px 0 0;
-  font-size: var(--fs-note);
-  line-height: 1.55;
-  color: var(--ink-2);
-}
-.disc__note .fx-label-mono {
-  margin-bottom: 2px;
-  color: var(--tone-recommend-ink);
+.disc__hop::after {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 14px;
+  border-left: 7px solid var(--tone-recommend);
+  border-top: 4.5px solid transparent;
+  border-bottom: 4.5px solid transparent;
 }
 .disc__quote {
-  position: absolute;
-  top: 0;
-  margin: 0;
-  padding-left: 14px;
+  margin: 2px 0 0;
+  padding-left: 12px;
   border-left: 2px solid var(--tone-source);
 }
 .disc__quote .fx-quote {
   font-size: var(--fs-title);
   white-space: nowrap;
-  line-height: 1.25;
+  line-height: 1.15;
+}
+.disc__quote .fx-cite {
+  margin-top: 2px;
 }
 </style>

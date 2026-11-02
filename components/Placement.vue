@@ -16,21 +16,21 @@ const rows = [
       <span>高</span>
       <i />
       <span>低</span>
-      <b>読まれる頻度</b>
+      <span class="pl__axis-name">読まれる頻度</span>
     </div>
     <div class="pl__table">
       <div class="pl__row pl__row--head">
         <span>置き場所</span><span>読まれ方</span><span>書くこと</span><span>書かないこと</span>
       </div>
       <div v-for="r in rows" :key="r.place" class="pl__row" :class="{ 'is-hit': r.hit, 'is-aside': r.aside }">
-        <strong>{{ r.place }}<small v-if="r.sub">{{ r.sub }}</small></strong>
+        <span class="pl__place">{{ r.place }}<small v-if="r.sub">{{ r.sub }}</small></span>
         <span class="pl__read">{{ r.read }}</span>
         <span>{{ r.write }}</span>
         <span class="pl__not">{{ r.not || 'なし' }}</span>
       </div>
     </div>
   </div>
-  <p class="pl__quote"><span><Ref id="ebbing" /> の作者は、CLAUDE.md には「結論と ADR 番号だけ」、ADR には「理由と却下した4案」、メモリには「私の好み」。</span></p>
+  <p class="pl__quote"><span><Ref id="ebbing" /> では、CLAUDE.md に「結論と ADR 番号だけ」、ADR に「理由と却下した4案」、メモリに「私の好み」を書く。</span></p>
 </template>
 
 <style scoped>
@@ -46,9 +46,7 @@ const rows = [
   align-items: center;
   gap: 6px;
   padding: 30px 0 58px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 700;
+  font-size: var(--fs-note);
   color: var(--muted);
 }
 .pl__axis i {
@@ -57,16 +55,15 @@ const rows = [
   border-radius: 2px;
   background: linear-gradient(180deg, var(--ink-2), var(--line));
 }
-.pl__axis b {
+.pl__axis-name {
   position: absolute;
   left: -4px;
   top: 50%;
   transform: translateY(-50%);
   writing-mode: vertical-rl;
-  font-weight: 600;
-  letter-spacing: var(--ls-label);
+  letter-spacing: 0.08em;
 }
-.pl__axis span,
+.pl__axis > span:not(.pl__axis-name),
 .pl__axis i {
   margin-left: 16px;
 }
@@ -83,26 +80,20 @@ const rows = [
 .pl__row--head {
   padding-top: 0;
   border-top: 0;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: var(--ls-label);
   color: var(--muted);
 }
-.pl__row strong {
+.pl__place {
   display: flex;
   flex-direction: column;
   font-size: var(--fs-body);
-  font-weight: 700;
-}
-.pl__row strong small {
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
   font-weight: 500;
+}
+.pl__place small {
+  font-size: var(--fs-note);
+  font-weight: 400;
   color: var(--muted);
 }
 .pl__read {
-  font-weight: 600;
   color: var(--ink-2);
 }
 .pl__not {
@@ -116,7 +107,7 @@ const rows = [
 .pl__row.is-hit + .pl__row {
   border-top-color: transparent;
 }
-.pl__row.is-hit strong,
+.pl__row.is-hit .pl__place,
 .pl__row.is-hit .pl__read {
   color: var(--tone-recommend-ink);
 }

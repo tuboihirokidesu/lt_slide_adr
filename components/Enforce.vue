@@ -15,7 +15,7 @@ const lint = [
   <div class="enf">
     <div class="enf__row">
       <div class="enf__col">
-        <p class="enf__role"><b>ADR</b>理由を書く</p>
+        <p class="enf__role"><span>ADR</span>理由を書く</p>
         <AdrPaper class="enf__paper" no="0012" file="0012-no-orm.md" status="accepted" title="ORM を導入しない。">
           <p class="fx-paper__h">Decision</p>
           <p class="enf__text">クエリは生 SQL で書く。</p>
@@ -36,9 +36,9 @@ const lint = [
       </div>
 
       <div class="enf__col">
-        <p class="enf__role"><b>lint・CI</b>強制する</p>
+        <p class="enf__role"><span>lint・CI</span>強制する</p>
         <div class="enf__term is-night">
-          <p class="enf__bar"><i /><i /><i /><span>pnpm lint</span></p>
+          <p class="enf__bar">$ pnpm lint</p>
           <p v-for="l in lint" :key="l.text" :class="l.cls">{{ l.text }}</p>
         </div>
       </div>
@@ -47,7 +47,7 @@ const lint = [
     <div class="enf__foot">
       <figure class="enf__quote">
         <blockquote class="fx-quote">When documentation falls short,<br>we promote the rule into code</blockquote>
-        <figcaption class="fx-cite"><Ref id="openai" label="OpenAI · Harness engineering" /></figcaption>
+        <figcaption class="fx-cite"><Ref id="openai" label="OpenAI の記事「Harness engineering」" /></figcaption>
       </figure>
       <p class="enf__note">強制できない「当面〜しない」系の決定は、<br>ADR とレビューで守る。それで十分。</p>
     </div>
@@ -70,12 +70,11 @@ const lint = [
   gap: 10px;
   margin: 0 0 8px;
   font-size: var(--fs-note);
-  font-weight: 600;
   color: var(--muted);
 }
-.enf__role b {
+.enf__role span {
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 500;
   color: var(--ink);
 }
 .enf__paper,
@@ -138,22 +137,10 @@ const lint = [
   padding: 0 16px;
 }
 .enf__term .enf__bar {
-  display: flex;
-  align-items: center;
-  gap: 6px;
   margin-bottom: 10px;
-  padding: 8px 12px;
+  padding: 8px 16px;
   border-bottom: 1px solid var(--line);
   color: var(--muted);
-}
-.enf__bar i {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--line-strong);
-}
-.enf__bar span {
-  margin-left: 8px;
 }
 .enf__term .is-path,
 .enf__term .is-dim {
@@ -164,12 +151,10 @@ const lint = [
 }
 .enf__term .is-ref {
   color: var(--tone-recommend-ink);
-  font-weight: 700;
 }
 .enf__term .is-sum {
   margin-top: 10px;
   color: var(--tone-caution-ink);
-  font-weight: 700;
 }
 .enf__foot {
   display: grid;
@@ -193,7 +178,7 @@ const lint = [
   gap: 10px;
   margin: 0;
   font-size: var(--fs-note);
-  font-weight: 600;
   line-height: 1.65;
+  color: var(--ink-2);
 }
 </style>

@@ -39,16 +39,16 @@ const picks: { head: string; src: Inline[]; body: string; example?: string; tags
         </g>
         <text x="199" y="178" class="three__core">書く</text>
       </svg>
-      <figcaption>3つを<b>すべて</b>満たすときだけ書く。<br>基準は <Ref id="pocock" /> の <span class="nowrap">grill-with-docs</span>。</figcaption>
+      <figcaption>基準は <Ref id="pocock" /> の <span class="nowrap">grill-with-docs</span>。</figcaption>
     </figure>
 
     <div class="three__picks">
       <p class="three__lead">とくに条件を満たしやすい2つは、積極的に書く。</p>
       <div v-for="p in picks" :key="p.head" class="fx-box three__pick">
-        <div class="three__head"><strong>{{ p.head }}</strong><span><RefText :text="p.src" /></span></div>
+        <div class="three__head"><span class="three__name">{{ p.head }}</span><span class="three__src"><RefText :text="p.src" /></span></div>
         <p>{{ p.body }}</p>
-        <p v-if="p.example" class="three__eg"><span class="fx-label-mono">例</span><span class="fx-no">{{ p.example }}</span></p>
-        <p v-if="p.tags" class="three__eg"><span class="fx-label-mono">例</span><span class="three__tags"><span v-for="t in p.tags" :key="t" class="fx-tag fx-tag--muted">{{ t }}</span></span></p>
+        <p v-if="p.example" class="three__eg"><span class="fx-caption">例</span><span>{{ p.example }}<span class="three__rejected">却下</span></span></p>
+        <p v-if="p.tags" class="three__eg"><span class="fx-caption">例</span><span class="three__tags"><span v-for="t in p.tags" :key="t" class="fx-tag fx-tag--muted">{{ t }}</span></span></p>
       </div>
     </div>
   </div>
@@ -80,19 +80,19 @@ const picks: { head: string; src: Inline[]; body: string; example?: string; tags
 }
 .three__label {
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 500;
   fill: var(--ink);
 }
 .three__sub {
   font-size: var(--fs-note);
-  font-weight: 500;
+  font-weight: 400;
   fill: var(--muted);
 }
 .three__core {
   text-anchor: middle;
   font-family: var(--font-sans);
   font-size: var(--fs-body);
-  font-weight: 800;
+  font-weight: 700;
   fill: var(--tone-recommend-ink);
 }
 .three__venn figcaption {
@@ -100,9 +100,6 @@ const picks: { head: string; src: Inline[]; body: string; example?: string; tags
   font-size: var(--fs-note);
   line-height: 1.6;
   color: var(--muted);
-}
-.three__venn figcaption b {
-  color: var(--tone-recommend-ink);
 }
 .three__picks {
   display: flex;
@@ -112,7 +109,7 @@ const picks: { head: string; src: Inline[]; body: string; example?: string; tags
 .three__lead {
   margin: 0 0 2px;
   font-size: var(--fs-body);
-  font-weight: 700;
+  color: var(--ink-2);
 }
 .three__pick {
   padding: 14px 18px;
@@ -123,13 +120,12 @@ const picks: { head: string; src: Inline[]; body: string; example?: string; tags
   justify-content: space-between;
   gap: 12px;
 }
-.three__head strong {
+.three__name {
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 500;
 }
-.three__head span {
+.three__src {
   font-size: var(--fs-note);
-  font-weight: 600;
   color: var(--tone-source-ink);
   white-space: nowrap;
 }
@@ -145,8 +141,12 @@ const picks: { head: string; src: Inline[]; body: string; example?: string; tags
   gap: 8px;
   margin-top: 8px;
 }
-.three__eg .fx-label-mono {
+.three__eg .fx-caption {
   margin-right: 2px;
+}
+.three__rejected {
+  margin-left: 10px;
+  color: var(--tone-caution-ink);
 }
 .three__tags {
   display: flex;

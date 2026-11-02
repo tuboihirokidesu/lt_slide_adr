@@ -19,7 +19,6 @@ const height = (l: Line) => (l.add ? `${12 + (l.rows ?? 1) * 21}px` : undefined)
   <div class="ed">
     <div class="ed__win">
       <div class="ed__bar">
-        <span class="ed__dots"><i /><i /><i /></span>
         <span class="ed__file">AGENTS.md</span>
         <span class="ed__diff">+4 行</span>
       </div>
@@ -64,24 +63,11 @@ const height = (l: Line) => (l.add ? `${12 + (l.rows ?? 1) * 21}px` : undefined)
   font-family: var(--font-mono);
   font-size: var(--fs-label);
 }
-.ed__dots {
-  display: flex;
-  gap: 6px;
-}
-.ed__dots i {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--line-strong);
-  opacity: 0.6;
-}
 .ed__file {
-  font-weight: 600;
   color: var(--ink);
 }
 .ed__diff {
   margin-left: auto;
-  font-weight: 600;
   color: var(--tone-recommend-ink);
 }
 .ed__code {
@@ -110,7 +96,6 @@ const height = (l: Line) => (l.add ? `${12 + (l.rows ?? 1) * 21}px` : undefined)
 }
 .ed__mark {
   text-align: center;
-  font-weight: 700;
   color: var(--tone-recommend);
 }
 .ed__code li.is-add {
@@ -121,7 +106,6 @@ const height = (l: Line) => (l.add ? `${12 + (l.rows ?? 1) * 21}px` : undefined)
 .ed__code li.is-add .ed__text {
   font-family: var(--font-sans);
   font-size: var(--fs-note);
-  font-weight: 600;
   line-height: 21px;
   color: var(--ink);
 }
@@ -140,7 +124,7 @@ const height = (l: Line) => (l.add ? `${12 + (l.rows ?? 1) * 21}px` : undefined)
   padding-left: 28px;
   line-height: 21px;
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 500;
   color: var(--tone-recommend-ink);
 }
 .ed__notes li.is-note::before {

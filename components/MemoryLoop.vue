@@ -2,9 +2,9 @@
 const props = withDefaults(defineProps<{ stage?: number }>(), { stage: 0 })
 
 const sessions = [
-  { no: '01', at: 0 },
-  { no: '02', at: 1 },
-  { no: '03', at: 2 },
+  { label: '1回目のセッション', at: 0 },
+  { label: '2回目のセッション', at: 1 },
+  { label: '3回目のセッション', at: 2 },
 ]
 const COL = 170
 const GAP = 30
@@ -29,12 +29,12 @@ const loopOn = () => props.stage >= 3
 
       <div
         v-for="(s, i) in sessions"
-        :key="s.no"
+        :key="s.label"
         class="loop__session fx-enter"
         :class="{ 'is-on': stage >= s.at }"
         :style="{ left: `${left(i)}px`, '--d': '0ms' }"
       >
-        <span class="fx-label-mono">Session {{ s.no }}</span>
+        <span class="fx-caption">{{ s.label }}</span>
         <div class="loop__card fx-box">
           <p class="loop__who">エージェント</p>
           <p class="loop__msg">キャッシュ層を足しましょう。</p>
@@ -90,10 +90,7 @@ const loopOn = () => props.stage >= 3
 }
 .loop__who {
   margin: 0;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-size: var(--fs-note);
   color: var(--muted);
 }
 .loop__who--you {
@@ -106,7 +103,6 @@ const loopOn = () => props.stage >= 3
   border-radius: var(--r-chip);
   background: var(--label-bg);
   font-size: var(--fs-note);
-  font-weight: 600;
   line-height: 1.55;
 }
 .loop__msg--you {

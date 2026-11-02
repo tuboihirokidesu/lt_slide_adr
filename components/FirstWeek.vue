@@ -14,8 +14,8 @@ const PX = 0.62
   <div class="wk">
     <ol class="wk__days">
       <li v-for="(d, i) in days" :key="d.title">
-        <span class="fx-label-mono">Day {{ i + 1 }}</span>
-        <strong>{{ d.title }}</strong>
+        <span class="fx-caption">{{ i + 1 }}日目</span>
+        <span class="wk__title">{{ d.title }}</span>
         <p>{{ d.body }}</p>
         <div class="wk__time">
           <span class="wk__bar" :style="{ height: `${d.min[1] * PX}px` }">
@@ -26,8 +26,8 @@ const PX = 0.62
       </li>
     </ol>
     <p class="wk__month">
-      <span class="fx-label-mono">1か月後に数えるもの</span>
-      <span class="wk__line"><span class="fx-no">書いた本数</span>ではなく、<b>再提案を止めた件数</b>と、<b class="is-caution">古くて邪魔をした件数</b>。</span>
+      <span class="fx-caption">1か月後に数えるもの</span>
+      <span class="wk__line"><span class="wk__good">再提案を止めた件数</span>と、<span class="wk__bad">ADR が古くて邪魔をした件数</span>。書いた本数は数えない。</span>
     </p>
   </div>
 </template>
@@ -49,14 +49,14 @@ const PX = 0.62
   padding-left: 0;
   border-left: 0;
 }
-.wk__days li .fx-label-mono {
+.wk__days li .fx-caption {
   font-variant-numeric: tabular-nums;
   color: var(--tone-recommend-ink);
 }
-.wk__days strong {
+.wk__title {
   margin-top: 6px;
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.45;
 }
 .wk__days p {
@@ -90,7 +90,6 @@ const PX = 0.62
 .wk__time small {
   font-size: var(--fs-note);
   font-variant-numeric: tabular-nums;
-  font-weight: 700;
   color: var(--ink);
 }
 .wk__month {
@@ -105,14 +104,14 @@ const PX = 0.62
 }
 .wk__line {
   font-size: var(--fs-body);
-  font-weight: 600;
   line-height: 1.6;
 }
-.wk__line b {
-  font-weight: 700;
+.wk__good {
+  font-weight: 500;
   color: var(--tone-recommend-ink);
 }
-.wk__line b.is-caution {
+.wk__bad {
+  font-weight: 500;
   color: var(--tone-caution-ink);
 }
 </style>

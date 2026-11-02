@@ -1,13 +1,14 @@
 <script setup lang="ts">
-type Row = { kind: 'title' | 'meta' | 'section'; head?: string; bars?: number[]; revisit?: boolean; note: string; sub?: string; strong?: boolean }
+// 紙面の文は Kody の 0000-template.md の原文。revisit-if は Consequences の段落の中にある
+type Row = { kind: 'title' | 'meta' | 'section'; head?: string; text?: string; revisit?: boolean; note: string; strong?: boolean }
 
 const rows: Row[] = [
-  { kind: 'title', note: '番号と決定タイトル', sub: '何に No と言ったかを、一文で。', strong: true },
-  { kind: 'meta', note: 'Status と日付', sub: 'accepted / superseded' },
-  { kind: 'section', head: 'Context', bars: [92, 64], note: 'Context', sub: '何がこの決定を迫ったか。' },
-  { kind: 'section', head: 'Decision', bars: [74], note: 'Decision', sub: '何を決めたか。' },
-  { kind: 'section', head: 'Consequences', bars: [86, 52], note: 'Consequences', sub: '良くなること、悪くなること。' },
-  { kind: 'section', head: 'Revisit if', bars: [70], revisit: true, note: 'Revisit if', sub: 'どうなったら、この No を見直すか。' },
+  { kind: 'title', note: '何に No と言ったかを、一文で。', strong: true },
+  { kind: 'meta', note: '状態と日付。置き換えたら superseded にする。' },
+  { kind: 'section', head: 'Context', text: 'What proposal or situation forced the decision.', note: '何がこの決定を迫ったか。' },
+  { kind: 'section', head: 'Decision', text: 'What was decided, in one or two sentences.', note: '何を決めたか。' },
+  { kind: 'section', head: 'Consequences', text: 'What stays simple, what gets harder, and the', note: '良くなること、悪くなること。' },
+  { kind: 'section', text: 'revisit-if — the concrete condition that would reopen this.', revisit: true, note: 'どうなったら、この No を見直すか。' },
 ]
 </script>
 
@@ -18,26 +19,21 @@ const rows: Row[] = [
       <div class="fx-paper__head kt__file"><Ref id="kody-template" /><span><Ref id="kent" /> の型</span></div>
       <template v-for="(r, i) in rows" :key="r.note">
         <div class="kt__cell" :style="{ gridRow: i + 2 }">
-          <p v-if="r.kind === 'title'" class="kt__title"><b>NNNN:</b> ◯◯ はしない。</p>
+          <p v-if="r.kind === 'title'" class="kt__title"><code>NNNN:</code> Short decision title (the no)</p>
           <p v-else-if="r.kind === 'meta'" class="kt__meta">
-            <span class="fx-status fx-status--accepted">accepted</span><span>2026-MM-DD</span>
+            <span class="fx-status fx-status--accepted">accepted</span><span>YYYY-MM-DD</span>
           </p>
           <template v-else>
-            <p class="fx-paper__h">{{ r.head }}</p>
-            <div :class="r.revisit ? 'fx-revisit kt__revisit' : 'kt__bars'">
-              <i v-for="(w, j) in r.bars" :key="j" :style="{ width: `${w}%` }" />
-            </div>
+            <p v-if="r.head" class="fx-paper__h">{{ r.head }}</p>
+            <p :class="r.revisit ? 'fx-revisit kt__revisit' : 'kt__text'">{{ r.text }}</p>
           </template>
         </div>
         <i class="kt__leader" :class="{ 'is-recommend': r.revisit }" :style="{ gridRow: i + 2 }" aria-hidden="true" />
-        <div class="kt__note" :class="{ 'is-strong': r.strong, 'is-revisit': r.revisit }" :style="{ gridRow: i + 2 }">
-          <strong>{{ r.note }}</strong>
-          <span>{{ r.sub }}</span>
-        </div>
+        <p class="kt__note" :class="{ 'is-strong': r.strong, 'is-revisit': r.revisit }" :style="{ gridRow: i + 2 }">{{ r.note }}</p>
       </template>
     </div>
     <p class="kt__aside">
-      書くのは <span class="fx-no">We use TypeScript</span> ではなく、<br>エージェントがやりかねないが、製品に有害なこと。
+      <span class="kt__dont">“We use TypeScript” のような、コードを見れば分かることは書かない。</span>書くのは、エージェントがやりかねないが、製品に有害なこと。
     </p>
   </div>
 </template>
@@ -50,7 +46,7 @@ const rows: Row[] = [
 }
 .kt__grid {
   display: grid;
-  grid-template-columns: 392px 56px 1fr;
+  grid-template-columns: 430px 48px 1fr;
   grid-auto-rows: auto;
   align-items: center;
 }
@@ -67,19 +63,17 @@ const rows: Row[] = [
 .kt__cell {
   grid-column: 1;
   position: relative;
-  padding: 5px 18px;
+  padding: 4px 18px;
 }
 .kt__cell .fx-paper__h {
-  margin: 0 0 5px;
+  margin: 0 0 2px;
 }
 .kt__title {
   margin: 4px 0 0;
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 500;
 }
-.kt__title b {
-  font-family: var(--font-mono);
-  font-size: var(--fs-note);
+.kt__title code {
   color: var(--tone-recommend-ink);
 }
 .kt__meta {
@@ -92,25 +86,18 @@ const rows: Row[] = [
   font-variant-numeric: tabular-nums;
   color: var(--muted);
 }
-.kt__bars,
-.kt__revisit {
-  display: grid;
-  gap: 5px;
-}
-.kt__bars i,
-.kt__revisit i {
-  display: block;
-  height: 6px;
-  border-radius: 3px;
-  background: var(--line);
+.kt__text {
+  margin: 0;
+  font-size: var(--fs-note);
+  line-height: 1.5;
+  color: var(--ink-2);
 }
 .kt__revisit {
-  padding: 7px 10px;
-  margin-bottom: 8px;
-}
-.kt__revisit i {
-  background: var(--tone-recommend-line);
-  opacity: 0.6;
+  margin: 0 0 8px;
+  padding: 4px 10px;
+  font-size: var(--fs-note);
+  line-height: 1.5;
+  color: var(--tone-recommend-ink);
 }
 .kt__leader {
   grid-column: 2;
@@ -134,44 +121,25 @@ const rows: Row[] = [
 }
 .kt__note {
   grid-column: 3;
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
+  margin: 0;
   padding: 0 14px;
-}
-.kt__note strong {
-  flex: none;
-  width: 128px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  color: var(--ink-2);
-}
-.kt__note span {
   font-size: var(--fs-note);
   color: var(--ink-2);
 }
-.kt__note.is-strong strong {
-  font-family: var(--font-sans);
-  font-size: var(--fs-note);
-  color: var(--ink);
-}
-.kt__note.is-strong span {
+.kt__note.is-strong {
+  font-size: var(--fs-body);
   font-weight: 700;
   color: var(--ink);
 }
 .kt__note.is-revisit {
   align-self: center;
-  height: 46px;
+  display: flex;
   align-items: center;
+  height: 40px;
   border-radius: var(--r-chip);
   background: var(--tone-recommend-fill);
   border: 1.5px dashed var(--tone-recommend-line);
-}
-.kt__note.is-revisit strong,
-.kt__note.is-revisit span {
   color: var(--tone-recommend-ink);
-  font-weight: 700;
 }
 .kt__aside {
   margin: 0;
@@ -180,7 +148,11 @@ const rows: Row[] = [
   border: 1.5px solid var(--line);
   background: var(--surface);
   font-size: var(--fs-body);
-  font-weight: 700;
   line-height: 1.6;
+}
+.kt__dont {
+  display: block;
+  font-size: var(--fs-note);
+  color: var(--muted);
 }
 </style>

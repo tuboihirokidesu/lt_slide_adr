@@ -1,66 +1,67 @@
 <script setup lang="ts">
 withDefaults(defineProps<{ stage?: number }>(), { stage: 0 })
-
-const gaps = ['レビュー', '承認', '番号の衝突', '陳腐化']
 </script>
 
 <template>
   <div class="rf">
     <div class="rf__pair">
       <div class="rf__col is-old">
-        <span class="fx-label-mono"><Ref id="nygard" label="Nygard" /> 以来の語られ方</span>
-        <AdrPaper class="rf__paper" no="0003" file="0003-use-postgresql.md" title="PostgreSQL を採用する。" status="accepted">
-          <p class="fx-paper__h">Context</p>
-          <div class="rf__bars"><i style="width: 88%" /><i style="width: 60%" /></div>
-          <p class="fx-paper__h">Decision</p>
-          <div class="rf__bars"><i style="width: 72%" /></div>
-        </AdrPaper>
-        <p class="rf__cap"><strong>何を採用したか。</strong>採用した内容は、コードを読めば分かる。</p>
+        <span class="fx-caption"><Ref id="nygard" label="Nygard" />（2011）の型と例</span>
+        <div class="fx-paper rf__paper">
+          <div class="fx-paper__head"><span>Documenting Architecture Decisions</span></div>
+          <div class="fx-paper__body">
+            <p class="fx-paper__title"><code>ADR 9:</code> LDAP for Multitenant Integration</p>
+            <p class="fx-paper__h">Context</p>
+            <p class="rf__text">This section describes the forces at play, …</p>
+            <p class="fx-paper__h">Decision</p>
+            <p class="rf__text">“We will …”</p>
+            <p class="fx-paper__h">Consequences</p>
+            <p class="rf__text">This section describes the resulting context, after applying the decision.</p>
+          </div>
+        </div>
+        <p class="rf__cap"><span class="rf__lead">何を採用したか</span>採用した内容は、コードを読めば分かる。</p>
       </div>
 
-      <svg class="rf__arrow" viewBox="0 0 64 20" width="64" height="20" aria-hidden="true">
-        <Edge d="M4 10 H60" :end="[60, 10]" dir="r" tone="recommend" :on="stage >= 1" />
+      <svg class="rf__arrow" viewBox="0 0 40 20" width="40" height="20" aria-hidden="true">
+        <Edge d="M2 10 H38" :end="[38, 10]" dir="r" tone="recommend" :on="stage >= 1" />
       </svg>
 
       <div class="rf__col fx-enter" :class="{ 'is-on': stage >= 1 }" style="--d: 300ms">
-        <span class="fx-label-mono is-recommend"><Ref id="kent" label="Kent" /> の捉え直し</span>
-        <AdrPaper class="rf__paper" no="0005" file="0005-no-cache-layer.md" title="独自のキャッシュ層を作らない。" status="accepted">
-          <p class="fx-paper__h">Considered options</p>
-          <p class="rf__opt"><span class="fx-no">Redis を前段に置く</span></p>
-          <p class="fx-paper__h">Revisit if</p>
-          <p class="fx-revisit rf__revisit">p95 が 800ms を超えたら</p>
-        </AdrPaper>
-        <p class="rf__cap"><strong>やらない・理由・見直す条件。</strong>却下した案は、コードに残らない。</p>
+        <span class="fx-caption is-recommend"><Ref id="kent" label="Kent" /> の書き方（<Ref id="kody" label="Kody" /> の実物）</span>
+        <div class="fx-paper rf__paper">
+          <div class="fx-paper__head">
+            <span><Ref id="kody-0025" label="0025-no-package-services-primitive.md" /></span>
+            <span class="fx-status fx-status--accepted">accepted</span>
+          </div>
+          <div class="fx-paper__body">
+            <p class="fx-paper__title"><code>0025:</code> No package services primitive</p>
+            <p class="fx-paper__h">Context</p>
+            <p class="rf__text">A fleet check found zero running services across 62 users.</p>
+            <p class="fx-paper__h">Decision</p>
+            <p class="rf__text">Delete the package services primitive, including <code>kody.services</code>, the services MCP domain, and <code>PackageServiceInstance</code>.</p>
+          </div>
+        </div>
+        <p class="rf__cap"><span class="rf__lead">何をやらないか、その理由</span>却下した案は、コードに残らない。</p>
       </div>
     </div>
 
     <div class="rf__foot">
       <p class="rf__fail">
-        <span class="rf__mine">私の見立て</span>エージェントの失敗は <span class="fx-no">知らないこと</span> より、<br><strong>一般論として妥当な案を、自信をもって再提案すること。</strong>
+        <span class="fx-caption">私の見立て</span>エージェントの失敗は、知らないことより、<br><strong>一般論として妥当な案を、自信をもって再提案すること。</strong>
       </p>
       <div class="rf__gaps">
-        <span class="fx-label-mono">動画が触れていない穴</span>
-        <p class="rf__chips"><span v-for="g in gaps" :key="g" class="fx-tag fx-tag--muted">{{ g }}</span></p>
-        <p class="rf__fill">リポジトリの <Ref id="kody-index" /> と docs:check が埋めている。</p>
+        <p class="rf__fill"><span class="fx-caption">動画が触れていないこと</span>レビュー、承認、番号の衝突、陳腐化。リポジトリの <Ref id="kody-index" /> と docs:check が埋めている。</p>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.rf__mine {
-  margin-right: 10px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-}
 .rf__pair {
   display: grid;
-  grid-template-columns: 1fr 64px 1fr;
+  grid-template-columns: 1fr 40px 1fr;
   align-items: stretch;
-  gap: 0 16px;
+  gap: 0 14px;
 }
 .rf__arrow {
   align-self: center;
@@ -74,31 +75,34 @@ const gaps = ['レビュー', '承認', '番号の衝突', '陳腐化']
   box-shadow: none;
   background: var(--legacy-fill);
 }
-.fx-label-mono.is-recommend {
+.fx-caption.is-recommend {
   color: var(--tone-recommend-ink);
 }
 .rf__paper {
   flex: 1;
 }
-.rf__bars {
-  display: grid;
-  gap: 6px;
-  padding-top: 4px;
+.rf__paper .fx-paper__title code {
+  color: var(--tone-recommend-ink);
 }
-.rf__bars i {
-  display: block;
-  height: 6px;
-  border-radius: 3px;
-  background: var(--line);
+.rf__col.is-old .fx-paper__title code {
+  color: var(--muted);
 }
-.rf__opt {
+.rf__paper .fx-paper__head {
+  padding: 6px 12px;
+}
+.rf__paper .fx-paper__body {
+  padding: 8px 14px 10px;
+}
+.rf__paper .fx-paper__title {
+  margin: 0;
+}
+.rf__paper .fx-paper__h {
+  margin: 6px 0 1px;
+}
+.rf__text {
   margin: 0;
   font-size: var(--fs-note);
-}
-.rf__revisit {
-  margin: 2px 0 0;
-  padding: 4px 10px;
-  font-size: var(--fs-note);
+  line-height: 1.5;
   color: var(--ink-2);
 }
 .rf__cap {
@@ -107,43 +111,43 @@ const gaps = ['レビュー', '承認', '番号の衝突', '陳腐化']
   line-height: 1.6;
   color: var(--ink-2);
 }
-.rf__cap strong {
+.rf__lead {
   display: block;
   font-size: var(--fs-body);
+  font-weight: 500;
   color: var(--ink);
 }
 .rf__foot {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
-  margin-top: 14px;
-  padding-top: 12px;
+  margin-top: 10px;
+  padding-top: 10px;
   border-top: 1px solid var(--line-strong);
 }
 .rf__fail {
   margin: 0;
   padding-right: 24px;
   font-size: var(--fs-note);
-  line-height: 1.75;
+  line-height: 1.6;
   color: var(--ink-2);
 }
 .rf__fail strong {
   font-size: var(--fs-body);
   color: var(--ink);
 }
+.rf__foot .fx-caption {
+  display: inline;
+  margin-right: 10px;
+}
 .rf__gaps {
   padding-left: 24px;
   border-left: 1px solid var(--line);
 }
-.rf__chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 6px 0 0;
-}
 .rf__fill {
-  margin: 6px 0 0;
+  margin: 0;
   font-size: var(--fs-note);
+  line-height: 1.6;
   color: var(--ink-2);
 }
 </style>

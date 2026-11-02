@@ -1,9 +1,10 @@
 <script setup lang="ts">
-const sections = [
-  { h: '背景と目標', bars: [88] },
-  { h: '案の比較', bars: [92, 64] },
-  { h: '結論', bars: [76], hit: true },
-  { h: '詳細設計', bars: [84] },
+const sections: { h: string; body?: string; hit?: boolean }[] = [
+  { h: '背景' },
+  { h: '目標' },
+  { h: '案の比較' },
+  { h: '結論', body: '生 SQL と型生成。ORM は入れない', hit: true },
+  { h: '未解決の問い' },
 ]
 </script>
 
@@ -20,25 +21,25 @@ const sections = [
       <span class="tl__axis">時間</span>
 
       <div class="tl__side tl__side--dd">
-        <p class="tl__dir"><strong>Design Doc</strong><span>前向き。これから作るものを議論する。</span></p>
+        <p class="tl__dir"><span class="tl__name">Design Doc</span><span>これから作るものを議論する</span></p>
         <div class="fx-paper tl__dd">
           <div class="fx-paper__head"><span>design-doc.md</span><span>数ページ</span></div>
           <div class="fx-paper__body">
             <div v-for="s in sections" :key="s.h" class="tl__sec" :class="{ 'is-hit': s.hit }">
               <p class="fx-paper__h">{{ s.h }}</p>
-              <i v-for="(w, j) in s.bars" :key="j" :style="{ width: `${w}%` }" />
+              <p v-if="s.body" class="tl__body">{{ s.body }}</p>
             </div>
           </div>
         </div>
       </div>
 
       <div class="tl__side tl__side--adr">
-        <p class="tl__dir"><strong>ADR</strong><span>後ろ向き。決まったことを短く固定する。</span></p>
-        <AdrPaper class="tl__adr" no="0005" file="0005-no-cache-layer.md" title="独自のキャッシュ層を作らない。" status="accepted">
+        <p class="tl__dir"><span class="tl__name">ADR</span><span>決まったことを短く固定する</span></p>
+        <AdrPaper class="tl__adr" no="0012" file="0012-no-orm.md" title="ORM を導入しない" status="accepted">
           <p class="fx-paper__h">Considered options</p>
-          <p class="tl__opt"><span class="fx-no">Redis を前段に置く</span></p>
+          <p class="tl__opt">ORM を入れる（<span class="tl__rejected">却下</span>）</p>
           <p class="fx-paper__h">Revisit if</p>
-          <p class="fx-revisit tl__revisit">p95 が 800ms を超えたら</p>
+          <p class="fx-revisit tl__revisit">CRUD 中心の画面が半分を超えたら</p>
         </AdrPaper>
       </div>
     </div>
@@ -72,24 +73,19 @@ const sections = [
 }
 .tl__decision span {
   position: absolute;
-  top: -22px;
+  top: -24px;
   left: 0;
   transform: translateX(-50%);
   padding: 0 8px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: var(--ls-label);
+  font-size: var(--fs-note);
   color: var(--ink-2);
+  white-space: nowrap;
 }
 .tl__axis {
   position: absolute;
   right: 0;
-  top: 312px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: var(--ls-label);
+  top: 310px;
+  font-size: var(--fs-note);
   color: var(--muted);
 }
 .tl__side {
@@ -110,15 +106,15 @@ const sections = [
   flex-direction: column;
   gap: 2px;
 }
-.tl__dir strong {
+.tl__name {
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 500;
 }
 .tl__dir span {
   font-size: var(--fs-note);
   color: var(--ink-2);
 }
-.tl__side--adr .tl__dir strong {
+.tl__side--adr .tl__name {
   color: var(--tone-recommend-ink);
 }
 .tl__dd .fx-paper__body {
@@ -126,14 +122,13 @@ const sections = [
   padding-bottom: 10px;
 }
 .tl__sec .fx-paper__h {
-  margin: 6px 0 4px;
+  margin: 6px 0 0;
 }
-.tl__sec i {
-  display: block;
-  height: 5px;
-  margin-top: 4px;
-  border-radius: 3px;
-  background: var(--line);
+.tl__body {
+  margin: 0;
+  font-size: var(--fs-note);
+  line-height: 1.5;
+  color: var(--ink-2);
 }
 .tl__sec.is-hit {
   margin: 4px -8px 0;
@@ -141,12 +136,16 @@ const sections = [
   border-radius: var(--r-mark);
   border: 1.5px dashed var(--tone-recommend-line);
 }
-.tl__sec.is-hit i {
-  background: color-mix(in srgb, var(--tone-recommend) 40%, transparent);
+.tl__sec.is-hit .tl__body {
+  color: var(--tone-recommend-ink);
 }
 .tl__opt {
   margin: 0;
   font-size: var(--fs-note);
+  color: var(--muted);
+}
+.tl__rejected {
+  color: var(--tone-caution-ink);
 }
 .tl__revisit {
   margin: 0;

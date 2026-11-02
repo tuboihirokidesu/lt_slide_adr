@@ -5,8 +5,8 @@ withDefaults(defineProps<{ stage?: number }>(), { stage: 0 })
 <template>
   <div class="flip">
     <div class="flip__col">
-      <span class="fx-label-mono">人間だけのチーム</span>
-      <p class="flip__word"><span class="fx-no fx-no--draw" :class="{ 'is-on': stage >= 1 }">読まれない</span></p>
+      <span class="fx-caption">人間だけのチーム</span>
+      <p class="flip__word is-old" :class="{ 'is-past': stage >= 1 }">読まれない</p>
       <p class="flip__src"><Ref id="keeling" />「一度読んだら、何か月も見返さない」</p>
       <p class="flip__why fx-enter" :class="{ 'is-on': stage >= 1 }">エージェントは毎セッション、<br>関係する ADR を読み直す。</p>
     </div>
@@ -16,8 +16,8 @@ withDefaults(defineProps<{ stage?: number }>(), { stage: 0 })
     </svg>
 
     <div class="flip__col fx-enter" :class="{ 'is-on': stage >= 1 }" style="--d: 250ms">
-      <span class="fx-label-mono">エージェントと働くチーム</span>
-      <p class="flip__word is-new">古い ADR に従う</p>
+      <span class="fx-caption">エージェントと働くチーム</span>
+      <p class="flip__word">古い ADR に従う</p>
       <p class="flip__src"><Ref id="uehra" />「ADR が多すぎて、AI が古い決定に従った」</p>
       <div class="flip__fix fx-enter" :class="{ 'is-on': stage >= 2 }">
         <strong>対策は、status 欄と索引。</strong>
@@ -35,28 +35,26 @@ withDefaults(defineProps<{ stage?: number }>(), { stage: 0 })
   align-items: start;
 }
 .flip__arrow {
-  margin-top: 84px;
+  margin-top: 44px;
 }
 .flip__col {
   display: flex;
   flex-direction: column;
 }
 .flip__word {
-  margin: 22px 0 0;
-  font-size: var(--fs-display);
+  margin: 14px 0 0;
+  font-size: var(--fs-title);
   white-space: nowrap;
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: var(--ls-display);
+  font-weight: 500;
+  line-height: 1.35;
   color: var(--tone-caution-ink);
 }
-.flip__word .fx-no {
-  color: var(--tone-caution-ink);
-  background-size: 0% 3px;
+/* 古い弱点は線で消さず、色を落として「もう問題ではない」と示す */
+.flip__word.is-old {
+  transition: color 450ms var(--ease-out);
 }
-.flip__word .fx-no.is-on,
-.is-static .flip__word .fx-no {
-  background-size: 100% 3px;
+.flip__word.is-past,
+.is-static .flip__word.is-old {
   color: var(--muted);
 }
 .flip__src {
@@ -72,16 +70,16 @@ withDefaults(defineProps<{ stage?: number }>(), { stage: 0 })
   flex: none;
 }
 .flip__why {
-  margin: 56px 0 0;
+  margin: 40px 0 0;
   padding-left: 16px;
   border-left: 2px solid var(--tone-recommend);
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.6;
   color: var(--tone-recommend-ink);
 }
 .flip__fix {
-  margin-top: 56px;
+  margin-top: 40px;
   padding: 18px 24px;
   border-radius: var(--r-box);
   border: 1.5px solid var(--tone-recommend-line);
