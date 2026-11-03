@@ -5,7 +5,7 @@ import type { Inline } from '../data/sources'
 const chapters: { no: string; title: string; desc: Inline[] | string }[] = [
   { no: '01', title: '起点', desc: [{ ref: 'kent' }, ' の動画と、', { ref: 'kody' }, ' のリポジトリ'] },
   { no: '02', title: '賛否', desc: '必要か、誰が書くか、守らせられるか、どこに置くかを順に見る' },
-  { no: '03', title: '何を書くか', desc: '書く条件、書かなくてよいもの、半ページのテンプレート' },
+  { no: '03', title: '何を書くか', desc: '書く条件、書かなくてよいもの、1画面に収まるテンプレート' },
   { no: '04', title: 'どう管理するか', desc: '索引と status、PR での運用、置き場所ごとの役割、最初の1週間' },
 ]
 

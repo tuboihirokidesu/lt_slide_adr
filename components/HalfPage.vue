@@ -65,7 +65,7 @@ const rows: Row[] = [
         </template>
       </template>
     </div>
-    <p class="hp__foot"><span class="fx-caption">目安</span><span>全体で半ページ、40〜80行。<Ref id="nygard" label="Nygard" /> と <Ref id="kent" label="Kent" /> の型に、選択肢・確信度・強制手段を足す。</span></p>
+    <p class="hp__foot"><span class="fx-caption">型と長さ</span><span><Ref id="nygard" label="Nygard" /> と <Ref id="kent" label="Kent" /> の型に、選択肢・確信度・強制手段を足す。長さは1画面まで（Nygard の目安の1〜2ページより短く）。</span></p>
   </div>
 </template>
 
