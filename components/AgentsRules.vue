@@ -8,7 +8,7 @@ const lines: Line[] = [
   { text: '## Decisions' },
   { add: true, text: '新しいプリミティブ、外部サービス、データの保存先、認可の経路を提案・実装する前に docs/adr/index.md の「現役」一覧を確認する。', note: '提案の前に、索引を見る', rows: 2 },
   { add: true, text: '現役 ADR に反する変更が必要だと判断したら、実装せずに「ADR-NNNN の revisit-if に該当するか」を添えて提案する。', note: '反するなら、実装せずに提案', rows: 2 },
-  { add: true, text: '戻しにくい決定を含む PR では、status: proposed の ADR 草案を同じ PR に入れる。不要なら PR 本文に「ADR 不要: 理由」と1行書く。', note: '草案は、同じ PR に', rows: 2 },
+  { add: true, text: '戻しにくい決定を含む PR では、status: proposed の ADR 草案を同じ PR に入れる。不要なら PR 本文の「関連 ADR」に「ADR 不要: 理由」と1行書く。', note: '草案は、同じ PR に', rows: 2 },
   { add: true, text: 'accepted の ADR を書き換えない。コードと ADR が食い違ったら報告する。', note: '書き換えず、報告する', rows: 1 },
 ]
 // 追加行は折り返す行数に合わせて高さを揃え、右の注記と同じ行に並べる

@@ -4,6 +4,7 @@ const rows = [
   { place: 'lint・テスト・CI・hook', read: '毎回、機械的に', write: '境界の強制。エラーに ADR 番号と直し方', not: '' },
   { place: '.claude/rules/*.md', read: '該当ファイルを触るとき', write: 'その領域の規約。結論と ADR 番号', not: '理由の長文' },
   { place: 'skills', read: '必要なときに呼ばれる', write: '手順（how）', not: '決定（why）' },
+  { place: 'PR 本文', read: 'レビューとマージまで', write: '目的、実装方針と採らなかった案', not: '変更をまたいで効く決定' },
   { place: 'ADR', sub: 'docs/adr/', read: 'grep や索引で開かれる', write: '理由と捨てた案、見直す条件', not: '手順、現状の仕様', hit: true },
   { place: '仕様・ガイド', sub: 'docs/', read: '必要なとき', write: '今どう動くか。常に最新', not: '過去の判断の経緯' },
   { place: 'エージェントのメモリ', read: '個人ごと', write: '個人の好みや作業スタイル', not: 'チームの決定', aside: true },
@@ -72,7 +73,7 @@ const rows = [
   grid-template-columns: 164px 158px 1fr 158px;
   align-items: baseline;
   gap: 12px;
-  padding: 7px 10px;
+  padding: 5px 10px;
   border-top: 1px solid var(--line);
   font-size: var(--fs-note);
   line-height: 1.5;

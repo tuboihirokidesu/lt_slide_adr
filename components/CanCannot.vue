@@ -4,7 +4,7 @@ import type { Inline } from '../data/sources'
 const can: { head: string; sub?: Inline[] }[] = [
   { head: '却下済みの案の再提案を防ぐ。' },
   { head: '新しいセッションの立ち上がりが速くなる。' },
-  { head: 'レビューで「なぜ」を説明する手間が減る。' },
+  { head: '経緯を知らないレビュアーにも、却下済みの案が伝わる。' },
   { head: '人間の新メンバーのオンボーディングにも効く。', sub: [{ ref: 'keeling', label: 'Keeling' }, ' のデータで、最も確かな効果。'] },
 ]
 const cannot = [
