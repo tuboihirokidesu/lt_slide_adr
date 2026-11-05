@@ -12,7 +12,8 @@ description: Review this Slidev deck against AGENTS.md. Use when asked to review
    - `--tone-caution` marks only No, rejection, skepticism, or failure. Emphasis without judgment uses `--tone-emphasis`.
    - Nothing was made smaller to fit. Content that does not fit is cut or moved to an appendix slide.
    - Documents show real text (template headings or verbatim excerpts), not grey placeholder bars. Fictional ADRs are limited to 0005 and 0012.
-   - Labels are Japanese sans. Monospace appears only in file names, paths, code, commands, and ADR numbers.
+   - Labels are Japanese (Zen Maru Gothic), not English capitals. Monospace appears only in file names, paths, code, commands, and ADR numbers.
+   - Lines look hand-drawn and nothing casts a shadow. Only the current chapter on a section slide and the rejected word on the cover and closing slide carry a hand-drawn circle or underline.
    - The heading reads as speech: a noun phrase has no 「。」, and only the closing slide uses a paired slogan.
 4. Read the notes report. A slide over 500 characters usually needs a better figure, not a faster speaker.
 5. Report each finding as slide number, rule, and the concrete fix.

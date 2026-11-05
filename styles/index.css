@@ -1,47 +1,55 @@
-@import "@fontsource-variable/geist";
+@import "@fontsource-variable/nunito/wght.css";
+@import "@fontsource/zen-maru-gothic/500.css";
+@import "@fontsource/zen-maru-gothic/700.css";
+@import "yakuhanjp/dist/css/yakuhanrp.css";
 @import "@fontsource-variable/geist-mono";
 
 /*
+ * 欧文と数字は Nunito、和文は Zen Maru Gothic。どちらも線端の丸いゴシックで、太さと丸みがそろう（Nunito は Excalidraw の通常書体でもある）。
+ * Zen Maru Gothic は約物を詰める機能（palt）を持たないので、句読点と括弧だけ半角幅の YakuHanRP を先に当てる。
+ */
+/*
  * 生の値はこのファイルの変数定義にだけ書く。部品は用途の名前で参照する（規則は AGENTS.md）。
  * 色は用途で4つ。recommend＝採用・推奨、caution＝No・却下・懐疑・失敗、source＝外部の発言と出典、emphasis＝良し悪しを含まない強調。
+ * 地は白に近い灰、文字はほぼ黒。意味を持たないものは灰に落とし、色は1枚の結論が指すものにだけ使う。
  */
 :root {
-  --bg: #f4f8fb;
-  --ink: #16293b;
-  --ink-2: #3a4d61;
-  --ink-lead: #2f5f82;
-  --muted: #56697d;
-  --line: #c3d1dd;
-  --line-strong: #9fb2c4;
-  --arrow: #71879c;
-  --label-bg: #e8eff5;
-  --legacy-fill: #eef2f6;
-  --surface: #fff;
+  --bg: #f8f9fa;
+  --ink: #1e1e1e;
+  --ink-2: #45494f;
+  --ink-lead: #5f656d;
+  --muted: #6f757d;
+  --line: #b9bfc6;
+  --line-strong: #8f969e;
+  --arrow: #7a8189;
+  --label-bg: #eceef1;
+  --legacy-fill: #f0f2f4;
+  --surface: #f8f9fa;
   --paper: #fff;
   --glint: #fff;
-  --grid-line: rgba(22, 41, 59, 0.06);
+  --grid-line: transparent;
 
-  --tone-recommend: #008c95;
-  --tone-recommend-ink: #00737b;
-  --tone-recommend-line: #5fb3b8;
-  --tone-recommend-fill: #e6f4f4;
-  --tone-recommend-glint: #0a9aa3;
+  --tone-recommend: #2f9e44;
+  --tone-recommend-ink: #2b8a3e;
+  --tone-recommend-line: #5fb76f;
+  --tone-recommend-fill: #ebf7ed;
+  --tone-recommend-glint: #2f9e44;
 
-  --tone-caution: #c57e08;
-  --tone-caution-ink: #8a5500;
-  --tone-caution-fill: #fff7e9;
-  --tone-caution-label: #fdeecb;
-  --tone-caution-glint: #ffd895;
+  --tone-caution: #e8890c;
+  --tone-caution-ink: #b35400;
+  --tone-caution-fill: #fff4e6;
+  --tone-caution-label: #ffe8cc;
+  --tone-caution-glint: #ffd8a8;
 
-  --tone-source: #2563c9;
-  --tone-source-ink: #1f55ad;
-  --tone-source-fill: #eef4ff;
-  --tone-source-line: #8fb0e6;
+  --tone-source: #1971c2;
+  --tone-source-ink: #1864ab;
+  --tone-source-fill: #eef5fc;
+  --tone-source-line: #74a9de;
 
   /* 強調は色相を足さず、濃い文字と淡い地で示す */
   --tone-emphasis: var(--ink);
   --tone-emphasis-ink: var(--ink);
-  --tone-emphasis-fill: #e2eaf1;
+  --tone-emphasis-fill: #eceef1;
 
   /* 文字は5段階と、飾りの数字。投影で読ませる文の下限は note */
   --fs-label: 12px;
@@ -51,11 +59,12 @@
   --fs-display: 48px;
   --fs-numeral: 96px;
   --ls-label: 0.12em;
-  --ls-display: -0.01em;
+  --ls-display: -0.03em;
 
-  --font-sans: "Geist Variable", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", system-ui, sans-serif;
+  --font-sans: "Nunito Variable", "YakuHanRP", "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Hiragino Sans", system-ui, sans-serif;
   --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
-  --shadow-1: 0 1px 1px rgba(22, 41, 59, 0.04), 0 10px 28px -16px rgba(22, 41, 59, 0.22);
+  /* 手描きの線で囲むので、影は落とさない */
+  --shadow-1: none;
 
   /* 線は2段階：細線（接続・輪郭）と強調線（採用・却下の流れ） */
   --w-hair: 1.5px;
@@ -70,53 +79,21 @@
   --ease-move: cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-/* 章扉・表紙・結びは夜の配色。同じ変数を上書きして、図の部品をそのまま使う */
-.is-night {
-  --bg: #061019;
-  --surface: rgba(214, 236, 245, 0.045);
-  --ink: #eaf2f6;
-  --ink-2: #c3d2dc;
-  --ink-lead: #9fc3dc;
-  --muted: #8ba1b1;
-  --line: rgba(170, 205, 222, 0.18);
-  --line-strong: rgba(170, 205, 222, 0.3);
-  --arrow: #5d7688;
-  --label-bg: rgba(170, 205, 222, 0.1);
-  --legacy-fill: rgba(170, 205, 222, 0.06);
-  --paper: #0c1923;
-  --grid-line: rgba(170, 205, 222, 0.05);
-  --tone-recommend: #1fc4c9;
-  --tone-recommend-ink: #5fdfe2;
-  --tone-recommend-line: rgba(47, 211, 214, 0.5);
-  --tone-recommend-fill: rgba(31, 196, 201, 0.09);
-  --tone-recommend-glint: #b9f2f3;
-  --tone-caution: #f0a42b;
-  --tone-caution-ink: #ffc766;
-  --tone-caution-fill: rgba(240, 164, 43, 0.1);
-  --tone-caution-label: rgba(240, 164, 43, 0.16);
-  --tone-source: #6f9bff;
-  --tone-source-ink: #a3bfff;
-  --tone-source-fill: rgba(111, 155, 255, 0.08);
-  --tone-source-line: rgba(111, 155, 255, 0.5);
-  --tone-emphasis: var(--ink);
-  --tone-emphasis-ink: var(--ink);
-  --tone-emphasis-fill: rgba(234, 242, 246, 0.08);
-  --shadow-1: 0 0 0 1px rgba(255, 255, 255, 0.02), 0 18px 40px -20px rgba(0, 0, 0, 0.8);
-  color-scheme: dark;
-}
-
 .slidev-layout {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-sans);
   font-feature-settings: "palt";
-  letter-spacing: 0.02em;
+  /* Zen Maru Gothic の仮名は字面が広いので、字間は足さない */
+  letter-spacing: 0;
+  /* 本文は 500。投影で細りすぎない太さにする */
+  font-weight: 500;
 }
 .slidev-layout h1 {
   font-size: var(--fs-title);
   font-weight: 700;
   line-height: 1.35;
-  letter-spacing: 0.005em;
+  letter-spacing: -0.02em;
   margin: 0;
 }
 .slidev-layout p,
@@ -196,9 +173,10 @@
 
 .fx-tag--muted { border-color: var(--line); color: var(--muted); }
 
-/* 図の線や印は飾り。上に重なっても、下のリンクのクリックを奪わない */
+/* 図の線や印は飾り。上に重なっても、下のリンクのクリックを奪わない。線は手で引いたようにわずかに揺らす */
 .slidev-layout svg[aria-hidden="true"] {
   pointer-events: none;
+  filter: url(#sk-wobble);
 }
 
 /* 線は描かれるように伸び、矢印の先は描き終わりに出る */
@@ -211,10 +189,15 @@
   stroke-dashoffset: 1.05;
   transition: stroke-dashoffset 200ms ease-out, stroke 200ms ease;
 }
+/* 矢印の先は塗りの三角ではなく、2本の線で開いた山形にする */
 .fx-head {
-  fill: var(--arrow);
+  fill: none;
+  stroke: var(--arrow);
+  stroke-width: var(--w-hair);
+  stroke-linecap: round;
+  stroke-linejoin: round;
   opacity: 0;
-  transition: opacity 120ms ease-out, fill 200ms ease;
+  transition: opacity 120ms ease-out, stroke 200ms ease;
 }
 .is-on > .fx-edge {
   stroke-dashoffset: 0;
@@ -222,7 +205,7 @@
 }
 .is-on > .fx-head {
   opacity: 1;
-  transition: opacity 150ms ease-out calc(var(--d, 0ms) + 480ms), fill 200ms ease;
+  transition: opacity 150ms ease-out calc(var(--d, 0ms) + 480ms), stroke 200ms ease;
 }
 .is-dashed > .fx-edge {
   stroke-dasharray: 5 4;
@@ -235,11 +218,11 @@
   transition: opacity 350ms var(--ease-out) var(--d, 0ms);
 }
 .is-recommend > .fx-edge { stroke: var(--tone-recommend); stroke-width: var(--w-em); }
-.is-recommend > .fx-head { fill: var(--tone-recommend); }
+.is-recommend > .fx-head { stroke: var(--tone-recommend); stroke-width: var(--w-em); }
 .is-caution > .fx-edge { stroke: var(--tone-caution); stroke-width: var(--w-em); }
-.is-caution > .fx-head { fill: var(--tone-caution); }
+.is-caution > .fx-head { stroke: var(--tone-caution); stroke-width: var(--w-em); }
 .is-source > .fx-edge { stroke: var(--tone-source); }
-.is-source > .fx-head { fill: var(--tone-source); }
+.is-source > .fx-head { stroke: var(--tone-source); }
 
 .fx-label {
   position: absolute;

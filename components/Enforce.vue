@@ -37,7 +37,7 @@ const lint = [
 
       <div class="enf__col">
         <p class="enf__role"><span>lint・CI</span>強制する</p>
-        <div class="enf__term is-night">
+        <div class="enf__term">
           <p class="enf__bar">$ pnpm lint</p>
           <p v-for="l in lint" :key="l.text" :class="l.cls">{{ l.text }}</p>
         </div>
@@ -123,6 +123,7 @@ const lint = [
 .enf__term {
   box-sizing: border-box;
   padding: 0 0 14px;
+  border: 1px solid var(--line);
   border-radius: var(--r-doc);
   background: var(--paper);
   font-family: var(--font-mono);

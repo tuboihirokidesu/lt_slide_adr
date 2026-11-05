@@ -37,6 +37,6 @@ const head = computed(() => {
     :style="{ '--d': `${delay}ms` }"
   >
     <path class="fx-edge" fill="none" :d="d" :pathLength="dashed ? undefined : 1" />
-    <polygon v-if="head" class="fx-head" :points="head" />
+    <polyline v-if="head" class="fx-head" :points="head" />
   </g>
 </template>

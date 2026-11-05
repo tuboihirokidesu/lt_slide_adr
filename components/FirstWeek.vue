@@ -20,7 +20,7 @@ const PX = 0.62
         <span class="wk__title">{{ d.title }}</span>
         <p><RefText :text="d.body" /></p>
         <div class="wk__time">
-          <span class="wk__bar" :style="{ height: `${d.min[1] * PX}px` }">
+          <span class="wk__bar" :class="{ 'is-range': d.min[1] > d.min[0] }" :style="{ height: `${d.min[1] * PX}px` }">
             <i :style="{ height: `${d.min[0] * PX}px` }" />
           </span>
           <small>{{ d.label }}</small>
@@ -53,7 +53,6 @@ const PX = 0.62
 }
 .wk__days li .fx-caption {
   font-variant-numeric: tabular-nums;
-  color: var(--tone-recommend-ink);
 }
 .wk__title {
   margin-top: 6px;
@@ -75,19 +74,29 @@ const PX = 0.62
   margin-top: auto;
   padding-top: 12px;
 }
+/* 所要時間は塗らずに輪郭の棒で示す。下限までを実線、上限までの幅を破線にする（線は setup/sketch.ts が手描きにする） */
 .wk__bar {
   position: relative;
-  width: 14px;
-  border-radius: 4px;
-  background: color-mix(in srgb, var(--tone-recommend) 22%, transparent);
+  box-sizing: border-box;
+  width: 18px;
+  border-radius: var(--r-mark);
+}
+.wk__bar.is-range {
+  border: var(--w-hair) dashed var(--line);
 }
 .wk__bar i {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: 4px;
-  background: var(--tone-recommend);
+  box-sizing: border-box;
+  border: var(--w-em) solid var(--line-strong);
+  border-radius: var(--r-mark);
+}
+.wk__bar.is-range i {
+  left: calc(-1 * var(--w-hair));
+  right: calc(-1 * var(--w-hair));
+  bottom: calc(-1 * var(--w-hair));
 }
 .wk__time small {
   font-size: var(--fs-note);
