@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import type { Inline } from '../data/sources'
+
 // 所要時間は分。幅があるものは [下限, 上限]
-const days = [
+const days: { title: string; body: Inline | Inline[]; min: [number, number]; label: string }[] = [
   { title: '置き場所を作る', body: 'テンプレート、index.md、このやり方を採用する ADR-0001 を docs/adr/ に置く。', min: [30, 30], label: '30分' },
   { title: '確定済みを3本書く', body: '下書きはエージェント。捨てた案と理由は、自分で直す。', min: [60, 120], label: '1〜2時間' },
   { title: 'つなぐ', body: 'AGENTS.md にポインタと運用ルール。CODEOWNERS と、PR テンプレートに2欄（採らなかった案と理由、関連 ADR）。', min: [30, 30], label: '30分' },
   { title: '判定を skill に', body: '起票するかを3条件と No で判定。不要なら一言で報告させる。', min: [60, 60], label: '1時間' },
-  { title: 'CI で確かめる', body: '番号の重複、status、リンク先、索引への掲載を検査。実タスクで参照を確かめる。', min: [60, 120], label: '1〜2時間' },
+  { title: 'CI で確かめる', body: ['番号の重複、status、リンク先、索引への掲載を検査（例は ', { ref: 'babarot', label: 'babarot' }, '）。実タスクで参照を確かめる。'], min: [60, 120], label: '1〜2時間' },
 ]
 const PX = 0.62
 </script>
@@ -16,7 +18,7 @@ const PX = 0.62
       <li v-for="(d, i) in days" :key="d.title">
         <span class="fx-caption">{{ i + 1 }}日目</span>
         <span class="wk__title">{{ d.title }}</span>
-        <p>{{ d.body }}</p>
+        <p><RefText :text="d.body" /></p>
         <div class="wk__time">
           <span class="wk__bar" :style="{ height: `${d.min[1] * PX}px` }">
             <i :style="{ height: `${d.min[0] * PX}px` }" />
