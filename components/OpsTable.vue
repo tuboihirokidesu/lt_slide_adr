@@ -10,7 +10,7 @@ const rows: { item: string; rec: string[]; src: (Inline | Inline[])[] }[] = [
   { item: '起票のタイミング', rec: ['ADR に上げるなら、実装と同じ PR に草案を入れる。', '実装を伴わない No は ADR だけの PR。合意前の議論はしない。'], src: [keeling, ebbing] },
   { item: 'レビュー', rec: ['コードと同じ PR レビュー。docs/adr/ に CODEOWNERS。', 'Accepted への遷移は人間の承認を必須にする。'], src: [keeling, { ref: 'aws' }, [{ ref: 'haandol' }, ' 対策']] },
   { item: 'PR との結び付け', rec: ['PR テンプレートに「採らなかった案と理由」と「関連 ADR」を足す。', 'コメントやテストから ADR-NNNN を参照する。'], src: [zenn, ebbing] },
-  { item: '陳腐化対策', rec: ['revisit-if は四半期に一度だけ棚卸し。食い違ったら、事実はコードを正とし、', '意図を変えるかは人間が新しい ADR で決める。エージェントは報告だけ。'], src: [{ ref: 'openai' }, ebbing, zenn] },
+  { item: '陳腐化対策', rec: ['revisit-if は四半期に一度だけ棚卸しする。', '食い違ったら事実はコードを正とし、意図は人間が新しい ADR で決める。'], src: [{ ref: 'openai' }, ebbing, zenn] },
   { item: 'ツール', rec: ['素の Markdown と小さな CI スクリプトで足りる。', 'adr-tools や log4brains は必須ではない。'], src: [zenn, { ref: 'kody' }] },
 ]
 </script>

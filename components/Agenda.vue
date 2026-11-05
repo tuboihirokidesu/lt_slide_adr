@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { useSlideContext } from '@slidev/client'
 import type { Inline } from '../data/sources'
+import { chapters as names } from '../data/chapters'
 
-const chapters: { no: string; title: string; desc: Inline[] | string }[] = [
-  { no: '01', title: '起点', desc: [{ ref: 'kent' }, ' の動画と、', { ref: 'kody' }, ' のリポジトリ'] },
-  { no: '02', title: '賛否', desc: '必要か、誰が書くか、守らせられるか、どこに置くかを順に見る' },
-  { no: '03', title: '何を書くか', desc: '書く条件、書かなくてよいもの、1画面に収まるテンプレート' },
-  { no: '04', title: 'どう管理するか', desc: '索引と status、PR での運用、置き場所ごとの役割、最初の1週間' },
-]
+const desc: Record<string, Inline[] | string> = {
+  '01': [{ ref: 'kent' }, ' の動画と、', { ref: 'kody' }, ' のリポジトリ'],
+  '02': '必要か、誰が書くか、守らせられるか、どこに置くかを順に見る',
+  '03': '書く条件、書かなくてよいもの、1画面に収まるテンプレート',
+  '04': '索引と status、PR での運用、置き場所ごとの役割、最初の1週間',
+}
+const chapters = names.map((c) => ({ ...c, desc: desc[c.no] }))
 
 // 章の範囲はデッキの frontmatter（章扉の chapter: "01"、本文の chapter: 01 起点）から数える
 const { $nav } = useSlideContext()
@@ -42,7 +44,7 @@ const pages = (no: string) => {
 }
 .agenda-x__no {
   font-size: var(--fs-note);
-  color: var(--tone-recommend-ink);
+  color: var(--muted);
 }
 .agenda-x__title {
   font-size: var(--fs-body);

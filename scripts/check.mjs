@@ -162,6 +162,11 @@ for (const n of targets) {
         if (px < floor - 0.01) found.push(`small-text: ${label(e)} ${px}px < ${floor}px`)
         if (Number(cs.fontWeight) >= 600 && !e.closest('h1')) bold.push(label(e))
       }
+      // Borders are redrawn by hand in setup/sketch.ts. A visible border with no border-image means the sketch layer missed it.
+      const drawn = ['top', 'right', 'bottom', 'left'].some((k) => parseFloat(cs.getPropertyValue(`border-${k}-width`)) >= 0.5
+        && !['none', 'hidden'].includes(cs.getPropertyValue(`border-${k}-style`))
+        && !/rgba\([^)]*,\s*0\)|transparent/.test(cs.getPropertyValue(`border-${k}-color`)))
+      if (drawn && cs.display !== 'inline' && cs.borderImageSource === 'none' && !e.closest('pre')) found.push(`straight-border: ${label(e)} (枠線は手描きの線に描き直す)`)
     }
     if (bold.length > maxBold) found.push(`bold-overuse: ${bold.length} bold runs > ${maxBold} (${bold.slice(0, 4).join(', ')})`)
     // A link is usable only if a click at its centre lands on the link, not on an overlay drawn above it.

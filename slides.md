@@ -13,7 +13,6 @@ fonts:
 transition: fade-quiet
 mdc: true
 layout: cover
-night: true
 accent: caution
 ---
 
@@ -553,7 +552,6 @@ chapter: 04 どう管理するか
 
 ---
 layout: cover
-night: true
 accent: caution
 ---
 
