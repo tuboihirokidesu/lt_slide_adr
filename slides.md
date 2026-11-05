@@ -19,7 +19,7 @@ accent: caution
 # ADR は、<br>エージェントへの<br><em>「No」</em>のリスト
 
 <p class="lead">アーキテクチャ決定記録は必要か。<br>何を書き、どう管理するか。</p>
-<p class="cover-date">2026年11月2日</p>
+<p class="cover-date">2026年11月10日</p>
 
 ::art::
 <AdrStack />
