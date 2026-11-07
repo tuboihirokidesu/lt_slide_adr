@@ -7,7 +7,7 @@ const desc: Record<string, Inline[] | string> = {
   '01': [{ ref: 'kent' }, ' の動画と、', { ref: 'kody' }, ' のリポジトリ'],
   '02': '必要か、誰が書くか、守らせられるか、どこに置くかを順に見る',
   '03': '書く条件、書かなくてよいもの、1画面に収まるテンプレート',
-  '04': '索引と status、PR での運用、置き場所ごとの役割、最初の1週間',
+  '04': '索引と status、PR での運用、置き場所ごとの役割、できることとできないこと',
 }
 const chapters = names.map((c) => ({ ...c, desc: desc[c.no] }))
 
