@@ -1,5 +1,7 @@
 <script setup lang="ts">
-// MTG で人間だけが決め、その場にいないエージェントには決定が届かない。人と机とエージェントは rough.js で描く
+// MTG で人間だけが決め、その場にいないエージェントには決定が届かない。
+// 会議はななめ上から見た机と、手前に座る人で描く。人は顔や手足を持たない駒の形にとどめる。
+// ホワイトボードには決定だけが残り、理由は口で話されるだけ（＝その場にいた人の頭の中にしかない）
 import rough from 'roughjs'
 
 const props = withDefaults(defineProps<{ stage?: number }>(), { stage: 0 })
@@ -8,52 +10,56 @@ const at = (n: number) => props.stage >= n
 const gen = rough.generator()
 const base = { roughness: 1.1, bowing: 0.8, strokeWidth: 1.6, preserveVertices: true }
 const strokes = (d: ReturnType<typeof gen.path>) => gen.toPaths(d).map((p) => p.d)
-const sketch = (d: string, seed: number, o = {}) => strokes(gen.path(d, { ...base, seed, ...o }))
-const ring = (cx: number, cy: number, r: number, seed: number) => strokes(gen.circle(cx, cy, r * 2, { ...base, seed }))
 const round = (x: number, y: number, w: number, h: number, r: number) =>
   `M${x + r} ${y}H${x + w - r}Q${x + w} ${y} ${x + w} ${y + r}V${y + h - r}Q${x + w} ${y + h} ${x + w - r} ${y + h}H${x + r}Q${x} ${y + h} ${x} ${y + h - r}V${y + r}Q${x} ${y} ${x + r} ${y}Z`
+const oval = (cx: number, cy: number, rx: number, ry: number) => `M${cx - rx} ${cy}a${rx} ${ry} 0 1 0 ${rx * 2} 0a${rx} ${ry} 0 1 0 ${-rx * 2} 0Z`
 
-// 机の向こうに座る3人。頭と肩だけで描き、机の天板が胸から下を隠す
-const people = [80, 156, 232].map((cx, i) => {
-  const cy = 184 + (i === 1 ? -4 : 0)
-  const shoulders = `M${cx - 30} ${cy + 58} C${cx - 29} ${cy + 30} ${cx - 16} ${cy + 22} ${cx} ${cy + 22} C${cx + 16} ${cy + 22} ${cx + 29} ${cy + 30} ${cx + 30} ${cy + 58}`
-  return {
-    cx,
-    cy,
-    head: ring(cx, cy, 15, 11 + i),
-    body: sketch(shoulders, 21 + i, { roughness: 0.9 }),
-    bodyFill: `${shoulders}Z`,
-  }
-})
-const table = {
-  fill: round(24, 232, 284, 22, 4),
-  top: sketch(round(24, 232, 284, 22, 4), 31, { roughness: 0.7 }),
-  legs: sketch('M48 254 V300 M284 254 V300', 32, { roughness: 0.6 }),
-  // 机の上の書類2枚
-  papers: sketch('M64 238 L100 236 L101 248 M172 237 L214 238 L213 249', 33, { roughness: 0.6, strokeWidth: 1.2 }),
+// 描く順に積む。塗りの上に手描きの線を重ねる
+type Layer = { d: string; cls: string }
+const layers: Layer[] = []
+let seed = 1
+const ink = (d: string, o: object = {}, cls = 'oor__ink') =>
+  strokes(gen.path(d, { ...base, seed: seed++, ...o })).forEach((p) => layers.push({ d: p, cls }))
+const shape = (d: string, o: object = {}, fillCls = 'oor__fill', inkCls = 'oor__ink') => {
+  layers.push({ d, cls: fillCls })
+  ink(d, o, inkCls)
 }
-// 閉じたドア。机の向こうの壁にある
-const door = {
-  fill: round(264, 60, 70, 172, 3),
-  frame: sketch(round(264, 60, 70, 172, 3), 35, { roughness: 0.7 }),
-  knob: ring(322, 150, 3.5, 36),
-  // 札を掛けたひも
-  cord: sketch('M299 74 L282 90 M299 74 L316 90', 37, { roughness: 0.4, strokeWidth: 1.2 }),
+// 駒の形の人を後ろから見る。肩の丸い胴と頭だけ。頭を少し横へずらすと、そちらを向いて見える
+const pawn = (x: number, y: number, r: number, turn = 0) => {
+  const w = r * 1.75
+  shape(`M${x - w} ${y + r * 4}C${x - w} ${y + r * 2} ${x - w * 0.6} ${y + r} ${x} ${y + r}C${x + w * 0.6} ${y + r} ${x + w} ${y + r * 2} ${x + w} ${y + r * 4}Z`, { roughness: 0.7 }, 'oor__fill oor__fill--body')
+  shape(oval(x + turn, y, r, r), { roughness: 0.5 }, 'oor__fill oor__fill--body')
 }
 
-// エージェント。端末のような四角い頭に、目が2つとアンテナ
-// 目は少し左、会議室のほうを見ている
+// ---- 机の左奥に立つホワイトボード。決定だけが書いてある。左の脚は机の外で床に着く ----
+ink('M18 112L14 210M194 112L198 170', { roughness: 0.5 }, 'oor__ink oor__ink--soft')
+ink('M8 114H204', { roughness: 0.5, strokeWidth: 2 }, 'oor__ink oor__ink--soft')
+
+// ---- 机。奥の縁から手前へ広がる天板と、手前の厚み ----
+shape('M80 158H272L312 240H40Z', { roughness: 0.7 }, 'oor__fill oor__fill--table', 'oor__ink oor__ink--soft')
+shape('M40 240H312V250H40Z', { roughness: 0.5 }, 'oor__fill oor__fill--chair', 'oor__ink oor__ink--soft')
+ink('M52 250V292M300 250V292', { roughness: 0.5 }, 'oor__ink oor__ink--soft')
+// 机の上の書類とマグカップ
+shape('M120 196L152 192L156 206L123 210Z', { roughness: 0.5, strokeWidth: 1.2 }, 'oor__fill', 'oor__ink oor__ink--soft')
+shape(oval(102, 180, 7, 4.5), { roughness: 0.4, strokeWidth: 1.3 }, 'oor__fill', 'oor__ink oor__ink--soft')
+
+// ---- 手前に座る3人。右の人が理由を話し、ほかの2人はそちらへ顔を向けている。椅子の背が胴の下を隠す ----
+for (const [x, turn] of [[94, 3], [172, 3], [256, 0]]) {
+  pawn(x, 224, 15, turn)
+  shape(round(x - 30, 262, 60, 28, 8), { roughness: 0.6 }, 'oor__fill oor__fill--chair', 'oor__ink oor__ink--soft')
+}
+// 話している人の吹き出しの尻尾
+shape('M246 182L254 206L262 182', { roughness: 0.4, strokeWidth: 1.4 }, 'oor__fill oor__fill--chair', 'oor__ink oor__ink--faint')
+
+// ---- エージェント。端末のような四角い頭に、目が2つとアンテナ ----
 const BX = 508
-const bot = {
-  headFill: round(BX - 30, 58, 60, 46, 12),
-  head: sketch(round(BX - 30, 58, 60, 46, 12), 41, { roughness: 0.9 }),
-  antenna: sketch(`M${BX} 58 V44`, 42, { roughness: 0.6 }),
-  knob: ring(BX, 40, 4, 43),
-  face: sketch(`M${BX - 16} 76 V84 M${BX + 8} 76 V84 M${BX - 11} 93 Q${BX - 4} 97 ${BX + 3} 93`, 44, { roughness: 0.5, strokeWidth: 1.8 }),
-  bodyFill: round(BX - 20, 110, 40, 24, 8),
-  body: sketch(round(BX - 20, 110, 40, 24, 8), 45, { roughness: 0.8 }),
-  desk: sketch(`M${BX - 56} 134 H${BX + 56}`, 46, { roughness: 0.7 }),
-}
+ink(`M${BX - 56} 134H${BX + 56}`, { roughness: 0.7 }, 'oor__ink oor__ink--soft')
+shape(round(BX - 20, 110, 40, 24, 8), { roughness: 0.8 })
+ink(`M${BX} 58V45`, { roughness: 0.6 })
+shape(oval(BX, 41, 4, 4), { roughness: 0.35 })
+shape(round(BX - 30, 58, 60, 46, 12), { roughness: 0.9 })
+layers.push({ d: oval(BX - 9, 80, 2.6, 3.6), cls: 'oor__eye' }, { d: oval(BX + 9, 80, 2.6, 3.6), cls: 'oor__eye' })
+ink(`M${BX - 5} 94H${BX + 5}`, { roughness: 0.3, strokeWidth: 1.8 })
 </script>
 
 <template>
@@ -61,45 +67,18 @@ const bot = {
     <div class="oor__scene">
       <span class="fx-caption oor__cap oor__cap--room">MTG（人間だけ）</span>
 
-      <div class="oor__room" />
-
-      <div class="oor__board fx-paper">
-        <span class="fx-caption">ホワイトボード</span>
-        <p class="oor__decision">キャッシュ層は入れない</p>
-        <p class="oor__why">整合性の事故が怖いから</p>
-      </div>
-
       <svg class="oor__art" viewBox="0 0 624 316" width="624" height="316" aria-hidden="true">
-        <path class="oor__fill oor__fill--door" :d="door.fill" />
-        <path v-for="(d, j) in [...door.frame, ...door.knob, ...door.cord]" :key="`d${j}`" class="oor__ink oor__ink--soft" :d="d" />
-        <g class="oor__people">
-          <g v-for="p in people" :key="p.cx">
-            <path class="oor__fill" :d="p.bodyFill" />
-            <path v-for="(d, j) in p.body" :key="`b${j}`" class="oor__ink" :d="d" />
-            <circle class="oor__fill" :cx="p.cx" :cy="p.cy" r="15" />
-            <path v-for="(d, j) in p.head" :key="`h${j}`" class="oor__ink" :d="d" />
-          </g>
-        </g>
-        <path class="oor__fill" :d="table.fill" />
-        <path v-for="(d, j) in [...table.top, ...table.legs]" :key="`t${j}`" class="oor__ink oor__ink--soft" :d="d" />
-        <path v-for="(d, j) in table.papers" :key="`p${j}`" class="oor__ink oor__ink--soft" :d="d" />
-
-        <g class="oor__bot">
-          <path class="oor__fill" :d="bot.bodyFill" />
-          <path v-for="(d, j) in bot.body" :key="`bb${j}`" class="oor__ink" :d="d" />
-          <path v-for="(d, j) in bot.antenna" :key="`ba${j}`" class="oor__ink" :d="d" />
-          <path v-for="(d, j) in bot.knob" :key="`bk${j}`" class="oor__ink" :d="d" />
-          <path class="oor__fill" :d="bot.headFill" />
-          <path v-for="(d, j) in bot.head" :key="`bh${j}`" class="oor__ink" :d="d" />
-          <path v-for="(d, j) in bot.face" :key="`bf${j}`" class="oor__ink" :d="d" />
-          <path v-for="(d, j) in bot.desk" :key="`bd${j}`" class="oor__ink oor__ink--soft" :d="d" />
-        </g>
-
+        <path v-for="(l, j) in layers" :key="j" :class="l.cls" :d="l.d" />
         <!-- 吹き出しの尻尾 -->
         <path class="oor__tail fx-enter" :class="{ 'is-on': at(1) }" d="M500 153 L508 141 L516 153" />
       </svg>
 
-      <span class="oor__sign">会議中</span>
+      <div class="oor__board fx-paper">
+        <span class="fx-caption">決まったこと</span>
+        <p class="oor__decision">キャッシュ層は入れない</p>
+      </div>
+      <p class="oor__talk">整合性の事故が怖いから</p>
+
       <span class="oor__huh" aria-hidden="true">?</span>
       <span class="fx-caption oor__cap oor__cap--bot">エージェント（その場にいない）</span>
 
@@ -109,13 +88,13 @@ const bot = {
       <p class="oor__say oor__say--you fx-enter" :class="{ 'is-on': at(2) }" style="--d: 450ms">それ、MTG で却下した。</p>
 
       <svg class="oor__edges" viewBox="0 0 624 316" width="624" height="316" aria-hidden="true">
-        <Edge d="M252 192 C306 192 330 234 384 234" :end="[386, 234]" dir="r" tone="caution" :on="at(2)" />
+        <Edge d="M280 242 C330 236 350 234 384 234" :end="[386, 234]" dir="r" tone="caution" :on="at(2)" />
       </svg>
       <span class="fx-label fx-label--caution oor__again" :class="{ 'is-on': at(3) }" style="--d: 300ms">毎回、人間が伝え直す</span>
     </div>
 
     <figure class="oor__quote fx-enter" :class="{ 'is-on': at(3) }" style="--d: 500ms">
-      <blockquote class="fx-quote">now you are<br>the memory</blockquote>
+      <blockquote class="fx-quote">you become<br>the memory</blockquote>
       <figcaption class="fx-cite"><Ref id="kent" /></figcaption>
       <p>決めた理由は、その場にいた人の頭の中にしかない。</p>
     </figure>
@@ -141,21 +120,12 @@ const bot = {
 .oor__cap--room { left: 0; }
 .oor__cap--bot { left: 392px; }
 
-/* 会議室の壁。決定はこの線の内側に残る */
-.oor__room {
-  left: 0;
-  top: 26px;
-  width: 352px;
-  height: 290px;
-  box-sizing: border-box;
-  border: var(--w-em) solid var(--line-strong);
-  border-radius: var(--r-box);
-  background: var(--legacy-fill);
-}
+/* 決定は、机の左奥のホワイトボードに書いてある */
 .oor__board {
-  left: 22px;
-  top: 46px;
-  width: 228px;
+  left: 0;
+  top: 34px;
+  width: 212px;
+  height: 76px;
   padding: 10px 16px 12px;
 }
 .oor__board p { margin: 0; }
@@ -164,9 +134,20 @@ const bot = {
   font-size: var(--fs-body);
   color: var(--tone-caution-ink);
 }
-.oor__why {
+/* 理由は書かれず、口で話されるだけ */
+.oor__talk {
+  left: 164px;
+  top: 148px;
+  white-space: nowrap;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border: var(--w-hair) solid var(--line);
+  border-radius: var(--r-chip);
+  background: var(--label-bg);
   font-size: var(--fs-note);
-  color: var(--muted);
+  line-height: 1.5;
+  text-align: center;
+  color: var(--ink-2);
 }
 
 .oor__art,
@@ -184,23 +165,12 @@ const bot = {
   stroke-linejoin: round;
 }
 .oor__ink--soft { stroke: var(--line-strong); }
-.oor__fill { fill: var(--paper); }
-.oor__fill--door { fill: var(--label-bg); }
-/* ドアに掛けた札 */
-.oor__sign {
-  left: 273px;
-  top: 88px;
-  width: 52px;
-  box-sizing: border-box;
-  padding: 1px 0;
-  border: var(--w-hair) solid var(--line-strong);
-  border-radius: var(--r-mark);
-  background: var(--paper);
-  font-size: var(--fs-note);
-  line-height: 1.5;
-  text-align: center;
-  color: var(--ink-2);
-}
+.oor__ink--faint { stroke: var(--line); }
+.oor__fill { fill: var(--paper); stroke: none; }
+.oor__fill--table { fill: var(--surface); }
+.oor__fill--chair { fill: var(--label-bg); }
+.oor__fill--body { fill: var(--line); }
+.oor__eye { fill: var(--ink-2); }
 /* 伝え直した吹き出しの後ろに重なる札。何度も同じことを言った跡 */
 .oor__echo {
   left: 392px;
