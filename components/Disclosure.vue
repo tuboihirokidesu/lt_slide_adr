@@ -37,7 +37,7 @@ const steering = [
     </div>
 
     <div class="disc__good">
-      <span class="fx-caption"><Ref id="kody" label="Kody" /> の場合（抜粋）</span>
+      <span class="fx-caption">ADR に分けた場合（<Ref id="kody" label="Kody" /> の抜粋）</span>
       <div class="disc__top">
         <div class="fx-paper disc__card">
           <div class="fx-paper__head"><span>AGENTS.md</span><span class="disc__step">1段目　毎回読む</span></div>

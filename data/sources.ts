@@ -22,7 +22,6 @@ export const sources = {
   kody: { group: 'video', who: 'Kody', title: 'docs/contributing/decisions', url: 'https://github.com/kody-hq/kody/tree/main/docs/contributing/decisions' },
   'kody-index': { partOf: 'kody', who: 'index.md', title: 'index.md', url: kodyAdr('index') },
   'kody-template': { partOf: 'kody', who: '0000-template.md', title: '0000-template.md', url: kodyAdr('0000-template') },
-  'kody-primitives': { partOf: 'kody', who: 'primitives.yaml', title: 'primitives.yaml', url: `${kody}/architecture/primitives.yaml` },
   'kody-0001': { partOf: 'kody', who: '0001', title: '0001', url: kodyAdr('0001-no-package-versioning') },
   'kody-0006': { partOf: 'kody', who: '0006', title: '0006', url: kodyAdr('0006-no-repo-ci-primitive') },
   'kody-0015': { partOf: 'kody', who: '0015', title: '0015', url: kodyAdr('0015-skills-over-mcp-wait') },
