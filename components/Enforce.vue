@@ -1,85 +1,111 @@
 <script setup lang="ts">
 withDefaults(defineProps<{ stage?: number }>(), { stage: 0 })
-
-const lint = [
-  { cls: 'is-path', text: 'src/db/users.ts:3:1' },
-  { cls: 'is-err', text: "error  'some-orm' の import は禁止" },
-  { cls: 'is-ref', text: '       ADR-0012「ORM を導入しない」' },
-  { cls: 'is-dim', text: '       docs/adr/0012-no-orm.md' },
-  { cls: 'is-dim', text: '       代わりに sql/ のクエリと型生成を使う' },
-  { cls: 'is-sum', text: '✖ 1 problem (1 error)' },
-]
 </script>
 
 <template>
   <div class="enf">
-    <div class="enf__row">
-      <div class="enf__col">
-        <p class="enf__role"><span>ADR</span>理由を書く</p>
-        <AdrPaper class="enf__paper" no="0012" file="0012-no-orm.md" status="accepted" title="ORM を導入しない。">
-          <p class="fx-paper__h">Decision</p>
-          <p class="enf__text">クエリは生 SQL で書く。</p>
-          <div class="enf__field">
-            <p class="fx-paper__h">Enforcement</p>
-            <p class="enf__text"><code>no-restricted-imports</code>（ORM パッケージ）</p>
-          </div>
-        </AdrPaper>
-      </div>
-
-      <div class="enf__mid">
-        <svg viewBox="0 0 150 150" width="150" height="150" aria-hidden="true">
-          <Edge d="M2 46 H148" :end="[148, 46]" dir="r" tone="recommend" :on="stage >= 1" />
-          <Edge d="M148 112 H2" :end="[2, 112]" dir="l" tone="caution" :on="stage >= 2" />
-        </svg>
-        <span class="fx-label fx-label--recommend enf__l1" :class="{ 'is-on': stage >= 1 }">Enforcement 欄が<br>ルールを指す</span>
-        <span class="fx-label fx-label--caution enf__l2" :class="{ 'is-on': stage >= 2 }">エラーが<br>ADR 番号を引く</span>
-      </div>
-
-      <div class="enf__col">
-        <p class="enf__role"><span>lint・CI</span>強制する</p>
-        <div class="enf__term">
-          <p class="enf__bar">$ pnpm lint</p>
-          <p v-for="l in lint" :key="l.text" :class="l.cls">{{ l.text }}</p>
+    <div class="enf__grid">
+      <AdrPaper class="enf__adr" no="0012" file="0012-no-orm.md" status="accepted" title="ORM を導入しない。">
+        <div class="enf__field">
+          <p class="fx-paper__h">Enforcement</p>
+          <p class="enf__text"><code>no-restricted-imports</code>（<code>.oxlintrc.json</code>）</p>
         </div>
+      </AdrPaper>
+
+      <div class="enf__h">
+        <svg viewBox="0 0 100 40" width="100" height="40" aria-hidden="true">
+          <Edge d="M2 20 H98" :end="[98, 20]" dir="r" tone="recommend" :on="stage >= 1" />
+        </svg>
+        <span class="fx-label fx-label--recommend enf__hl" :class="{ 'is-on': stage >= 1 }">同じ決定を<br>lint にも書く</span>
+      </div>
+
+      <div class="fx-paper enf__file fx-enter" :class="{ 'is-on': stage >= 1 }">
+        <div class="fx-paper__head"><span>.oxlintrc.json</span><span>人間が書く</span></div>
+        <div class="enf__code">
+          <p>"no-restricted-imports": ["error", { "paths": [{</p>
+          <p>  "name": "some-orm",</p>
+          <p class="is-ref">  "message": "ADR-0012 を参照。sql/ を使う"</p>
+          <p>}] }]</p>
+        </div>
+      </div>
+
+      <div class="enf__v">
+        <svg viewBox="0 0 40 52" width="40" height="52" aria-hidden="true">
+          <Edge d="M20 50 V2" :end="[20, 2]" dir="u" tone="recommend" :on="stage >= 2" />
+        </svg>
+        <span class="fx-label fx-label--recommend enf__vl" :class="{ 'is-on': stage >= 2 }">help が ADR を指す</span>
+      </div>
+
+      <div class="enf__term">
+        <p class="enf__bar">$ pnpm lint</p>
+        <div v-if="stage >= 2" class="enf__out">
+          <p><span class="is-dim">src/db/users.ts:1:1:</span> <span class="is-err">error</span> eslint(no-restricted-imports): 'some-orm' import is restricted from being used.</p>
+          <p class="is-ref">help: ADR-0012 を参照。sql/ を使う</p>
+        </div>
+        <p v-else class="enf__pass">何も出ずに通る</p>
+      </div>
+
+      <div class="enf__h">
+        <svg viewBox="0 0 100 40" width="100" height="40" aria-hidden="true">
+          <Edge d="M98 20 H2" :end="[2, 20]" dir="l" />
+        </svg>
+      </div>
+
+      <div class="enf__right">
+        <div class="fx-paper enf__file">
+          <div class="fx-paper__head"><span>src/db/users.ts</span><span>エージェントが書く</span></div>
+          <div class="enf__code">
+            <p>import { db } from 'some-orm'</p>
+          </div>
+        </div>
+        <p class="enf__note">強制できない「当面〜しない」系の決定は、<br>ADR とレビューで守る。それで十分。</p>
       </div>
     </div>
 
     <div class="enf__foot">
       <figure class="enf__quote">
-        <blockquote class="fx-quote">When documentation falls short,<br>we promote the rule into code</blockquote>
+        <blockquote class="fx-quote">When documentation falls short, we promote the rule into code</blockquote>
         <figcaption class="fx-cite"><Ref id="openai" label="OpenAI の記事「Harness engineering」" /></figcaption>
       </figure>
-      <p class="enf__note">強制できない「当面〜しない」系の決定は、<br>ADR とレビューで守る。それで十分。</p>
     </div>
   </div>
 </template>
 
 <style scoped>
-.enf__row {
+.enf__grid {
   display: grid;
-  grid-template-columns: 1fr 150px 1fr;
-  align-items: stretch;
+  grid-template-columns: 1fr 100px 420px;
+  grid-template-rows: auto 44px auto;
+  align-items: start;
 }
-.enf__col {
-  display: flex;
-  flex-direction: column;
+.enf__v {
+  position: relative;
+  grid-column: 1;
+  justify-self: center;
 }
-.enf__role {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin: 0 0 8px;
-  font-size: var(--fs-note);
-  color: var(--muted);
+.enf__v svg,
+.enf__h svg {
+  display: block;
+  overflow: visible;
 }
-.enf__role span {
-  font-size: var(--fs-body);
-  font-weight: 500;
-  color: var(--ink);
+.enf__vl {
+  top: 12px;
+  white-space: nowrap;
+  left: 44px;
 }
-.enf__paper,
-.enf__term {
-  flex: 1;
+.enf__v + * {
+  grid-column: 1;
+}
+.enf__h {
+  position: relative;
+  align-self: center;
+}
+.enf__hl {
+  bottom: 44px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  line-height: 1.4;
 }
 .enf__text {
   margin: 0;
@@ -96,87 +122,76 @@ const lint = [
   margin-top: 6px;
   color: var(--tone-recommend-ink);
 }
-.enf__mid {
-  position: relative;
-  height: 150px;
-  align-self: center;
-  margin-top: 30px;
-}
-.enf__mid svg {
-  overflow: visible;
-}
-.enf__l1,
-.enf__l2 {
-  left: 0;
-  right: 0;
-  text-align: center;
-  white-space: normal;
-  font-size: var(--fs-note);
-  line-height: 1.4;
-}
-.enf__l1 {
-  top: 2px;
-}
-.enf__l2 {
-  top: 120px;
-}
+.enf__code,
 .enf__term {
-  box-sizing: border-box;
-  padding: 0 0 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-doc);
-  background: var(--paper);
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   line-height: 1.75;
   color: var(--ink-2);
-  white-space: pre;
-  overflow: hidden;
 }
+.enf__code {
+  padding: 8px 14px 10px;
+  white-space: pre;
+}
+.enf__code p,
 .enf__term p {
   margin: 0;
-  padding: 0 16px;
+}
+.enf__term {
+  box-sizing: border-box;
+  padding: 0 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-doc);
+  background: var(--paper);
 }
 .enf__term .enf__bar {
-  margin-bottom: 10px;
-  padding: 8px 16px;
+  margin-bottom: 8px;
+  padding: 8px 14px;
   border-bottom: 1px solid var(--line);
   color: var(--muted);
 }
-.enf__term .is-path,
-.enf__term .is-dim {
+.enf__out {
+  padding: 0 14px;
+}
+.enf__out p + p {
+  margin-top: 4px;
+}
+.enf__pass {
+  padding: 0 14px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-note);
   color: var(--muted);
 }
-.enf__term .is-err {
+.is-dim {
+  color: var(--muted);
+}
+.is-err {
   color: var(--tone-caution-ink);
 }
-.enf__term .is-ref {
+.is-ref {
   color: var(--tone-recommend-ink);
 }
-.enf__term .is-sum {
-  margin-top: 10px;
-  color: var(--tone-caution-ink);
-}
 .enf__foot {
-  display: grid;
-  grid-template-columns: 440px 1fr;
-  gap: 32px;
-  align-items: center;
   margin-top: 14px;
-  padding-top: 12px;
+  padding-top: 10px;
   border-top: 1px solid var(--line-strong);
 }
 .enf__quote {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
   margin: 0;
 }
 .enf__quote .fx-quote {
   font-size: var(--fs-body);
   line-height: 1.5;
 }
-.enf__note {
+.enf__right {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
+  flex-direction: column;
+  gap: 14px;
+}
+.enf__note {
   margin: 0;
   font-size: var(--fs-note);
   line-height: 1.65;
